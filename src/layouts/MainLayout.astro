@@ -29,6 +29,18 @@ const { frontmatter, url } = Astro.props;
 		--color-link: #89dceb;
 		--color-emphasis: #a6e3a1;
 		--color-border: #313244;
+		--color-code-bg: #11111b;
+	}
+
+	@media (prefers-color-scheme: light) {
+		:root {
+			--color-base: #eff1f5;
+			--color-text: #4c4f69;
+			--color-link: #7287fd;
+			--color-emphasis: #1e66f5;
+			--color-border: #ccd0da;
+			--color-code-bg: #dce0e8;
+		}
 	}
 
 	body {
