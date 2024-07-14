@@ -6,9 +6,64 @@ interface Props {
   type: "main" | "source",
   created: string,
   modified: string,
+  wrap?: boolean,
 }
 
 const meta = Astro.props
 ---
 
-<pre>{JSON.stringify(meta, null, 4)}</pre>
+<div class={meta.wrap ? "outer block wrap" : "outer block"}>
+  <a class="name" href={meta.name}>{meta.name}</a>
+
+  <div class="block">
+    <span title="created">
+      <span class="sitelen-pona">sin</span>
+      {meta.created}
+    </span>
+
+    <span title="last modified">
+      <span class="sitelen-pona">ante</span>
+      {meta.modified}
+    </span>
+
+    <a title="last modified" href={meta.source}>
+      <span class="sitelen-pona">tan</span>
+        src
+      </span>
+    </a>
+  </div>
+</div>
+
+<style>
+  .outer {
+    padding-top: 1em;
+  }
+
+  .block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.618em;
+  }
+
+  .block > * {
+    white-space: nowrap;
+  }
+
+  .name {
+    border: 2px solid var(--color-link);
+    border-radius: 1ch;
+    padding: 0 0.5ch;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .wrap {
+    flex-wrap: wrap;
+  }
+</style>
