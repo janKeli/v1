@@ -1,8 +1,8 @@
 ---
-const { title } = Astro.props.frontmatter;
 import type { MarkdownLayoutProps } from 'astro';
+import NoteMeta from "../components/NoteMeta.astro"
 
-const { frontmatter, url } = Astro.props;
+const { frontmatter } = Astro.props;
 ---
 
 <html lang="en">
@@ -15,6 +15,7 @@ const { frontmatter, url } = Astro.props;
 	</head>
 	<body>
 		<main>
+			<NoteMeta name={frontmatter.title} {...frontmatter} />
 	    <slot />
 		</main>
 	</body>

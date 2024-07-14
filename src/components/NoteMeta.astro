@@ -13,7 +13,10 @@ const meta = Astro.props
 ---
 
 <div class={meta.wrap ? "outer block wrap" : "outer block"}>
-  <a class="name" href={meta.name}>{meta.name}</a>
+  <div>
+    {meta.type === "source" && <span title="source note" class="sitelen-pona">kulupu</span>}
+    <a class="name" href={meta.name}>{meta.name}</a>
+  </div>
 
   <div class="block">
     <span title="created">
@@ -26,11 +29,13 @@ const meta = Astro.props
       {meta.modified}
     </span>
 
-    <a title="last modified" href={meta.source}>
-      <span class="sitelen-pona">tan</span>
-        src
-      </span>
-    </a>
+    {meta.source && (
+      <a title="last modified" href={meta.source}>
+        <span class="sitelen-pona">tan</span>
+          src
+        </span>
+      </a>
+    )}
   </div>
 </div>
 
