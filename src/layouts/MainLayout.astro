@@ -29,7 +29,9 @@ const { frontmatter, url } = Astro.props;
 		--color-link: #89dceb;
 		--color-emphasis: #a6e3a1;
 		--color-border: #313244;
-		--color-code-bg: #11111b;
+		--color-code-base: #181825;
+		--color-code-text: #cdd6f4;
+		--color-select: #b4befe;
 	}
 
 	@media (prefers-color-scheme: light) {
@@ -39,7 +41,8 @@ const { frontmatter, url } = Astro.props;
 			--color-link: #7287fd;
 			--color-emphasis: #1e66f5;
 			--color-border: #ccd0da;
-			--color-code-bg: #dce0e8;
+			--color-code-base: #181825;
+			--color-select: #7287fd;
 		}
 	}
 
@@ -81,5 +84,24 @@ const { frontmatter, url } = Astro.props;
 
 	th {
 		font-weight: bold;
+	}
+
+	p code {
+		background: var(--color-code-base) !important;
+		color: var(--color-code-text) !important;
+		/* took this from catppuccin-obsidian */
+		padding: 0.1em 0.25em;
+		border-radius: 4px;
+	}
+
+	.astro-code {
+		background: var(--color-code-base) !important;
+		padding: 1ch;
+		border-radius: 8px;
+	}
+
+	::selection {
+		color: var(--color-base);
+		background: var(--color-select);
 	}
 </style>
