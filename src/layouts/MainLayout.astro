@@ -54,4 +54,20 @@ const { frontmatter, url } = Astro.props;
 	hr {
 		border: 1px solid var(--color-border);
 	}
+
+	table {
+		width: 100%;
+		text-align: left;
+		border: none;
+		border-collapse: collapse;
+	}
+
+	tr, td, th {
+		border: 1px solid var(--color-border);
+		padding: 0.25em 0.5em;
+	}
+
+	th {
+		font-weight: bold;
+	}
 </style>
