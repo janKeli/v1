@@ -1,0 +1,14 @@
+---
+interface Props {
+  name: string,
+  source: string,
+  scope: string,
+  type: "main" | "source",
+  created: string,
+  modified: string,
+}
+
+const meta = Astro.props
+---
+
+<pre>{JSON.stringify(meta, null, 4)}</pre>
