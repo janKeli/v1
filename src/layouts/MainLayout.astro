@@ -28,6 +28,7 @@ const { frontmatter, url } = Astro.props;
 		--color-text: #cdd6f4;
 		--color-link: #89dceb;
 		--color-emphasis: #a6e3a1;
+		--color-deleted: #f38ba8;
 		--color-border: #313244;
 		--color-code-base: #181825;
 		--color-code-text: #cdd6f4;
@@ -40,6 +41,7 @@ const { frontmatter, url } = Astro.props;
 			--color-text: #4c4f69;
 			--color-link: #7287fd;
 			--color-emphasis: #1e66f5;
+			--color-deleted: #d20f39;
 			--color-border: #ccd0da;
 			--color-code-base: #181825;
 			--color-select: #7287fd;
@@ -73,12 +75,15 @@ const { frontmatter, url } = Astro.props;
 	}
 
 	p {
-		padding: 1em 0;
-		margin: 0;
+		padding-bottom: 1em;
 	}
 
 	em {
 		color: var(--color-emphasis);
+	}
+
+	del {
+		color: var(--color-deleted);
 	}
 
 	hr {
