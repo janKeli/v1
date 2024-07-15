@@ -1,6 +1,7 @@
 ---
+import '@fontsource/jetbrains-mono';
 import type { MarkdownLayoutProps } from 'astro';
-import NoteMeta from "../components/NoteMeta.astro"
+import NoteMeta from "../components/NoteMeta.astro";
 
 const { frontmatter } = Astro.props;
 ---
@@ -22,8 +23,6 @@ const { frontmatter } = Astro.props;
 </html>
 
 <style is:global>
-	@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
-
 	:root {
 		--color-base: #1e1e2e;
 		--color-text: #cdd6f4;
@@ -55,6 +54,14 @@ const { frontmatter } = Astro.props;
 		padding: 0;
 	}
 
+	@font-face {
+		font-family: 'nasin-nanpa';
+		src: url('/fonts/nasin-nanpa-4.0.1.otf') format('opentype');
+		font-weight: normal;
+		font-style: normal;
+		font-display: swap;
+	}
+
 	body {
 		background: var(--color-base);
 		color: var(--color-text);
@@ -62,13 +69,13 @@ const { frontmatter } = Astro.props;
 
 	main {
 		max-width: 80ch;
-		font-family: JetBrains Mono;
+		font-family: "JetBrains Mono", monospace;
 		font-size: 16px;
 		margin: 0 auto;
 	}
 
 	.sitelen-pona {
-		font-family: nasin-nanpa;
+		font-family: "nasin-nanpa", monospace;
 	}
 
 	a {
