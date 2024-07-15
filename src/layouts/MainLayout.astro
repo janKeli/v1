@@ -1,7 +1,9 @@
 ---
 import '@fontsource/jetbrains-mono';
 import type { MarkdownLayoutProps } from 'astro';
+import Header from "../components/Header.astro";
 import NoteMeta from "../components/NoteMeta.astro";
+import Footer from "../components/Footer.astro";
 
 const { frontmatter } = Astro.props;
 ---
@@ -15,10 +17,12 @@ const { frontmatter } = Astro.props;
 		<title>{frontmatter.title}</title>
 	</head>
 	<body>
+		<Header />
 		<main>
 			<NoteMeta name={frontmatter.title} {...frontmatter} />
 	    <slot />
 		</main>
+		<Footer />
 	</body>
 </html>
 
@@ -26,12 +30,14 @@ const { frontmatter } = Astro.props;
 	:root {
 		--color-base: #1e1e2e;
 		--color-text: #cdd6f4;
+		--color-subtext: #a6adc8;
 		--color-link: #89dceb;
 		--color-emphasis: #a6e3a1;
 		--color-deleted: #f38ba8;
 		--color-border: #313244;
 		--color-code-base: #181825;
 		--color-code-text: #cdd6f4;
+		--color-header-base: #181825;
 		--color-select: #b4befe;
 	}
 
@@ -39,11 +45,14 @@ const { frontmatter } = Astro.props;
 		:root {
 			--color-base: #eff1f5;
 			--color-text: #4c4f69;
+			--color-subtext: #6c6f85;
 			--color-link: #7287fd;
 			--color-emphasis: #1e66f5;
 			--color-deleted: #d20f39;
 			--color-border: #ccd0da;
 			--color-code-base: #181825;
+			--color-code-text: #cdd6f4;
+			--color-header-base: #181825;
 			--color-select: #7287fd;
 		}
 	}
@@ -65,17 +74,18 @@ const { frontmatter } = Astro.props;
 	body {
 		background: var(--color-base);
 		color: var(--color-text);
+		font-family: "JetBrains Mono", monospace;
 	}
 
 	main {
 		max-width: 80ch;
-		font-family: "JetBrains Mono", monospace;
 		font-size: 16px;
 		margin: 0 auto;
 	}
 
 	.sitelen-pona {
 		font-family: "nasin-nanpa", monospace;
+		text-decoration: none;
 	}
 
 	a {
