@@ -8,7 +8,7 @@ created: "2024-07-05T06:48Z"
 modified: "2024-07-15T18:12Z"
 ---
 
-When trying to view [iommu](iommu) groups, I used this script by *flungo*:
+When trying to view [iommu](/iommu) groups, I used this script by *flungo*:
 ```bash
 #!/bin/bash
 for d in $(find /sys/kernel/iommu_groups/ -type l | sort -n -k5 -t/); do
@@ -18,4 +18,4 @@ for d in $(find /sys/kernel/iommu_groups/ -type l | sort -n -k5 -t/); do
 done;
 ```
 
-For running it on [nixos](nixos), I needed to install (or, you know, `nix-shell -p`) the `pciutils` package.
+For running it on [nixos](/nixos), I needed to install (or, you know, `nix-shell -p`) the `pciutils` package.

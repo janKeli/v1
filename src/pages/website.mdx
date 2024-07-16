@@ -14,19 +14,19 @@ import NoteMeta from "../components/NoteMeta.astro"
 
 I've wanted to *build a website* for a few months now. I am writing this down *now* to finally get it out of my head.
 
-The website will be built from *this* [obsidian](obsidian) vault, which uses [zettelkasten](zettelkasten). Viewing source notes by clicking every link is not very browser-friendly imo, so what I want to do is to *render notes as threads*:
+The website will be built from *this* [obsidian](/obsidian) vault, which uses [zettelkasten](/zettelkasten). Viewing source notes by clicking every link is not very browser-friendly imo, so what I want to do is to *render notes as threads*:
 - each main note gets a link, and
 - their contents get copied into the source notes, separated by `---`.
 
-I'm not aware of any system that can do this, so I'll write my own - taking in obsidian-flavoured [markdown](markdown) and linking it as described above, outputing as markdown once again.
+I'm not aware of any system that can do this, so I'll write my own - taking in obsidian-flavoured [markdown](/markdown) and linking it as described above, outputing as markdown once again.
 
-Then run that through any [ssg](ssg).
+Then run that through any [ssg](/ssg).
 
 ---
 
 <NoteMeta name="website-updated-field" source="" scope="public" type="main" created="2024-07-01T17:56Z" modified="2024-07-01T17:59Z" />
 
-My notes used to have an *updated* field storing an ISO 8601 timestamp. Then I recreated `.obsidian` and forgot to update the config of a plugin I use for that. So now it's called *modified*. Naturally, I forgot about this until the [website](website) builder prototype reported on my notes not having a *modified* field. Yeah...
+My notes used to have an *updated* field storing an ISO 8601 timestamp. Then I recreated `.obsidian` and forgot to update the config of a plugin I use for that. So now it's called *modified*. Naturally, I forgot about this until the [website](/website) builder prototype reported on my notes not having a *modified* field. Yeah...
 
 ---
 
@@ -53,11 +53,11 @@ fn main() {
     dbg!(note);
 }
 ```
-Did you notice here that the note lives under `active-externalism/data` and not just `active-externalism`? Well, that's because `active-externalism` (previously called `~/brain`) is the first, older generation of my vault that didn't use [zettelkasten](zettelkasten).
+Did you notice here that the note lives under `active-externalism/data` and not just `active-externalism`? Well, that's because `active-externalism` (previously called `~/brain`) is the first, older generation of my vault that didn't use [zettelkasten](/zettelkasten).
 
 It seems that the parser will need to be a recursive function.
 
-Also, here's a link to [the tool I use to write this](obsidian) in order to validate named links.
+Also, here's a link to [the tool I use to write this](/obsidian) in order to validate named links.
 
 ---
 
@@ -190,7 +190,7 @@ text.split('`')
 
 fixed the bug, testing:
 
-Here's a link to [zettelkasten](zettelkasten), for example.
+Here's a link to [zettelkasten](/zettelkasten), for example.
 
 `Here's the same link, but inside a code block: [[zettelkasten]]`
 
@@ -270,7 +270,7 @@ You can `npm install` and then use it like this:
 
 <NoteMeta name="napchart-for-my-site" source="" scope="public" type="main" created="2024-07-15T07:07Z" modified="2024-07-16T15:23Z" />
 
-Despite it being easy to use, I *will not be using the [napchart-library](napchart-library) for my website*. It is useful when you need interactivity, but it draws the chart on a *canvas* element. I would like an SVG instead.
+Despite it being easy to use, I *will not be using the [napchart-library](/napchart-library) for my website*. It is useful when you need interactivity, but it draws the chart on a *canvas* element. I would like an SVG instead.
 
 ---
 
