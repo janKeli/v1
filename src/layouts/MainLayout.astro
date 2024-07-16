@@ -3,7 +3,6 @@ import '@fontsource/jetbrains-mono';
 import type { MarkdownLayoutProps } from 'astro';
 import Header from "../components/Header.astro";
 import NoteMeta from "../components/NoteMeta.astro";
-import Footer from "../components/Footer.astro";
 
 const { frontmatter } = Astro.props;
 ---
@@ -22,7 +21,6 @@ const { frontmatter } = Astro.props;
 			<NoteMeta name={frontmatter.title} {...frontmatter} />
 	    <slot />
 		</main>
-		<Footer />
 	</body>
 </html>
 
