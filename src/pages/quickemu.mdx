@@ -1,0 +1,29 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "quickemu"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-06-17T18:25Z"
+modified: "2024-07-01T17:55Z"
+---
+
+automatically configures a VM to best utilize your hardware.
+
+```shell
+# quickget <os> <version> [edition]
+> quickget nixos unstable gnome
+Downloading NixOS unstable gnome
+- URL: https://releases.nixos.org/nixos/unstable/(cut)
+############################################################################### 100.0%
+Checking nixos-unstable-gnome/(cut) with sha256sum... Good!
+Making nixos-unstable-gnome.conf
+Setting nixos-unstable-gnome.conf executable
+
+To start your NixOS virtual machine run:
+    quickemu --vm nixos-unstable-gnome.conf
+
+> quickemu --vm nixos-unstable-gnome.conf
+```
+
+You can use <kbd>Ctrl-Alt-f</kbd> to toggle fullscreen mode in the window it opens.

@@ -1,0 +1,24 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "website-parser-test"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-07-02T16:31Z"
+modified: "2024-07-04T16:50Z"
+---
+
+So I ended up needing to have to split the markdown into a not-quite-ast to ignore code blocks properly. I need a file to test it on, so here we are:
+```rust
+fn main() {
+    let path = "/nix/persist/active-externalism/data/website-parser-test.md";
+    let note = read_note(path).expect("it's this note!");
+
+    dbg!(note);
+}
+```
+Did you notice here that the note lives under `active-externalism/data` and not just `active-externalism`? Well, that's because `active-externalism` (previously called `~/brain`) is the first, older generation of my vault that didn't use [zettelkasten](zettelkasten).
+
+It seems that the parser will need to be a recursive function.
+
+Also, here's a link to [the tool I use to write this](obsidian) in order to validate named links.

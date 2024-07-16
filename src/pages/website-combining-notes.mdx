@@ -1,0 +1,18 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "website-combining-notes"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-07-04T16:55Z"
+modified: "2024-07-04T16:59Z"
+---
+
+Okay I've spent way to long formatting links. What I *should* be focusing on is *CONCATENATING* all the *MAIN* notes *into* the *SOURCE* note. Oh, except if they're nested.
+
+- interpret the source note as a vector of links
+- open each note that matches the linked one
+- non-recursively dump its body into a buffer
+- replace the current note's body with that buffer
+
+Looks simple enough!

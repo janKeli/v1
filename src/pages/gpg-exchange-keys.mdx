@@ -1,0 +1,26 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "gpg-exchange-keys"
+source: "https://gnupg.org/gph/en/manual.html"
+scope: "public"
+type: "main"
+created: "2024-06-18T18:26Z"
+modified: "2024-07-01T17:55Z"
+---
+
+To communicate with someone you have to give them your public key, that can be done using
+```shell
+> gpg --list-keys # to get the email
+> gpg --armor --export <email>
+```
+
+The `--armor` flag is used to output ASCII instead of raw bits.
+
+Then they add it with
+```shell
+> gpg --import key.gpg
+> gpg --edit-key <imported-email>
+gpg> fpr
+# it returns a fingerprint, ask the person you're getting the key from if it matches, then:
+gpg> sign
+```

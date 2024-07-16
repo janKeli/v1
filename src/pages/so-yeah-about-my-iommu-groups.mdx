@@ -1,0 +1,20 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "so-yeah-about-my-iommu-groups"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-07-05T08:26Z"
+modified: "2024-07-05T08:29Z"
+---
+
+What I omitted above `(cut)` were basically all of my other devices. In IOMMU group 11 there are:
+- the SATA adapter through which my OS disk is connected
+- the keyboard/mouse USB hub
+- the other USB hub
+- the ethernet controller
+- the audio controller
+
+I ran the script and thought that the system just froze. IT DIDN'T FREEZE! I just disconnected all of the perepherals.
+
+So now I've swapped the GPUs around, now the IOMMU group 12 is JUST the guest GPU.

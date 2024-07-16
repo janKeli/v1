@@ -1,0 +1,18 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "2024-06-24-website-organization"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-06-24T08:10Z"
+modified: "2024-06-24T08:31Z"
+---
+
+First, I have to figure out how to structure it. Right now I have a somewhat pure [zettelkasten](zettelkasten) system with *main* notes and *source* notes. Normally, source notes would be converted into folders. But that comes with the limitation of being unable to source a single note in multiple places. So I'll leave the directory structure flat, as it is now.
+
+I thought of making my own SSG, but that'd be quite unnecessary. So instead I should make something closer to [obsidian-export](https://github.com/zoni/obsidian-export), but
+- with MDX support,
+- built-in linking
+- custom code blocks
+
+And then build that using... Probably [astro](astro) for its ecosystem (I like [tailwind](tailwind), for instance).

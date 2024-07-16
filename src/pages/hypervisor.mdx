@@ -1,0 +1,33 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "hypervisor"
+source: ""
+scope: "public"
+type: "source"
+created: "2024-06-17T12:05Z"
+modified: "2024-07-01T17:55Z"
+---
+
+import NoteMeta from "../components/NoteMeta.astro"
+
+<NoteMeta name="level-1-hypervisors" source="" scope="public" type="main" created="2024-06-17T12:06Z" modified="2024-07-16T14:49Z" />
+
+level 1 runs on *bare metal*. A level-1 hypervisor is a minimal operating system with the hyprevisor software on top. Its pro is that it requires little resources for the host OS.
+
+The most popular options are:
+- [proxmox](proxmox)
+- [xcp-ng](xcp-ng)
+- [esxi](esxi)
+
+Some NAS systems (like TrueNas Scale) also support running VMs.
+
+---
+
+<NoteMeta name="level-2-hypervisors" source="" scope="public" type="main" created="2024-06-17T12:13Z" modified="2024-07-16T14:49Z" />
+
+lvel 2 hypervisors are software that you install *on top* of your primary OS.
+
+Which one you install is largely dependent on which host OS you're running:
+- [virtualbox](virtualbox) works on anything, but it's the slowest one
+- [hyper-v](hyper-v) is the windows one, and
+- [qemu](qemu) is the best choice for anything else

@@ -1,0 +1,27 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "website-prototype-one"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-07-10T10:41Z"
+modified: "2024-07-10T15:50Z"
+---
+
+What I don't like the most about prototype 0 is the lack of configurability. What happens ~~if~~ when I want to move the vault to a different directory? What happens if I want to add/remove a scope?
+
+I want the utility to be configured using *environment variables* only, and *print the logs to stdout*.
+
+Okay, I've done the output part, I don't like this:
+```
+ INFO  site_builder > reading source note `gpg`
+ INFO  site_builder > inserting `public-key-cryptography` into `gpg`
+ INFO  site_builder > inserting `gpg-create-key` into `gpg`
+ (etc)
+```
+
+I'll make it a tree view instead.
+
+*done*
+
+Now I just have to make a flake package for it!

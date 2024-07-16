@@ -1,0 +1,43 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "zellij-commands"
+source: "https://zellij.dev/documentation/plugin-api-commands"
+scope: "public"
+type: "main"
+created: "2024-06-14T15:27Z"
+modified: "2024-07-16T15:25Z"
+---
+
+zellij-commands are actions that you run inside `update`.
+
+Most used:
+
+| command                   | permission             | description                            |
+| ------------------------- | ---------------------- | -------------------------------------- |
+| subscribe and unsubscribe |                        | to an [event](zellij-events\)         |
+| request_permission        |                        |                                        |
+| set_selectable            |                        | enable/disable user input              |
+| open_file                 | OpenFiles              | in an editor                           |
+| open_terminal             | OpenTerminalsOrPlugins | in a new pane                          |
+| open_command_pane         | RunCommands            |                                        |
+| run_command               | RunCommands            | silently                               |
+| web_request               | WebAccess              |                                        |
+| switch_tab_to             |                        |                                        |
+| go_to_tab_name            | ChangeApplicationState |                                        |
+| set_timeout               |                        |                                        |
+| hide_self                 |                        |                                        |
+| show_self                 |                        |                                        |
+| switch_to_input_mode      | ChangeApplicationState |                                        |
+| new_tabs_with_layout      | ChangeApplicationState |                                        |
+| new_tab                   | ChangeApplicationState |                                        |
+| resize_focused_pane       | ChangeApplicationState |                                        |
+| move_focus                | ChangeApplicationState | to another pane                        |
+| detach                    | ChangeApplicationState | disconnect the user                    |
+| write                     | WriteToStdin           |                                        |
+| move_pane                 | ChangeApplicationState |                                        |
+| clear_screen              |                        |                                        |
+| close_focus               | ChangeApplicationState | pane                                   |
+| close_focused_tab         | ChangeApplicationState |                                        |
+| rename_tab                | ChangeApplicationState |                                        |
+| switch_session            | ChangeApplicationState |                                        |
+| scan_host_folder          |                        | works faster than std::fs because wasi |

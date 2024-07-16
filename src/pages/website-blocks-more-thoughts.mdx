@@ -1,0 +1,19 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "website-blocks-more-thoughts"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-07-03T18:06Z"
+modified: "2024-07-03T18:30Z"
+---
+
+But how are blocks even structured?
+- Text blocks can contain other blocks
+- Code blocks and links cannot contain other blocks
+
+It seems, therefore, that to process the entire document, I'd have to get the highest block, form a list of sub-blocks, go over every text block inside it and do the same recursively until I get one text block back. *How hard could that be!*
+
+Wait, I'm overcomplicating things. I needed blocks just to replace links, that's simpler to do with a regex...
+
+This is why there's no commit today

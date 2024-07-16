@@ -1,0 +1,50 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "rust-nix-wasi"
+source: "[[fenix]]"
+scope: "public"
+type: "main"
+created: "2024-06-14T14:02Z"
+modified: "2024-07-16T15:09Z"
+---
+
+Add [naersk](naersk) and [fenix](fenix) to your flake's inputs:
+```nix
+inputs = {
+  naersk.url = "github:nix-community/naersk/master";
+  fenix.url = "github:nix-community/fenix";
+  nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  utils.url = "github:numtide/flake-utils";
+};
+```
+
+Set up the toolchain:
+```nix
+toolchain = with fenix.packages.${system}; combine [
+  minimal.rustc
+  minimal.cargo
+  targets.wasm32-wasi.latest.rust-std
+];
+
+naersk-lib = pkgs.callPackage naersk {
+  cargo = toolchain;
+  rustc = toolchain;
+};
+```
+
+Set up the dev shell:
+```nix
+devShell = with pkgs; mkShell {
+  buildInputs = [ toolchain rustfmt rustPackages.clippy bacon ];
+  RUST_SRC_PATH = rustPlatform.rustLibSrc;
+  CARGO_BUILD_TARGET = "wasm32-wasi";
+};
+```
+
+And the production build:
+```nix
+defaultPackage = naersk-lib.buildPackage {
+    src = ./.;
+    CARGO_BUILD_TARGET = "wasm32-wasi";
+};
+```

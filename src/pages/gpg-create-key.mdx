@@ -1,0 +1,17 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "gpg-create-key"
+source: "https://gnupg.org/gph/en/manual.html"
+scope: "public"
+type: "main"
+created: "2024-06-18T18:26Z"
+modified: "2024-07-01T17:54Z"
+---
+
+```shell
+> gpg --gen-key
+# It will ask for the passphrase, it is used to protect your private key if it ever leaks.
+
+# This can be used to revoke the public key if the private key gets compromised
+> gpg --output revoke.asc --gen-revoke <email>
+```

@@ -1,0 +1,19 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "zellij-plugins-start"
+source: "https://zellij.dev/documentation/plugin-development"
+scope: "public"
+type: "main"
+created: "2024-06-16T10:17Z"
+modified: "2024-07-01T17:56Z"
+---
+
+First, you'll need to set up the `wasm32-wasi` toolchain. [Here](rust-nix-wasi) is how you do it on [nixos](nixos).
+
+Create a new binary (`cargo new`) and add the `zellij-tile` crate.
+
+To load the plugin inside zellij during development, you can:
+```shell
+> cargo build
+> zellij action start-or-reload-plugin file:target/wasm32-wasi/debug/plugin-name.wasm
+```

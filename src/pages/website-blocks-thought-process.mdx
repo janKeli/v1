@@ -1,0 +1,21 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "website-blocks-thought-process"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-07-02T16:54Z"
+modified: "2024-07-02T17:56Z"
+---
+
+Alright but how *do* I get the different blocks of the website? I have tried splitting the text on triple \` and labelling every other one as code, but that has 2 problems:
+- escaping
+- depth
+
+Let me outline the task again: I need to turn a `String` into a sequence of `Block`s.
+
+Option two is making a loop, going through each character, comparing them against the markdown syntax (if the last one is not a backslash) and filling a temporary buffer with characters like these until there's a closing one. I don't know if that sentence makes much sense, I'm not re-reading it, I'll go try that approach instead.
+
+Or here's what I want: split the string into more strings, every other one is a delimiter, and then assemble blocks of three into blocks. There.
+
+Okay, I'm done. *TIL: match_indices and zip functions exist*.

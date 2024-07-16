@@ -1,0 +1,57 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "random-notes"
+source: ""
+scope: "public"
+type: "source"
+created: "2024-06-21T08:24Z"
+modified: "2024-07-16T15:34Z"
+---
+
+import NoteMeta from "../components/NoteMeta.astro"
+
+<NoteMeta name="markdev-devlog-2024-06-20" source="" scope="public" type="main" created="2024-06-20T21:22Z" modified="2024-07-01T17:55Z" />
+
+I keep having problems with this. I *really* want to use the [typestate-pattern](typestate-pattern) here for intitialization, it would make sense. But I can't either because of how the [zellij-plugins](zellij-plugins) API is implemented or because I don't understand how to work with it. Anyway, ~~tomorrow~~ 2024-06-21 I'll remove all the plugin code and make it a standalone tool first. Then see if it makes sense to wrap it in a plugin again.
+
+---
+
+<NoteMeta name="2024-06-21-putting-everything-together" source="" scope="public" type="main" created="2024-06-21T10:14Z" modified="2024-07-01T18:02Z" />
+
+I think [dots](dots) is at a stage where I can *almost* use it to develop other projects. So I'll install helix on it and move [markdev](markdev) development there.
+
+Aaaaand [done](cult-of-done). Now cloned the repo, it's installing the toolchain.
+
+---
+
+<NoteMeta name="2024-06-23-gpu-and-passwords" source="" scope="public" type="main" created="2024-06-23T20:52Z" modified="2024-06-23T21:36Z" />
+
+I finally got sick enough of Nvidia to get a new GPU. It's an rx570-8g.
+
+The first thing I did is I went and set up [sway](sway) because I wanted to do that for quite a while now. I've done that on my host OS, so it's not in the repo.
+
+2024-06-24 I plan to install [dots](dots) on bare metal. I will need to do a few things today for that to work, though:
+- back up the obsidian vault, the work repo and the current config,
+- make [dots](dots)' passwords persistent, so it doesn't reset to `hunter2` on every reboot
+- write an install guide
+
+Starting with the password, I thought the best way to do that was to make `passwd` and `shadow` persistent, but that doesn't seem to work. I looked it up and it seems many people use `initialHashedPassword`. I don't know if it's a good idea, but my machine should only really ask a password if you already have physical access to it, which you probably don't.
+
+---
+
+<NoteMeta name="2024-06-24-website-organization" source="" scope="public" type="main" created="2024-06-24T08:10Z" modified="2024-06-24T08:31Z" />
+
+First, I have to figure out how to structure it. Right now I have a somewhat pure [zettelkasten](zettelkasten) system with *main* notes and *source* notes. Normally, source notes would be converted into folders. But that comes with the limitation of being unable to source a single note in multiple places. So I'll leave the directory structure flat, as it is now.
+
+I thought of making my own SSG, but that'd be quite unnecessary. So instead I should make something closer to [obsidian-export](https://github.com/zoni/obsidian-export), but
+- with MDX support,
+- built-in linking
+- custom code blocks
+
+And then build that using... Probably [astro](astro) for its ecosystem (I like [tailwind](tailwind), for instance).
+
+---
+
+<NoteMeta name="2024-06-24-hardware-dots" source="" scope="public" type="main" created="2024-06-24T15:20Z" modified="2024-06-24T15:23Z" />
+
+I now use [dots](dots) on my primary machine! You can check out the repo [on GitHub](https://github.com/janElikan/dots). If you have any input, please create an issue there!

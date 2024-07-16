@@ -1,0 +1,102 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "vm-lab"
+source: ""
+scope: "public"
+type: "source"
+created: "2024-07-05T06:20Z"
+modified: "2024-07-05T14:43Z"
+---
+
+import NoteMeta from "../components/NoteMeta.astro"
+
+<NoteMeta name="vm-gpu-pass-idea" source="https://github.com/bryansteiner/gpu-passthrough-tutorial/" scope="public" type="main" created="2024-07-05T06:21Z" modified="2024-07-05T08:24Z" />
+
+So I wanted to try GPU pass-through for a long time now, but have never HAD a GPU to do it with. If I understand correctly, this would've been possible if my CPU had integrated graphics, but it's a `ryzen 3600`, so no.
+
+But now I've upgraded my GPU and haven't yet sold the old one, so I can try that. Why?
+- learn how it works
+- see how performant it is
+- the uni I'm going to will *probably* want me to use Windows, and I'm not installing that thing on bare metal again!
+
+---
+
+*not created yet*
+
+---
+
+<NoteMeta name="lsiommu-nixos" source="https://gist.github.com/flungo/428c374c040de1d0a30fd4a593d39040" scope="public" type="main" created="2024-07-05T06:48Z" modified="2024-07-15T18:12Z" />
+
+When trying to view [iommu](iommu) groups, I used this script by *flungo*:
+```bash
+#!/bin/bash
+for d in $(find /sys/kernel/iommu_groups/ -type l | sort -n -k5 -t/); do
+    n=${d#*/iommu_groups/*}; n=${n%%/*}
+    printf 'IOMMU Group %s ' "$n"
+    lspci -nns "${d##*/}"
+done;
+```
+
+For running it on [nixos](nixos), I needed to install (or, you know, `nix-shell -p`) the `pciutils` package.
+
+---
+
+<NoteMeta name="2024-07-05-my-iomuu-groups" source="" scope="public" type="main" created="2024-07-05T06:54Z" modified="2024-07-05T08:24Z" />
+
+```
+(cut)
+IOMMU Group 11 03:00.0 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] 400 Series Chipset USB 3.1 xHCI Compliant Host Controller [1022:43d5] (rev 01)
+IOMMU Group 11 03:00.1 SATA controller [0106]: Advanced Micro Devices, Inc. [AMD] 400 Series Chipset SATA Controller [1022:43c8] (rev 01)
+IOMMU Group 11 03:00.2 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 400 Series Chipset PCIe Bridge [1022:43c6] (rev 01)
+IOMMU Group 11 20:00.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 400 Series Chipset PCIe Port [1022:43c7] (rev 01)
+IOMMU Group 11 20:01.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 400 Series Chipset PCIe Port [1022:43c7] (rev 01)
+IOMMU Group 11 20:04.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 400 Series Chipset PCIe Port [1022:43c7] (rev 01)
+IOMMU Group 11 22:00.0 Ethernet controller [0200]: Realtek Semiconductor Co., Ltd. RTL8111/8168/8211/8411 PCI Express Gigabit Ethernet Controller [10ec:8168] (rev 15)
+IOMMU Group 11 25:00.0 VGA compatible controller [0300]: NVIDIA Corporation GP107 [GeForce GTX 1050 Ti] [10de:1c82] (rev a1)
+IOMMU Group 11 25:00.1 Audio device [0403]: NVIDIA Corporation GP107GL High Definition Audio Controller [10de:0fb9] (rev a1)
+IOMMU Group 12 26:00.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Ellesmere [Radeon RX 470/480/570/570X/580/580X/590] [1002:67df] (rev ef)
+IOMMU Group 12 26:00.1 Audio device [0403]: Advanced Micro Devices, Inc. [AMD/ATI] Ellesmere HDMI Audio [Radeon RX 470/480 / 570/580/590] [1002:aaf0]
+```
+
+Sure hope this doesn't mean that my ethernet controller is going to the VM!
+
+---
+
+*not created yet*
+
+---
+
+<NoteMeta name="so-yeah-about-my-iommu-groups" source="" scope="public" type="main" created="2024-07-05T08:26Z" modified="2024-07-05T08:29Z" />
+
+What I omitted above `(cut)` were basically all of my other devices. In IOMMU group 11 there are:
+- the SATA adapter through which my OS disk is connected
+- the keyboard/mouse USB hub
+- the other USB hub
+- the ethernet controller
+- the audio controller
+
+I ran the script and thought that the system just froze. IT DIDN'T FREEZE! I just disconnected all of the perepherals.
+
+So now I've swapped the GPUs around, now the IOMMU group 12 is JUST the guest GPU.
+
+---
+
+<NoteMeta name="iommu-detach-at-boot" source="https://gist.github.com/techhazard/1be07805081a4d7a51c527e452b87b26" scope="public" type="main" created="2024-07-05T09:08Z" modified="2024-07-08T14:53Z" />
+
+Device IDs:
+- `10de:1c82`
+- `10de:0fb9`
+
+because I don't want the NVIDIA GPU in my linux system.
+
+Update from 3 hours after: everything works, everything is set up. I like it. Now to looking-glass...
+
+---
+
+<NoteMeta name="vm-gpu-end-of-day" source="" scope="public" type="main" created="2024-07-05T14:43Z" modified="2024-07-08T15:01Z" />
+
+So *at the end of the day* with that experiment I have:
+- 2 working computers (kinda)
+- I do anything with both and then restore (the VM has snapshots, the host is impermanent)
+
+Cool!

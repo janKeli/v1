@@ -1,0 +1,21 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "virtual-machine"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-06-17T11:54Z"
+modified: "2024-07-16T15:12Z"
+---
+
+A VM is basically a computer running inside of another computer.
+
+The physical machine is called the *host*, VM - the *guest*. Multiple guests can be run on one host.
+
+You install a [hypervisor](hypervisor) on the host, it grabs a chunk of your CPU, memory, disk, etc. and uses that to run a *full operating system* (with a [kernel](kernel) and an [init-system](init-system)) on.
+
+Before installing a hypervisor, make sure to enable virtualization support in your UEFI, that massively improves the performance.
+
+Resources are *allocated before booting* the guest, and can not be re-defined at runtime. Same as with a physical computer, really.
+
+VMs are commonly used on servers. For example, if you wanted to deploy a website, you could rent a [vps](vps) (Virtual Private Server), which is a VM.

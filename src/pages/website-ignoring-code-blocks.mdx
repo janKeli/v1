@@ -1,0 +1,36 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "website-ignoring-code-blocks"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-07-11T09:09Z"
+modified: "2024-07-14T11:48Z"
+---
+
+(mobile note)
+
+To ignore code blocks when transforming links:
+```rust-pseudocode
+text.split('`')
+  .enumerate()
+  .map(if % 2==0 { replace_links() })
+  .join('`');
+```
+
+(mobile note end)
+
+fixed the bug, testing:
+
+Here's a link to [zettelkasten](zettelkasten), for example.
+
+`Here's the same link, but inside a code block: [[zettelkasten]]`
+
+```markdown
+And here's a multiline code block with the same link:
+[[zettelkasten]]
+```
+
+Yeah, it works.
+
+While I'm at it, I may as well fix the line breaks. When the tool is filling in a source note with main notes that it links to, it inserts a `---` after each one. Including the last one.

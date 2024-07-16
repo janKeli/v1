@@ -1,0 +1,19 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "website-init"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-06-30T15:55Z"
+modified: "2024-06-30T16:04Z"
+---
+
+I've wanted to *build a website* for a few months now. I am writing this down *now* to finally get it out of my head.
+
+The website will be built from *this* [obsidian](obsidian) vault, which uses [zettelkasten](zettelkasten). Viewing source notes by clicking every link is not very browser-friendly imo, so what I want to do is to *render notes as threads*:
+- each main note gets a link, and
+- their contents get copied into the source notes, separated by `---`.
+
+I'm not aware of any system that can do this, so I'll write my own - taking in obsidian-flavoured [markdown](markdown) and linking it as described above, outputing as markdown once again.
+
+Then run that through any [ssg](ssg).

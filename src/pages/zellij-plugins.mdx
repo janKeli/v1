@@ -1,0 +1,113 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "zellij-plugins"
+source: ""
+scope: "public"
+type: "source"
+created: "2024-06-14T11:05Z"
+modified: "2024-07-16T15:25Z"
+---
+
+import NoteMeta from "../components/NoteMeta.astro"
+
+<NoteMeta name="zellij-plugins-start" source="https://zellij.dev/documentation/plugin-development" scope="public" type="main" created="2024-06-16T10:17Z" modified="2024-07-01T17:56Z" />
+
+First, you'll need to set up the `wasm32-wasi` toolchain. [Here](rust-nix-wasi) is how you do it on [nixos](nixos).
+
+Create a new binary (`cargo new`) and add the `zellij-tile` crate.
+
+To load the plugin inside zellij during development, you can:
+```shell
+> cargo build
+> zellij action start-or-reload-plugin file:target/wasm32-wasi/debug/plugin-name.wasm
+```
+
+---
+
+<NoteMeta name="zellij-plugins-structure" source="https://docs.rs/zellij-tile/0.40.1/zellij_tile/trait.ZellijPlugin.html" scope="public" type="main" created="2024-06-16T10:23Z" modified="2024-07-01T17:56Z" />
+
+```rust
+/// The main struct of your plugin, stores state.
+struct Plugin { ... }
+
+/// Zellij API
+impl ZellijPlugin for Plugin {
+  fn load(&mut self);
+  fn update(&mut self, event: Event) -> bool; // return true to re-render
+  fn pipe(&mut self, pipe_message: PipeMessage) -> bool;
+  fn render(&mut self, rows: usize, cols: usize);
+}
+
+/// Used instead of the regular `main` function
+register_plugin!(Plugin);
+```
+
+---
+
+<NoteMeta name="zellij-events" source="https://zellij.dev/documentation/plugin-api-events" scope="public" type="main" created="2024-06-14T15:08Z" modified="2024-07-16T15:25Z" />
+
+Zellij sends out events when something happens. If you `subscribe` to them in the `load` function, they will trigger `update`.
+
+Most used events:
+
+| event              | required permission    | description                                                                                      |
+| ------------------ | ---------------------- | ------------------------------------------------------------------------------------------------ |
+| `ModeUpdate`       | `ReadApplicationState` | e.g., `Normal`, `Pane`, etc.                                                                     |
+| `TabUpdate`        | `ReadApplicationState` | which one is active, how many are there, how many panes they contain, etc.                       |
+| `PaneUpdate`       | `ReadApplicationState` | active panes, their titles and status (running/exited)                                           |
+| `SessionUpdate`    | `ReadApplicationState` | list of running sessions                                                                         |
+| `Key`              |                        | keypress on the plugin pane                                                                      |
+| `Mouse`            |                        | mouse action on the plugin window                                                                |
+| `Timer`            |                        | responds to the `set_timeout` function                                                           |
+| `Visible`          |                        | show/hide the plugin                                                                             |
+| `FileSystemCreate` |                        | and `..Read/Update/Delete` fire when something changes in the directory where Zellij was started |
+| `RunCommandResult` |                        | contains its STDIN, STDOUT, exit status, working directory                                       |
+| `WebRequestResult` |                        | contains status code, body, context                                                              |
+
+The full list is available in [the documentation](https://zellij.dev/documentation/plugin-api-events).
+
+---
+
+<NoteMeta name="zellij-commands" source="https://zellij.dev/documentation/plugin-api-commands" scope="public" type="main" created="2024-06-14T15:27Z" modified="2024-07-16T15:25Z" />
+
+zellij-commands are actions that you run inside `update`.
+
+Most used:
+
+| command                   | permission             | description                            |
+| ------------------------- | ---------------------- | -------------------------------------- |
+| subscribe and unsubscribe |                        | to an [event](zellij-events\)         |
+| request_permission        |                        |                                        |
+| set_selectable            |                        | enable/disable user input              |
+| open_file                 | OpenFiles              | in an editor                           |
+| open_terminal             | OpenTerminalsOrPlugins | in a new pane                          |
+| open_command_pane         | RunCommands            |                                        |
+| run_command               | RunCommands            | silently                               |
+| web_request               | WebAccess              |                                        |
+| switch_tab_to             |                        |                                        |
+| go_to_tab_name            | ChangeApplicationState |                                        |
+| set_timeout               |                        |                                        |
+| hide_self                 |                        |                                        |
+| show_self                 |                        |                                        |
+| switch_to_input_mode      | ChangeApplicationState |                                        |
+| new_tabs_with_layout      | ChangeApplicationState |                                        |
+| new_tab                   | ChangeApplicationState |                                        |
+| resize_focused_pane       | ChangeApplicationState |                                        |
+| move_focus                | ChangeApplicationState | to another pane                        |
+| detach                    | ChangeApplicationState | disconnect the user                    |
+| write                     | WriteToStdin           |                                        |
+| move_pane                 | ChangeApplicationState |                                        |
+| clear_screen              |                        |                                        |
+| close_focus               | ChangeApplicationState | pane                                   |
+| close_focused_tab         | ChangeApplicationState |                                        |
+| rename_tab                | ChangeApplicationState |                                        |
+| switch_session            | ChangeApplicationState |                                        |
+| scan_host_folder          |                        | works faster than std::fs because wasi |
+
+---
+
+*not created yet*
+
+---
+
+*not created yet*

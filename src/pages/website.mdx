@@ -1,0 +1,283 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "website"
+source: ""
+scope: "public"
+type: "source"
+created: "2024-06-30T15:55Z"
+modified: "2024-07-16T15:17Z"
+---
+
+import NoteMeta from "../components/NoteMeta.astro"
+
+<NoteMeta name="website-init" source="" scope="public" type="main" created="2024-06-30T15:55Z" modified="2024-06-30T16:04Z" />
+
+I've wanted to *build a website* for a few months now. I am writing this down *now* to finally get it out of my head.
+
+The website will be built from *this* [obsidian](obsidian) vault, which uses [zettelkasten](zettelkasten). Viewing source notes by clicking every link is not very browser-friendly imo, so what I want to do is to *render notes as threads*:
+- each main note gets a link, and
+- their contents get copied into the source notes, separated by `---`.
+
+I'm not aware of any system that can do this, so I'll write my own - taking in obsidian-flavoured [markdown](markdown) and linking it as described above, outputing as markdown once again.
+
+Then run that through any [ssg](ssg).
+
+---
+
+<NoteMeta name="website-updated-field" source="" scope="public" type="main" created="2024-07-01T17:56Z" modified="2024-07-01T17:59Z" />
+
+My notes used to have an *updated* field storing an ISO 8601 timestamp. Then I recreated `.obsidian` and forgot to update the config of a plugin I use for that. So now it's called *modified*. Naturally, I forgot about this until the [website](website) builder prototype reported on my notes not having a *modified* field. Yeah...
+
+---
+
+<NoteMeta name="website-links" source="" scope="public" type="main" created="2024-07-01T18:05Z" modified="2024-07-02T16:09Z" />
+
+Directory scanning done! Now onto links!
+
+Links need to be converted into commonmark. Since the structure is flat, I can just `.find` a note that either has a matching name or a matching alias.
+
+Sidenote: I *love* clippy!
+
+`Let's see if[[this]]counts as a link. It does. So everything in [[brackets]] is a link, whitespaces are ign[[o]]red.` Wait, codeblocks aren't!
+
+---
+
+<NoteMeta name="website-parser-test" source="" scope="public" type="main" created="2024-07-02T16:31Z" modified="2024-07-04T16:50Z" />
+
+So I ended up needing to have to split the markdown into a not-quite-ast to ignore code blocks properly. I need a file to test it on, so here we are:
+```rust
+fn main() {
+    let path = "/nix/persist/active-externalism/data/website-parser-test.md";
+    let note = read_note(path).expect("it's this note!");
+
+    dbg!(note);
+}
+```
+Did you notice here that the note lives under `active-externalism/data` and not just `active-externalism`? Well, that's because `active-externalism` (previously called `~/brain`) is the first, older generation of my vault that didn't use [zettelkasten](zettelkasten).
+
+It seems that the parser will need to be a recursive function.
+
+Also, here's a link to [the tool I use to write this](obsidian) in order to validate named links.
+
+---
+
+<NoteMeta name="website-blocks-thought-process" source="" scope="public" type="main" created="2024-07-02T16:54Z" modified="2024-07-02T17:56Z" />
+
+Alright but how *do* I get the different blocks of the website? I have tried splitting the text on triple \` and labelling every other one as code, but that has 2 problems:
+- escaping
+- depth
+
+Let me outline the task again: I need to turn a `String` into a sequence of `Block`s.
+
+Option two is making a loop, going through each character, comparing them against the markdown syntax (if the last one is not a backslash) and filling a temporary buffer with characters like these until there's a closing one. I don't know if that sentence makes much sense, I'm not re-reading it, I'll go try that approach instead.
+
+Or here's what I want: split the string into more strings, every other one is a delimiter, and then assemble blocks of three into blocks. There.
+
+Okay, I'm done. *TIL: match_indices and zip functions exist*.
+
+---
+
+<NoteMeta name="website-blocks-more-thoughts" source="" scope="public" type="main" created="2024-07-03T18:06Z" modified="2024-07-03T18:30Z" />
+
+But how are blocks even structured?
+- Text blocks can contain other blocks
+- Code blocks and links cannot contain other blocks
+
+It seems, therefore, that to process the entire document, I'd have to get the highest block, form a list of sub-blocks, go over every text block inside it and do the same recursively until I get one text block back. *How hard could that be!*
+
+Wait, I'm overcomplicating things. I needed blocks just to replace links, that's simpler to do with a regex...
+
+This is why there's no commit today
+
+---
+
+<NoteMeta name="website-blocks-hindsight" source="" scope="public" type="main" created="2024-07-16T15:15Z" modified="2024-07-16T15:17Z" />
+
+Implementing blocks would mean that this project (the generator) is a *static site generator* rather than a *markdown compiler/linker*. Would've been too complex and would've solved nothing.
+
+---
+
+<NoteMeta name="website-combining-notes" source="" scope="public" type="main" created="2024-07-04T16:55Z" modified="2024-07-04T16:59Z" />
+
+Okay I've spent way to long formatting links. What I *should* be focusing on is *CONCATENATING* all the *MAIN* notes *into* the *SOURCE* note. Oh, except if they're nested.
+
+- interpret the source note as a vector of links
+- open each note that matches the linked one
+- non-recursively dump its body into a buffer
+- replace the current note's body with that buffer
+
+Looks simple enough!
+
+---
+
+<NoteMeta name="website-first-test" source="" scope="public" type="main" created="2024-07-04T17:48Z" modified="2024-07-08T15:01Z" />
+
+*First test done*! A few things to note:
+- since I ended up replacing links with a simple regex, links inside of code blocks are also replaced
+- main notes nested inside `source` notes loose their metadata
+- in fact, everything looses its metadata
+
+In general, this is a success. Too bad it took (checking) 4 days. But then I'm still learning and I didn't allocate much time for this.
+
+Yeah days are not very useful, let me check the seconds
+
+(reading)
+
+(calculating)
+
+16500 seconds, which is more than 255 minutes
+
+Alright, I'll go add metadata, also write a doc test for it because that seems both simple and a good thing to do.
+
+---
+
+*not created yet*
+
+---
+
+<NoteMeta name="website-prototype-zero" source="" scope="public" type="main" created="2024-07-08T18:20Z" modified="2024-07-10T10:41Z" />
+
+Well I guess this is the *prototype #0*! I've implemented the metadata in THE DUMBEST WAY POSSIBLE, but it works for now. Just have to
+- [x] set up output to a directory
+- [x] run it across all notes
+- [x] filter scopes
+
+A bad prototype $done$!
+
+---
+
+<NoteMeta name="website-prototype-one" source="" scope="public" type="main" created="2024-07-10T10:41Z" modified="2024-07-10T15:50Z" />
+
+What I don't like the most about prototype 0 is the lack of configurability. What happens ~~if~~ when I want to move the vault to a different directory? What happens if I want to add/remove a scope?
+
+I want the utility to be configured using *environment variables* only, and *print the logs to stdout*.
+
+Okay, I've done the output part, I don't like this:
+```
+ INFO  site_builder > reading source note `gpg`
+ INFO  site_builder > inserting `public-key-cryptography` into `gpg`
+ INFO  site_builder > inserting `gpg-create-key` into `gpg`
+ (etc)
+```
+
+I'll make it a tree view instead.
+
+*done*
+
+Now I just have to make a flake package for it!
+
+---
+
+<NoteMeta name="website-prototype-one-done" source="" scope="public" type="main" created="2024-07-10T15:50Z" modified="2024-07-10T15:50Z" />
+
+It's in a usable state! I have added it
+
+---
+
+<NoteMeta name="website-ignoring-code-blocks" source="" scope="public" type="main" created="2024-07-11T09:09Z" modified="2024-07-14T11:48Z" />
+
+(mobile note)
+
+To ignore code blocks when transforming links:
+```rust-pseudocode
+text.split('`')
+  .enumerate()
+  .map(if % 2==0 { replace_links() })
+  .join('`');
+```
+
+(mobile note end)
+
+fixed the bug, testing:
+
+Here's a link to [zettelkasten](zettelkasten), for example.
+
+`Here's the same link, but inside a code block: [[zettelkasten]]`
+
+```markdown
+And here's a multiline code block with the same link:
+[[zettelkasten]]
+```
+
+Yeah, it works.
+
+While I'm at it, I may as well fix the line breaks. When the tool is filling in a source note with main notes that it links to, it inserts a `---` after each one. Including the last one.
+
+---
+
+*not created yet*
+
+---
+
+<NoteMeta name="website-timeline-2024-07-13" source="" scope="public" type="main" created="2024-07-13T16:56Z" modified="2024-07-15T07:07Z" />
+
+Next steps:
+
+| est. date  | task                                    |
+| ---------- | --------------------------------------- |
+| 2024-07-14 | init the actual site, not the generator |
+| 2024-07-14 | basic styling of the site               |
+| 2024-07-15 | add content                             |
+| 2024-07-15 | think about the logo                    |
+| 2024-07-16 | improve shiki styles                    |
+
+---
+
+<NoteMeta name="website-ssg-init" source="" scope="public" type="main" created="2024-07-14T17:24Z" modified="2024-07-15T07:07Z" />
+
+Created the *website repo*, not the generator. I'll add the content tomorrow, it's not staged for now. I've been working on it locally.
+
+Basic styles down, though I didn't test mobile.
+There is no header/footer.
+
+Now going to deploy it with gh pages.
+
+Also I forgot to add the `nasin-nanpa` font :facepalm:
+
+---
+
+<NoteMeta name="napchart-library" source="https://github.com/larskarbo/napchart" scope="public" type="main" created="2024-07-15T06:48Z" modified="2024-07-15T07:07Z" />
+
+I was trying to find the source code for [napchart.com](napchart.com), but turns out it exists as a library!
+
+You can `npm install` and then use it like this:
+```html
+<div class="wrapper">
+  <canvas id="napchart" />
+</div>
+
+<script>
+  import Napchart from "napchart";
+
+  const canvas = document.getElementById("napchart");
+  const chart = Napchart.init(canvas.getContext('2d'), {
+    elements: [
+      {
+        start: 720,
+        end: 790,
+        text: "test",
+        color: "#89b4fa",
+      },
+    ]
+  }, {
+    background: "#1e1e2e",
+    fontColor: "#cdd6f4",
+  })
+</script>
+```
+
+---
+
+<NoteMeta name="napchart-for-my-site" source="" scope="public" type="main" created="2024-07-15T07:07Z" modified="2024-07-16T15:23Z" />
+
+Despite it being easy to use, I *will not be using the [napchart-library](napchart-library) for my website*. It is useful when you need interactivity, but it draws the chart on a *canvas* element. I would like an SVG instead.
+
+---
+
+<NoteMeta name="website-status-2024-07-15" source="" scope="public" type="main" created="2024-07-15T18:25Z" modified="2024-07-16T15:24Z" />
+
+I planned to fill it in with notes today, but I didn't.
+
+Guess I'm doing that 2024-07-16 then!
+
+Anyway, I've made a header and footer for it.

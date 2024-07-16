@@ -1,0 +1,78 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "dots"
+source: ""
+scope: "public"
+type: "source"
+created: "2024-06-17T11:49Z"
+modified: "2024-07-16T06:11Z"
+---
+
+import NoteMeta from "../components/NoteMeta.astro"
+
+<NoteMeta name="dots-the-concept" source="" scope="public" type="main" created="2024-06-17T11:50Z" modified="2024-07-16T14:46Z" />
+
+Dts are going to be the dotfiles and provisioning scripts for my devices (2 currently).
+
+I need to work on the machine I'm writing this on, so I can't reinstall the system on it now. What I can do is either dual-boot or make a VM.
+
+Somehow I forgot that I can just make a VM until like 2 days ago. I have 32 gigs of RAM, so I can even leave it running in the background.
+
+So yeah, I'll make a [nixos](nixos) [virtual-machine](virtual-machine) and write my dotfiles on that.
+
+---
+
+<NoteMeta name="dots-empty-machine" source="" scope="public" type="main" created="2024-06-17T21:12Z" modified="2024-07-01T17:54Z" />
+
+I've set up the machine and installed neovim on it. This note will be uploaded after the config, but the dates in the frontmatter are correct.
+
+~~Tomorrow~~ On 2024-06-18 I'll start writing the actual dotfiles.
+
+The machine set up using [quickemu](quickemu), it's in `~/vms/nixos-unstable-gnome.conf` although it doesn't use gnome. I'll probably rename it later.
+
+---
+
+<NoteMeta name="dots-flake" source="" scope="public" type="main" created="2024-06-18T12:11Z" modified="2024-07-01T17:54Z" />
+
+I've set up a flake in it and installed [home-manager](home-manager). That works well. What doesn't is [sway](sway), I can't yet figure out how to start it on [quickemu](quickemu).
+
+---
+
+<NoteMeta name="2024-06-27-gnome" source="" scope="public" type="main" created="2024-06-27T16:27Z" modified="2024-07-10T15:49Z" />
+
+I'm creating a branch inside [dots](dots) for gnome. I need to figure out how to get screen capture working on wayland, so until then...
+
+---
+
+<NoteMeta name="website-prototype-one-done" source="" scope="public" type="main" created="2024-07-10T15:50Z" modified="2024-07-10T15:50Z" />
+
+It's in a usable state! I have added it
+
+---
+
+<NoteMeta name="dots-rules" source="" scope="public" type="main" created="2024-07-16T06:11Z" modified="2024-07-16T14:45Z" />
+
+Requirements for each machine:
+- all *perephirals must be wired*
+- *no remote access* except for the server
+- *no closed-source services* that have *full access to hardware* (e.g. google assistant)
+  - exception: phone vendor's kernel
+- all devices can be *set up* either fully or semi-*automatically* using the [dots repo](https://github.com/janElikan/dots) (i.e. no snowflakes)
+- the *OS* has to be able to *heal itself* to a point, no system reinstalls
+
+Data:
+- the vault is as public/transparent as possible
+- all important data is stored in one directory
+- that directory is synced across all devices
+- compressed, encrypted and backed up weekly
+
+Physical machines:
+- workstation <span class="sitelen-pona">ilo&sona suli</span>
+- mobile computer <span class="sitelen-pona">ilo&sona tawa</span>
+- server, optional
+
+Virtual machines:
+- can follow the requirements if they are trusted
+- are considered temporary, disposable if they don't
+
+Containers are not treated as machines and do not have to follow these.

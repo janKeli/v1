@@ -1,0 +1,25 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "zellij-plugins-structure"
+source: "https://docs.rs/zellij-tile/0.40.1/zellij_tile/trait.ZellijPlugin.html"
+scope: "public"
+type: "main"
+created: "2024-06-16T10:23Z"
+modified: "2024-07-01T17:56Z"
+---
+
+```rust
+/// The main struct of your plugin, stores state.
+struct Plugin { ... }
+
+/// Zellij API
+impl ZellijPlugin for Plugin {
+  fn load(&mut self);
+  fn update(&mut self, event: Event) -> bool; // return true to re-render
+  fn pipe(&mut self, pipe_message: PipeMessage) -> bool;
+  fn render(&mut self, rows: usize, cols: usize);
+}
+
+/// Used instead of the regular `main` function
+register_plugin!(Plugin);
+```

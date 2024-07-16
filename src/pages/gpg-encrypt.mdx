@@ -1,0 +1,15 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "gpg-encrypt"
+source: "https://gnupg.org/gph/en/manual.html"
+scope: "public"
+type: "main"
+created: "2024-06-18T18:27Z"
+modified: "2024-07-01T17:54Z"
+---
+
+```shell
+> gpg --output msg.gpg --encrypt --recipient <email> ./file
+```
+
+Note that you can't decrypt it back because you don't have their private key.

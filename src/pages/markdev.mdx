@@ -1,0 +1,71 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "markdev"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-06-13T20:42Z"
+modified: "2024-07-01T17:55Z"
+---
+
+creates and manages [zellij](zellij) workspaces from [obsidian](obsidian) notes.
+
+(insert-video-demo-here)
+
+You can *run* it without installation using `zellij --whatever-the-flags` or *install* it like this: `figure-it-out`.
+
+Example project metdata:
+```yaml
+# this goes into frontmatter, YAML and TOML are supported
+
+workdir: "~/projects/markdev"
+branch: "main" # optional
+# no -- editor: "nvim" # manual overwrite
+procs:
+- bacon
+- lazygit
+
+# other fields are ignored
+```
+
+If the repo doesn't exist, it will create one.
+If the branch doesn't exist, it will ask you what to do.
+If the repo is a bare repo, it will know what to do.
+
+Note that markdev creates a *tab* for each project, not a session.
+
+---
+
+## devlog
+- 2024-06-13 wrote the requirements
+- 2024-06-14 first I have to figure out how to use [rust-on-nix](rust-on-nix)
+- build chain figured out
+- reading about [zellij-plugins](zellij-plugins)
+- and that's where I stopped, the project is now scaffolded and awaits data modelling. Read the article mentioned in [log](log)
+- 2024-06-16 modelling time!
+**WORK(25m)**: 13:13 - 13:38
+**BREAK(5m)**: 13:38 - 13:43
+**WORK(25m)**: 13:43 - 14:08
+**BREAK(5m)**: 14:08 - 14:13
+**WORK(25m)**: 14:14 - 14:39
+I need to reboot because file limit blahblahblah
+**WORK(25m)**: 14:47 - 15:12
+
+
+**WORK(25m)**: 15:28 - 15:53
+
+
+**WORK(25m)**: 08:52 - 09:17
+**BREAK(5m)**: 09:17 - 09:22
+**WORK(25m)**: 09:22 - 09:47
+**BREAK(5m)**: 09:48 - 09:53
+**WORK(25m)**: 09:53 - 10:18
+- [rust-self-consumption-vs-mutation](rust-self-consumption-vs-mutation)?
+- how to make add-workspace immutable
+**WORK(25m)**: 20:31 - 20:56
+**BREAK(5m)**: 20:56 - 21:01
+- why am I re-implementing a vector?
+- because I want to have a separate workspace manager and a separate obsidian vault, not nested
+- mutable is fine here
+
+- [markdev-devlog-2024-06-20](markdev-devlog-2024-06-20)

@@ -1,0 +1,37 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "naersk"
+source: "https://github.com/nix-community/naersk"
+scope: "public"
+type: "main"
+created: "2024-06-14T11:16Z"
+modified: "2024-07-16T15:05Z"
+---
+
+is a tool for building rust programs on nix.
+
+The easiest way to *start* is with a flake template:
+```shell
+> nix flake init -t github:nix-community/naersk`
+```
+
+Usage:
+```nix
+naersk.buildPackage {
+  src = ./.; # required
+
+  buildInputs = []; # native packages to build the app
+  doDoc = false; # build documentation
+  CARGO_ENV_VAR = "test";
+}
+```
+
+`buildPackage` reads `Cargo.lock` and `Cargo.toml`, fetches dependencies and returns a [[nix-derivation]].
+
+You can also overwrite toolchains using:
+```nix
+naersk' = naersk.lib.${system}.override {
+  cargo = toolchain;
+  rustc = toolchain;
+};
+```

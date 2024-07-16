@@ -1,0 +1,29 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "zellij-events"
+source: "https://zellij.dev/documentation/plugin-api-events"
+scope: "public"
+type: "main"
+created: "2024-06-14T15:08Z"
+modified: "2024-07-16T15:25Z"
+---
+
+Zellij sends out events when something happens. If you `subscribe` to them in the `load` function, they will trigger `update`.
+
+Most used events:
+
+| event              | required permission    | description                                                                                      |
+| ------------------ | ---------------------- | ------------------------------------------------------------------------------------------------ |
+| `ModeUpdate`       | `ReadApplicationState` | e.g., `Normal`, `Pane`, etc.                                                                     |
+| `TabUpdate`        | `ReadApplicationState` | which one is active, how many are there, how many panes they contain, etc.                       |
+| `PaneUpdate`       | `ReadApplicationState` | active panes, their titles and status (running/exited)                                           |
+| `SessionUpdate`    | `ReadApplicationState` | list of running sessions                                                                         |
+| `Key`              |                        | keypress on the plugin pane                                                                      |
+| `Mouse`            |                        | mouse action on the plugin window                                                                |
+| `Timer`            |                        | responds to the `set_timeout` function                                                           |
+| `Visible`          |                        | show/hide the plugin                                                                             |
+| `FileSystemCreate` |                        | and `..Read/Update/Delete` fire when something changes in the directory where Zellij was started |
+| `RunCommandResult` |                        | contains its STDIN, STDOUT, exit status, working directory                                       |
+| `WebRequestResult` |                        | contains status code, body, context                                                              |
+
+The full list is available in [the documentation](https://zellij.dev/documentation/plugin-api-events).

@@ -1,0 +1,37 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "napchart-library"
+source: "https://github.com/larskarbo/napchart"
+scope: "public"
+type: "main"
+created: "2024-07-15T06:48Z"
+modified: "2024-07-15T07:07Z"
+---
+
+I was trying to find the source code for [napchart.com](napchart.com), but turns out it exists as a library!
+
+You can `npm install` and then use it like this:
+```html
+<div class="wrapper">
+  <canvas id="napchart" />
+</div>
+
+<script>
+  import Napchart from "napchart";
+
+  const canvas = document.getElementById("napchart");
+  const chart = Napchart.init(canvas.getContext('2d'), {
+    elements: [
+      {
+        start: 720,
+        end: 790,
+        text: "test",
+        color: "#89b4fa",
+      },
+    ]
+  }, {
+    background: "#1e1e2e",
+    fontColor: "#cdd6f4",
+  })
+</script>
+```
