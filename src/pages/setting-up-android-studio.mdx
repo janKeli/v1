@@ -1,0 +1,20 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "setting-up-android-studio"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-07-18T17:52Z"
+modified: "2024-07-18T17:58Z"
+---
+
+*Android Studio* is available in `nixpkgs`. You should also set `programs.adb.enable = true;`.
+
+If you're using an impermanent system, make sure to make these locations *persistent*:
+- `~/Android` for the SDK
+- `~/.android` for the debug bridge
+- `~/.java`
+- `~/.gradle` for the toolchains
+- `~/.config/Google` for telemetry, I guess?
+
+If you're getting an *emulator*, note that *android 14* is called *UpsideDownCake*.

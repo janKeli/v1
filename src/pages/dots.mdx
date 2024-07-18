@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-06-17T11:49Z"
-modified: "2024-07-16T06:11Z"
+modified: "2024-07-18T10:49Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -35,6 +35,12 @@ The machine set up using [quickemu](/quickemu), it's in `~/vms/nixos-unstable-gn
 <NoteMeta name="dots-flake" source="" scope="public" type="main" created="2024-06-18T12:11Z" modified="2024-07-01T17:54Z" />
 
 I've set up a flake in it and installed [home-manager](/home-manager). That works well. What doesn't is [sway](/sway), I can't yet figure out how to start it on [quickemu](/quickemu).
+
+---
+
+<NoteMeta name="2024-06-24-hardware-dots" source="" scope="public" type="main" created="2024-06-24T15:20Z" modified="2024-06-24T15:23Z" />
+
+I now use [dots](/dots) on my primary machine! You can check out the repo [on GitHub](https://github.com/janElikan/dots). If you have any input, please create an issue there!
 
 ---
 
@@ -76,3 +82,91 @@ Virtual machines:
 - are considered temporary, disposable if they don't
 
 Containers are not treated as machines and do not have to follow these.
+
+---
+
+<NoteMeta name="dots-tawa-init" source="" scope="public" type="main" created="2024-07-18T04:46Z" modified="2024-07-18T07:56Z" />
+
+Currently, the device that will become <span class="sitelen-pona">ilo&sona tawa</span> is running LineageOS 21 with no root and no gapps. I'll create a separate user on it to test the concept, then probably format it.
+
+I'll start with the terminal, which it must have as it's a general-purpose computer. There's a project called [nix-on-droid](/nix-on-droid), which I'll try now.
+
+Then I want to see if it can manage system-level APKs.
+
+P.S. No, it can only run as a primary user, so I have to do everything on the current account \*sigh\*.
+
+---
+
+<NoteMeta name="nix-on-droid" source="https://github.com/nix-community/nix-on-droid" scope="public" type="main" created="2024-07-18T04:52Z" modified="2024-07-18T05:00Z" />
+
+*Nix-on-Droid* lets you run the *nix package manager* on android. It also supports home manager!
+
+Under the hood, it uses termux *proot*, which is a userland hack that partially replaces chroot without requiring sudo.
+
+You can *install* it from [f-droid](https://f-droid.org/packages/com.termux.nix/). Then it can either be configured like this:
+```nix
+{ pkgs, ... }:
+
+{
+  # in ~/.config/nixpkgs/nix-on-droid.nix
+  environment.packages = [ pkgs.vim ];
+  system.stateVersion = "24.05";
+}
+```
+```shell
+> nix-on-droid switch
+> nix-on-droid rollback
+```
+
+or with a flake:
+```nix
+{
+  description = "Minimal example of Nix-on-Droid system config.";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+
+    nix-on-droid = {
+      url = "github:nix-community/nix-on-droid/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
+  outputs = { self, nixpkgs, nix-on-droid }: {
+
+    nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
+      system = "aarch64-linux";
+      modules = [ ./nix-on-droid.nix ];
+    };
+
+  };
+}
+```
+```shell
+> nix-on-droid switch --impure --flake <path>#device # first time
+> nix-on-droid switch --flake <path>#device
+```
+
+---
+
+<NoteMeta name="integrating-with-nix-on-droid" source="" scope="public" type="main" created="2024-07-18T05:55Z" modified="2024-07-18T05:56Z" />
+
+[nix-on-droid](/nix-on-droid) has generated a flake, I'll now merge it with my main `dots` repo. First, I'll have to refactor the config of THIS device though.
+
+---
+
+<NoteMeta name="dots-tawa-128-minutes-in" source="" scope="public" type="main" created="2024-07-18T07:47Z" modified="2024-07-18T07:55Z" />
+
+When I started refactoring *dots* for *nix-on-droid*, I thought half of the `configuration.nix` will be shared between both devices. Well no, it won't. I'm not even entirely sure that the package versions will be the same, as <span class="sitelen-pona">ilo&sona tawa</span> is currently running nixpkgs 24.05.
+
+I also have to switch away from the catppuccin nix module, as it uses a quite few things that simply do not exist on non-nixos systems.
+
+One thing I'm extremely happy about, though! It *doesn't feel like a phone*, like an <span class="sitelen-pona">ilo&toki</span>, it's a <span class="sitelen-pona">ilo&sona tawa</span>, a *mobile computer*.
+
+---
+
+<NoteMeta name="drawing-the-hardware" source="" scope="public" type="main" created="2024-07-18T10:48Z" modified="2024-07-18T13:01Z" />
+
+I'll probably never upload photos, but I want to add pics of my hardware setup to the dots repo (and here, obviously). Also, my site doesn't currently support images, that's a perfect opportunity to fix it!
+
+Update: I'm done with the computer in that pic, gonna get back to the rest later.

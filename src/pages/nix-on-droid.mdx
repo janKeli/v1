@@ -1,0 +1,57 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "nix-on-droid"
+source: "https://github.com/nix-community/nix-on-droid"
+scope: "public"
+type: "main"
+created: "2024-07-18T04:52Z"
+modified: "2024-07-18T05:00Z"
+---
+
+*Nix-on-Droid* lets you run the *nix package manager* on android. It also supports home manager!
+
+Under the hood, it uses termux *proot*, which is a userland hack that partially replaces chroot without requiring sudo.
+
+You can *install* it from [f-droid](https://f-droid.org/packages/com.termux.nix/). Then it can either be configured like this:
+```nix
+{ pkgs, ... }:
+
+{
+  # in ~/.config/nixpkgs/nix-on-droid.nix
+  environment.packages = [ pkgs.vim ];
+  system.stateVersion = "24.05";
+}
+```
+```shell
+> nix-on-droid switch
+> nix-on-droid rollback
+```
+
+or with a flake:
+```nix
+{
+  description = "Minimal example of Nix-on-Droid system config.";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+
+    nix-on-droid = {
+      url = "github:nix-community/nix-on-droid/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
+  outputs = { self, nixpkgs, nix-on-droid }: {
+
+    nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
+      system = "aarch64-linux";
+      modules = [ ./nix-on-droid.nix ];
+    };
+
+  };
+}
+```
+```shell
+> nix-on-droid switch --impure --flake <path>#device # first time
+> nix-on-droid switch --flake <path>#device
+```
