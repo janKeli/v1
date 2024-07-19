@@ -10,6 +10,9 @@ interface Props {
 }
 
 const meta = Astro.props
+
+const [createdDate, createdTime] = meta.created.split('T')
+const [modifiedDate, modifiedTime] = meta.modified.split('T')
 ---
 
 <div class={meta.wrap ? "outer block wrap" : "outer block"}>
@@ -21,12 +24,12 @@ const meta = Astro.props
   <div class="block">
     <span title="created">
       <span class="sitelen-pona">sin</span>
-      {meta.created}
+      {createdDate}
     </span>
 
     <span title="last modified">
       <span class="sitelen-pona">ante</span>
-      {meta.modified}
+      {modifiedDate}
     </span>
 
     {meta.source && 
@@ -70,5 +73,11 @@ const meta = Astro.props
 
   .wrap {
     flex-wrap: wrap;
+  }
+
+  @media screen and (max-width: 600px) {
+    .outer {
+      flex-direction: column;
+    }
   }
 </style>
