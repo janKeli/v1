@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-06-17T11:49Z"
-modified: "2024-07-18T10:49Z"
+modified: "2024-07-19T06:50Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -170,3 +170,25 @@ One thing I'm extremely happy about, though! It *doesn't feel like a phone*, lik
 I'll probably never upload photos, but I want to add pics of my hardware setup to the dots repo (and here, obviously). Also, my site doesn't currently support images, that's a perfect opportunity to fix it!
 
 Update: I'm done with the computer in that pic, gonna get back to the rest later.
+
+---
+
+<NoteMeta name="device-naming" source="" scope="public" type="main" created="2024-07-19T06:40Z" modified="2024-07-19T06:50Z" />
+
+My *naming scheme* before february 2024 was non-existant. My computer was running pop os, so it was called `ryzen5-pop`. My phone used whatever name the manufacturer gave it.
+
+Then I switched to `LLSSSRRRI`:
+
+| hostname  | Location | System       | Role       | Index | type         |
+| --------- | -------- | ------------ | ---------- | ----- | ------------ |
+| honixdev0 | *ho*me   | *nix*os      | *dev*box   | 0     | workstation  |
+| hodebsrv0 | *ho*me   | *deb*ian     | *s*e*rv*er | 0     | raspberry pi |
+| molincli0 | *mo*bile | *lin*eage os | *cli*ent   | 0     | phone        |
+
+But that's a bit extra, considering that at most I will have 3 devices (as stated in [dots-rules](/dots-rules)).
+
+So currently I renamed
+- `honixdev0` to `suli`, as in `big computer`
+- `molincli0` to `tawa`, as in `portable computer`
+
+Also more on `molincli0`, it was planned to be an ssh client, but now it's a standalone machine, so it'd be wrong to call it `cli0` anymore.
