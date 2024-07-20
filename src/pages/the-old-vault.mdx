@@ -1,0 +1,53 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "the-old-vault"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-07-20T14:16Z"
+modified: "2024-07-20T17:05Z"
+---
+
+There's actually a bit more to the old vault than the notes:
+
+I've found an archived project called `dotfiles`, which says:
+> You need to URGENTLY figure out your dotfiles. Store them here, it's fine. Make a quick setup script.
+
+That took a year, but eventually I executed it exactly as planned. The dotfiles were stored in the vault, among other things:
+```shell
+> ls -d
+╭────┬───────────────────┬──────┬───────────┬──────────────╮
+│  + │       name        │ type │   size    │   modified   │
+├────┼───────────────────┼──────┼───────────┼──────────────┤
+│  0 │ Excalidraw        │ dir  │   4.0 KiB │ 2 months ago │
+│  1 │ README.md         │ file │   1.9 KiB │ 2 months ago │
+│  2 │ areas-of-focus.md │ file │      77 B │ 2 months ago │
+│  3 │ contexts          │ dir  │   4.4 KiB │ 2 months ago │
+│  4 │ data              │ dir  │   1.0 GiB │ 2 months ago │
+│  5 │ horizons.md       │ file │     278 B │ 2 months ago │
+│  6 │ inbox             │ dir  │  19.0 MiB │ 2 months ago │
+│  7 │ keys              │ dir  │  28.2 KiB │ 2 months ago │
+│  8 │ pass              │ dir  │ 503.9 KiB │ 2 months ago │
+│  9 │ projects          │ dir  │  72.7 KiB │ 2 months ago │
+│ 10 │ somedaymaybies    │ dir  │  36.2 KiB │ 2 months ago │
+│ 11 │ systems           │ dir  │   1.3 MiB │ 2 months ago │
+│ 12 │ templates         │ dir  │  11.3 KiB │ 2 months ago │
+│ 13 │ waiting-for.md    │ file │     180 B │ 2 months ago │
+╰────┴───────────────────┴──────┴───────────┴──────────────╯
+```
+
+Let me go through them:
+- GTD
+  - areas-of-focus.md
+  - contexts/
+  - data/ (aka reference)
+  - horizons.md
+  - inbox/
+  - projects/
+  - somedaymaybies/
+- systems was the old [nixos](/nixos) config
+- keys where the ssh and gpg keys were
+- pass is the gnu password store's repo
+- templates were for obsidian
+
+The only thing I still haven't migrated from is the `pass` directory. It was tied to the old GPG key and had some info that I don't want anymore.

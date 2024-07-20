@@ -1,0 +1,16 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "gpg-trust"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-07-20T12:43Z"
+modified: "2024-07-20T12:49Z"
+---
+
+By default, only the keys that you signed (see [gpg-exchange-keys](/gpg-exchange-keys)) are considered valid. If you *trust* someone, you can run the following command on their key. This will make gpg consider *keys that THEY have signed* automatically *valid*.
+
+```shell
+> gpg --edit-key <email>
+gpg> trust
+```

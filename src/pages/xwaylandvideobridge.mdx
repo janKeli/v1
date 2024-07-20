@@ -1,0 +1,19 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "xwaylandvideobridge"
+source: "https://blog.davidedmundson.co.uk/blog/xwaylandvideobridge/"
+scope: "public"
+type: "main"
+created: "2024-07-20T10:38Z"
+modified: "2024-07-20T10:41Z"
+---
+
+Discord and other apps that try to capture the screen may not work on wayland, use this kde project to fix them.
+
+If I understand correctly, it needs an [xdg-portal](/xdg-portal), here's what I use on [nixos](/nixos) for [sway](/sway):
+```nix
+xdg.portal.enable = true
+xdg.portal.wlr.enable = true
+```
+
+Then you just install xwaylandvideobridge, run it in the background and it handles screencap.

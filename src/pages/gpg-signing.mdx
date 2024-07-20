@@ -1,0 +1,25 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "gpg-signing"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-07-20T11:31Z"
+modified: "2024-07-20T11:48Z"
+---
+
+*Signing* ensures that the *file you got is the same* that its author created (and it *hasn't been modified* since being signed).
+
+You sign a file with your private key:
+```shell
+> gpg --outupt ./file-signed.sig --sign ./file # sign and compress
+> gpg --clearsign ./file # sign and leave in plaintext
+> gpg --outupt ./signature.sig --sign ./file # signature as a separate file
+```
+
+And verify it using a public key:
+```shell
+> gpg --verify ./file-signed.sig # check and exit
+> gpg --verify ./file-signed.sig ./file # if the signature is detached, you need to verify both the file and the signature$
+> gpg --output ./file --decrypt ./file-signed.sig # decompress and decrypt
+```

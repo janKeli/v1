@@ -1,0 +1,49 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "implementing-backups-humanize"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-07-20T13:20Z"
+modified: "2024-07-20T17:06Z"
+---
+
+[Step zero. Humanize.](https://youtu.be/XUZ9VATeF_4?t=633) I'll make an archive manually:
+
+Everything is ALREADY in one directory, `/nix/persist`:
+```text
+╭───┬────────────────────┬───────────────────────────────────────────────╮
+│ # │        name        │ can be lost safely │      my description      │
+├───┼────────────────────┼────────────────────┼──────────────────────────┤
+│ 0 │ active-externalism │ DEFINITELY NO!!!   │ this and the old vaults  │
+│ 1 │ docker             │ yes                │ dockerd data             │
+│ 2 │ dots               │ could recover      │ (needs to be moved)      │
+│ 3 │ identity           │ could recreate     │ machine id and keys      │
+│ 4 │ impermanence       │ yes                │ mostly browser config    │
+│ 5 │ repos              │ could recover      │ my projects              │
+│ 6 │ secure             │ DEFINITELY NO!!!   │ 2fa recovery codes       │
+│ 7 │ sync               │ yes                │ syncthing default folder │
+│ 8 │ sync-config        │ yes                │ syncthing config files   │
+╰───┴────────────────────┴────────────────────┴──────────────────────────╯
+```
+
+Of these, I wanna back up:
+- active-externalism
+- secure
+- identity
+
+```shell
+> sudo tar -caf backup.tar.gz active-externalism secure identity
+[sudo] password for elikan:
+
+> ls | where name == backup.tar.gz
+╭───┬───────────────┬──────┬─────────┬──────────────╮
+│ # │     name      │ type │  size   │   modified   │
+├───┼───────────────┼──────┼─────────┼──────────────┤
+│ 0 │ backup.tar.gz │ file │ 1.1 GiB │ a minute ago │
+╰───┴───────────────┴──────┴─────────┴──────────────╯
+```
+
+That's a bit large... I'll try xz.
+
+It's still 1.1 gigs... Let me look into that

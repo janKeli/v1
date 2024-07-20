@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-06-17T11:49Z"
-modified: "2024-07-19T06:50Z"
+modified: "2024-07-20T17:11Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -192,3 +192,231 @@ So currently I renamed
 - `molincli0` to `tawa`, as in `portable computer`
 
 Also more on `molincli0`, it was planned to be an ssh client, but now it's a standalone machine, so it'd be wrong to call it `cli0` anymore.
+
+---
+
+<NoteMeta name="i-think-i-wanna-give-sway-another-go" source="" scope="public" type="main" created="2024-07-19T15:13Z" modified="2024-07-20T10:40Z" />
+
+I think I want to give sway another go.
+
+*Reasons*:
+- my gnome shortcuts are not configured declaratively
+- there are a few apps that I don't want
+- I want complete control and configurability of my system
+- I want custom launchers
+- the tiling addon is not the best thing ever
+- not lightweight enough to run a desktop version *on a raspberry pi off a solar panel* (I do own a pi 3b+).
+- *my system works too well and I'm bored /lh*
+
+---
+
+<NoteMeta name="device-vs-machine" source="" scope="public" type="main" created="2024-07-19T15:21Z" modified="2024-07-19T15:25Z" />
+
+Here's where I'm going to draw a distinction going forward:
+- a *device* is a physical piece of hardware, whereas
+- a *machine* (<span class="sitelen-pona">ilo sona kon</span>) is its OS and configuration
+
+A machine can be transfered between hosts, duplicated or whatever. A *machine* does not exist in meatspace, only a device does.
+
+The naming is bad, I know. If you have any ideas about that, please [let me know](/contact)!
+
+---
+
+<NoteMeta name="sway-shortcuts" source="https://depau.github.io/sway-cheatsheet/" scope="public" type="main" created="2024-07-19T16:03Z" modified="2024-07-20T10:40Z" />
+
+Honestly, the default shortcuts make so much sense that I'm not even gonna touch them for now.
+
+| shortcut                    | action              |
+| --------------------------- | ------------------- |
+| super + enter               | launch terminal     |
+| super + f                   | fullscreen          |
+| super + shift + q           | quit app            |
+| super + 0..9                | switch to workspace |
+| super + d                   | dmenu               |
+| super + shift + space       | floating mode       |
+| super + hjkl                | focus window        |
+| super + shift + hjkl        | move window         |
+| super + r or left mouse btn | resize              |
+| super + v                   | vertical split      |
+| super + b                   | horizontal split    |
+
+---
+
+<NoteMeta name="xwaylandvideobridge" source="https://blog.davidedmundson.co.uk/blog/xwaylandvideobridge/" scope="public" type="main" created="2024-07-20T10:38Z" modified="2024-07-20T10:41Z" />
+
+Discord and other apps that try to capture the screen may not work on wayland, use this kde project to fix them.
+
+If I understand correctly, it needs an [xdg-portal](/xdg-portal), here's what I use on [nixos](/nixos) for [sway](/sway):
+```nix
+xdg.portal.enable = true
+xdg.portal.wlr.enable = true
+```
+
+Then you just install xwaylandvideobridge, run it in the background and it handles screencap.
+
+---
+
+<NoteMeta name="my-sway-workspaces" source="" scope="public" type="main" created="2024-07-20T10:42Z" modified="2024-07-20T10:53Z" />
+
+I come from DEs, so I'm not very used being able to jump to a specific workspace instead of scrolling through them.
+
+Anyway, here's my current setup:
+- 1 for audio/video configuration
+- 4 for ad-hoc terminal tasks
+- 5 is the main workspace, has obsidian at all times and will *usually* have a terminal
+- 6 for firefox
+- 10 for a windows VM
+
+---
+
+<NoteMeta name="implementing-backups-requirements" source="" scope="public" type="main" created="2024-07-20T11:28Z" modified="2024-07-20T11:30Z" />
+
+I have stated in [dots-rules](/dots-rules) that all of my data must be compressed, encrypted and backed up weekly.
+
+To do that, I'll need:
+- [tar](/tar)
+- [gpg](/gpg)
+- some kind of syncing service (rsync, git?)
+
+I'll go add info that's missing about them and come back here
+
+---
+
+<NoteMeta name="implementing-backups-humanize" source="" scope="public" type="main" created="2024-07-20T13:20Z" modified="2024-07-20T17:06Z" />
+
+[Step zero. Humanize.](https://youtu.be/XUZ9VATeF_4?t=633) I'll make an archive manually:
+
+Everything is ALREADY in one directory, `/nix/persist`:
+```text
+╭───┬────────────────────┬───────────────────────────────────────────────╮
+│ # │        name        │ can be lost safely │      my description      │
+├───┼────────────────────┼────────────────────┼──────────────────────────┤
+│ 0 │ active-externalism │ DEFINITELY NO!!!   │ this and the old vaults  │
+│ 1 │ docker             │ yes                │ dockerd data             │
+│ 2 │ dots               │ could recover      │ (needs to be moved)      │
+│ 3 │ identity           │ could recreate     │ machine id and keys      │
+│ 4 │ impermanence       │ yes                │ mostly browser config    │
+│ 5 │ repos              │ could recover      │ my projects              │
+│ 6 │ secure             │ DEFINITELY NO!!!   │ 2fa recovery codes       │
+│ 7 │ sync               │ yes                │ syncthing default folder │
+│ 8 │ sync-config        │ yes                │ syncthing config files   │
+╰───┴────────────────────┴────────────────────┴──────────────────────────╯
+```
+
+Of these, I wanna back up:
+- active-externalism
+- secure
+- identity
+
+```shell
+> sudo tar -caf backup.tar.gz active-externalism secure identity
+[sudo] password for elikan:
+
+> ls | where name == backup.tar.gz
+╭───┬───────────────┬──────┬─────────┬──────────────╮
+│ # │     name      │ type │  size   │   modified   │
+├───┼───────────────┼──────┼─────────┼──────────────┤
+│ 0 │ backup.tar.gz │ file │ 1.1 GiB │ a minute ago │
+╰───┴───────────────┴──────┴─────────┴──────────────╯
+```
+
+That's a bit large... I'll try xz.
+
+It's still 1.1 gigs... Let me look into that
+
+---
+
+<NoteMeta name="the-old-vault" source="" scope="public" type="main" created="2024-07-20T14:16Z" modified="2024-07-20T17:05Z" />
+
+There's actually a bit more to the old vault than the notes:
+
+I've found an archived project called `dotfiles`, which says:
+> You need to URGENTLY figure out your dotfiles. Store them here, it's fine. Make a quick setup script.
+
+That took a year, but eventually I executed it exactly as planned. The dotfiles were stored in the vault, among other things:
+```shell
+> ls -d
+╭────┬───────────────────┬──────┬───────────┬──────────────╮
+│  + │       name        │ type │   size    │   modified   │
+├────┼───────────────────┼──────┼───────────┼──────────────┤
+│  0 │ Excalidraw        │ dir  │   4.0 KiB │ 2 months ago │
+│  1 │ README.md         │ file │   1.9 KiB │ 2 months ago │
+│  2 │ areas-of-focus.md │ file │      77 B │ 2 months ago │
+│  3 │ contexts          │ dir  │   4.4 KiB │ 2 months ago │
+│  4 │ data              │ dir  │   1.0 GiB │ 2 months ago │
+│  5 │ horizons.md       │ file │     278 B │ 2 months ago │
+│  6 │ inbox             │ dir  │  19.0 MiB │ 2 months ago │
+│  7 │ keys              │ dir  │  28.2 KiB │ 2 months ago │
+│  8 │ pass              │ dir  │ 503.9 KiB │ 2 months ago │
+│  9 │ projects          │ dir  │  72.7 KiB │ 2 months ago │
+│ 10 │ somedaymaybies    │ dir  │  36.2 KiB │ 2 months ago │
+│ 11 │ systems           │ dir  │   1.3 MiB │ 2 months ago │
+│ 12 │ templates         │ dir  │  11.3 KiB │ 2 months ago │
+│ 13 │ waiting-for.md    │ file │     180 B │ 2 months ago │
+╰────┴───────────────────┴──────┴───────────┴──────────────╯
+```
+
+Let me go through them:
+- GTD
+  - areas-of-focus.md
+  - contexts/
+  - data/ (aka reference)
+  - horizons.md
+  - inbox/
+  - projects/
+  - somedaymaybies/
+- systems was the old [nixos](/nixos) config
+- keys where the ssh and gpg keys were
+- pass is the gnu password store's repo
+- templates were for obsidian
+
+The only thing I still haven't migrated from is the `pass` directory. It was tied to the old GPG key and had some info that I don't want anymore.
+
+---
+
+<NoteMeta name="dots-password-management" source="" scope="public" type="main" created="2024-07-20T16:24Z" modified="2024-07-20T17:05Z" />
+
+How should I *store passwords*?
+
+I use gpg with gnu pass, so that's easy. But how do I back them up? I currently have 2 copies of the private key: on <span class="sitelen-pona">ilo&sona suli</span> and <span class="sitelen-pona">ilo&sona tawa</span>. But what if I loose both? What of the off-site backup? Good that I will have the data, but *I won't be able to recover it*!
+
+---
+
+<NoteMeta name="moving-directories" source="" scope="public" type="main" created="2024-07-20T16:53Z" modified="2024-07-20T17:06Z" />
+
+In order to make a proper backup, I need to re-organize the persist directory, the things that may cause problems are:
+- `active-externalism`
+- `dots`
+
+I'll push a commit when I'm done if I don't break my system /lh
+
+P.S. I didn't break my system.
+
+---
+
+<NoteMeta name="first-backup-tarball" source="" scope="public" type="main" created="2024-07-20T17:11Z" modified="2024-07-20T17:17Z" />
+
+Again, *humanize*. This one is manual.
+
+```shell
+> tar -caf backup.tar.gz active-externalism impermanence/home/elikan/.password-store impermanence/home/elikan/.2fa-codes
+> gpg --output backup.gpg --encrypt --recipient janelikan ./backup.tar.gz
+> rm backup.tar.gz
+> ls
+╭───┬────────────────────┬──────┬──────────┬────────────────╮
+│ # │        name        │ type │   size   │    modified    │
+├───┼────────────────────┼──────┼──────────┼────────────────┤
+│ 0 │ active-externalism │ dir  │ 12.0 KiB │ 2 minutes ago  │
+│ 1 │ backup.gpg         │ file │ 13.4 MiB │ a minute ago   │
+│ 2 │ docker             │ dir  │  4.0 KiB │ 8 minutes ago  │
+│ 3 │ identity           │ dir  │  4.0 KiB │ 3 weeks ago    │
+│ 4 │ impermanence       │ dir  │  4.0 KiB │ 2 weeks ago    │
+│ 5 │ repos              │ dir  │  4.0 KiB │ 15 minutes ago │
+│ 6 │ sync               │ dir  │  4.0 KiB │ 3 weeks ago    │
+│ 7 │ sync-config        │ dir  │  4.0 KiB │ 18 minutes ago │
+╰───┴────────────────────┴──────┴──────────┴────────────────╯
+```
+
+Cool, 14 megs! I want to include repos then!
+
+And for that I need to learn about [rsync](/rsync).

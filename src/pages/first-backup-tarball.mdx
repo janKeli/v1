@@ -1,0 +1,34 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "first-backup-tarball"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-07-20T17:11Z"
+modified: "2024-07-20T17:17Z"
+---
+
+Again, *humanize*. This one is manual.
+
+```shell
+> tar -caf backup.tar.gz active-externalism impermanence/home/elikan/.password-store impermanence/home/elikan/.2fa-codes
+> gpg --output backup.gpg --encrypt --recipient janelikan ./backup.tar.gz
+> rm backup.tar.gz
+> ls
+╭───┬────────────────────┬──────┬──────────┬────────────────╮
+│ # │        name        │ type │   size   │    modified    │
+├───┼────────────────────┼──────┼──────────┼────────────────┤
+│ 0 │ active-externalism │ dir  │ 12.0 KiB │ 2 minutes ago  │
+│ 1 │ backup.gpg         │ file │ 13.4 MiB │ a minute ago   │
+│ 2 │ docker             │ dir  │  4.0 KiB │ 8 minutes ago  │
+│ 3 │ identity           │ dir  │  4.0 KiB │ 3 weeks ago    │
+│ 4 │ impermanence       │ dir  │  4.0 KiB │ 2 weeks ago    │
+│ 5 │ repos              │ dir  │  4.0 KiB │ 15 minutes ago │
+│ 6 │ sync               │ dir  │  4.0 KiB │ 3 weeks ago    │
+│ 7 │ sync-config        │ dir  │  4.0 KiB │ 18 minutes ago │
+╰───┴────────────────────┴──────┴──────────┴────────────────╯
+```
+
+Cool, 14 megs! I want to include repos then!
+
+And for that I need to learn about [rsync](/rsync).

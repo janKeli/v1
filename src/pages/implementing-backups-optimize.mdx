@@ -1,0 +1,32 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "implementing-backups-optimize"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-07-20T13:53Z"
+modified: "2024-07-20T17:06Z"
+---
+
+What do I *really* need to back up inside `active-externalism`?
+
+```shell
+> nix-shell -p dust
+> dust
+(cut)
+```
+
+The largest files are:
+- the photos (there were quite a few in the old vault)
+- obsidian plugins (which I'll drop for the old vault now)
+
+I can't (or really don't want to) sacrifise a lot of the old vault, *but the old vault is never again going to change*, it can be backed up once. Also it will have one less copy.
+
+I didn't say why I was trying to minimize the size. I'll be uploading this to proton drive, and because I'm (currently) on their free plan, they won't let me upload more that 500 megs, so:
+
+```shell
+> rm -rf data-v3/assets
+> rm -rf data-v3/archive
+```
+
+Again, I still have it, just not here, not uncompressed.

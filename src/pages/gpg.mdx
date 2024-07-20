@@ -5,7 +5,7 @@ source: "https://gnupg.org/gph/en/manual.html"
 scope: "public"
 type: "source"
 created: "2024-06-18T17:27Z"
-modified: "2024-07-01T17:54Z"
+modified: "2024-07-20T13:01Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -51,7 +51,7 @@ gpg> sign
 
 ---
 
-<NoteMeta name="gpg-encrypt" source="https://gnupg.org/gph/en/manual.html" scope="public" type="main" created="2024-06-18T18:27Z" modified="2024-07-01T17:54Z" />
+<NoteMeta name="gpg-encrypt" source="https://gnupg.org/gph/en/manual.html" scope="public" type="main" created="2024-06-18T18:27Z" modified="2024-07-20T17:13Z" />
 
 ```shell
 > gpg --output msg.gpg --encrypt --recipient <email> ./file
@@ -69,7 +69,7 @@ Note that you can't decrypt it back because you don't have their private key.
 
 ---
 
-<NoteMeta name="gpg-symmetric" source="" scope="public" type="main" created="2024-06-18T18:45Z" modified="2024-07-01T17:55Z" />
+<NoteMeta name="gpg-symmetric" source="" scope="public" type="main" created="2024-06-18T18:45Z" modified="2024-07-20T11:30Z" />
 
 is used to secure a file with a passphrase, without using [public-key-cryptography](/public-key-cryptography). It is obviously less secure.
 
@@ -80,4 +80,39 @@ Enter passphrase:
 
 ---
 
-*not created yet*
+<NoteMeta name="gpg-signing" source="" scope="public" type="main" created="2024-07-20T11:31Z" modified="2024-07-20T11:48Z" />
+
+*Signing* ensures that the *file you got is the same* that its author created (and it *hasn't been modified* since being signed).
+
+You sign a file with your private key:
+```shell
+> gpg --outupt ./file-signed.sig --sign ./file # sign and compress
+> gpg --clearsign ./file # sign and leave in plaintext
+> gpg --outupt ./signature.sig --sign ./file # signature as a separate file
+```
+
+And verify it using a public key:
+```shell
+> gpg --verify ./file-signed.sig # check and exit
+> gpg --verify ./file-signed.sig ./file # if the signature is detached, you need to verify both the file and the signature$
+> gpg --output ./file --decrypt ./file-signed.sig # decompress and decrypt
+```
+
+---
+
+<NoteMeta name="gpg-trust" source="" scope="public" type="main" created="2024-07-20T12:43Z" modified="2024-07-20T12:49Z" />
+
+By default, only the keys that you signed (see [gpg-exchange-keys](/gpg-exchange-keys)) are considered valid. If you *trust* someone, you can run the following command on their key. This will make gpg consider *keys that THEY have signed* automatically *valid*.
+
+```shell
+> gpg --edit-key <email>
+gpg> trust
+```
+
+---
+
+<NoteMeta name="gpg-protecting-the-key" source="" scope="public" type="main" created="2024-07-20T12:59Z" modified="2024-07-20T13:08Z" />
+
+A good passphrase is crucial. Trying to brute force it is uneffective, so the attacker would probably try to guess it.
+
+In addition, the handbook recommends *storing a key on a physical, removable, write-protected* device. This is not always an option, but it's good if you can do that.
