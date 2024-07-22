@@ -1,0 +1,26 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "nixos-autologin"
+source: "https://github.com/blitz/nixos-appliance-example/blob/master/configuration.nix"
+scope: "public"
+type: "main"
+created: "2024-07-22T07:13Z"
+modified: "2024-07-22T15:32Z"
+---
+
+This can be useful for appliances, for example:
+```nix
+# in configuration.nix
+
+services.getty.autologinUser = "admin";
+security.sudo.wheelNeedsPassword = false;
+
+users.mutableUsers = false;
+users.users.admin = {
+  description = "Appliance administrator";
+  isNormalUser = true;
+  extraGroups = [ "wheel" ];
+  createHome = true;
+  initialPassword = "hunter2";
+};
+```

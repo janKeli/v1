@@ -1,0 +1,157 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "nas-appliance"
+source: ""
+scope: "public"
+type: "source"
+created: "2024-07-21T07:45Z"
+modified: "2024-07-22T13:34Z"
+---
+
+import NoteMeta from "../components/NoteMeta.astro"
+
+<NoteMeta name="nas-applience-idea" source="" scope="public" type="main" created="2024-07-21T05:10Z" modified="2024-07-21T07:45Z" />
+
+About every half a year I get someone asking me to connect a few old hard drives to the network and they don't want to buy anything and they don't want redundancy. I've built like 3 using Alpine linux, which is nice and light, but also very manual.
+
+Going to fork the dots repo and make a machine template that automatically mounts all drives and samba-shares them. No UI, no RAID support no nothing. Just that. Stupid simple. No install either, just a live USB.
+
+I'll test it in a [virtual-machine](/virtual-machine) (why would I ever build hardware when [machines](/device-vs-machine) are portable and I can borrow hardware from an existing device)
+
+---
+
+<NoteMeta name="nixos-custom-iso" source="https://nixos.wiki/wiki/Creating_a_NixOS_live_CD" scope="public" type="main" created="2024-07-22T06:56Z" modified="2024-07-22T08:31Z" />
+
+You can *make* a custom NixOS-based *system* by creating a [nix-flake](/nix-flake) like this:
+```nix
+{
+  description = "Minimal Nixos Disk";
+  inputs.nixos.url = "nixpkgs/24.05";
+
+  outputs = { self, nixos }: {
+    nixosConfigurations.iso = nixos.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+        ./configuration.nix
+      ];
+    };
+  };
+}
+```
+```nix
+{ config, pkgs, lib, ... }:
+
+{
+    networking.useNetworkd = true; # auto-configure networks
+    networking.firewall.enable = false;
+    systemd.network.wait-online.enable = true;
+    networking.hostName = "mnd";
+
+    environment.systemPackages = with pkgs; [
+        vim
+        tmux
+        htop
+        strace
+    ];
+
+    system.stateVersion = "24.05";
+}
+```
+```shell
+> git init
+> git add flake.nix
+> nix build .#nixosConfigurations.iso.config.system.build.isoImage
+> ls result/iso
+```
+
+---
+
+<NoteMeta name="nixos-autologin" source="https://github.com/blitz/nixos-appliance-example/blob/master/configuration.nix" scope="public" type="main" created="2024-07-22T07:13Z" modified="2024-07-22T15:32Z" />
+
+This can be useful for appliances, for example:
+```nix
+# in configuration.nix
+
+services.getty.autologinUser = "admin";
+security.sudo.wheelNeedsPassword = false;
+
+users.mutableUsers = false;
+users.users.admin = {
+  description = "Appliance administrator";
+  isNormalUser = true;
+  extraGroups = [ "wheel" ];
+  createHome = true;
+  initialPassword = "hunter2";
+};
+```
+
+---
+
+<NoteMeta name="linux-automount-with-autofs" source="https://wiki.archlinux.org/title/Autofs" scope="public" type="main" created="2024-07-22T07:45Z" modified="2024-07-22T10:37Z" />
+
+*I couldn't get this to work:*
+
+*AutoFS* is a service that automatically mounts removable media and network shares.
+
+It's *configured* using `/etc/autofs/auto.master` (or `services.autofs.autoMaster` on NixOS):
+```text
+# mountpoint    device_type    --timeout=0 (to never unmount)
+/mnt/usb    /etc/autofs/auto.media        --timeout=0
+/mnt/nfs    /etc/autofs/auto.file_server  --timeout=60
+/mnt/smb    /etc/autofs/auto.<server>     --timeout 60 --browse
+```
+
+> [!caution]
+> This file must have an empty line at the end.
+
+Don't forget to launch `autofs.service`!
+
+---
+
+<NoteMeta name="nixos-doesnt-iso" source="https://nixos.org/manual/nixos/stable/#sec-building-image" scope="public" type="main" created="2024-07-22T08:40Z" modified="2024-07-22T09:17Z" />
+
+I've built an ISO and it doesn't do what I intended. I can't find the smb service anywhere and autofs is not configured properly. The hostname is right though. I'll look into it.
+
+So my problems are coming from [the installer module](https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix), I'll make a system without it now.
+
+Nope, I'm not, a lot of things depend on it.
+
+Turns out the *disk manager service* [was disabled](https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/minimal.nix)!
+
+---
+
+<NoteMeta name="nixos-coreutils" source="https://github.com/NixOS/nixpkgs/blob/nixos-24.05/nixos/modules/config/system-path.nix" scope="public" type="main" created="2024-07-22T09:53Z" modified="2024-07-22T15:33Z" />
+
+I was wondering where the coreutils were coming from, well, they come from [this file](https://github.com/NixOS/nixpkgs/blob/nixos-24.05/nixos/modules/config/system-path.nix).
+
+---
+
+<NoteMeta name="linux-mount-media" source="" scope="public" type="main" created="2024-07-22T10:37Z" modified="2024-07-22T11:09Z" />
+
+You need to enable *services.udisks2* and then you can use these:
+```shell
+> udiskctl mount -b /dev/sda1
+> udiskctl unmount -b /dev/sda1
+```
+
+And then you can use something like `ldm` to auto-mount disks.
+
+---
+
+<NoteMeta name="nixos-builds-fine" source="" scope="public" type="main" created="2024-07-22T11:14Z" modified="2024-07-22T11:50Z" />
+
+The ISO *builder wasn't the problem* after all, the *autofs was*.
+
+ldm doesn't want to work as a systemd service though. I don't know what to do...
+
+---
+
+<NoteMeta name="nas-appliance-midday-state" source="" scope="public" type="main" created="2024-07-22T13:34Z" modified="2024-07-22T13:36Z" />
+
+- the SMB service is up, but
+- I haven't figured out how to change the password;
+- auto-mounting doesn't work,
+- but today I learned about [udisks](/linux-mount-media)
+
+The project is on hold for a few hours to a few days

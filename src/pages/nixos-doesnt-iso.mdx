@@ -1,0 +1,17 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "nixos-doesnt-iso"
+source: "https://nixos.org/manual/nixos/stable/#sec-building-image"
+scope: "public"
+type: "main"
+created: "2024-07-22T08:40Z"
+modified: "2024-07-22T09:17Z"
+---
+
+I've built an ISO and it doesn't do what I intended. I can't find the smb service anywhere and autofs is not configured properly. The hostname is right though. I'll look into it.
+
+So my problems are coming from [the installer module](https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix), I'll make a system without it now.
+
+Nope, I'm not, a lot of things depend on it.
+
+Turns out the *disk manager service* [was disabled](https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/minimal.nix)!

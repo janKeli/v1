@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-07-05T06:20Z"
-modified: "2024-07-05T14:43Z"
+modified: "2024-07-21T07:46Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -100,3 +100,13 @@ So *at the end of the day* with that experiment I have:
 - I do anything with both and then restore (the VM has snapshots, the host is impermanent)
 
 Cool!
+
+---
+
+<NoteMeta name="nas-applience-idea" source="" scope="public" type="main" created="2024-07-21T05:10Z" modified="2024-07-21T07:45Z" />
+
+About every half a year I get someone asking me to connect a few old hard drives to the network and they don't want to buy anything and they don't want redundancy. I've built like 3 using Alpine linux, which is nice and light, but also very manual.
+
+Going to fork the dots repo and make a machine template that automatically mounts all drives and samba-shares them. No UI, no RAID support no nothing. Just that. Stupid simple. No install either, just a live USB.
+
+I'll test it in a [virtual-machine](/virtual-machine) (why would I ever build hardware when [machines](/device-vs-machine) are portable and I can borrow hardware from an existing device)

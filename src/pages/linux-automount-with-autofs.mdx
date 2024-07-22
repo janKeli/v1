@@ -1,0 +1,26 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "linux-automount-with-autofs"
+source: "https://wiki.archlinux.org/title/Autofs"
+scope: "public"
+type: "main"
+created: "2024-07-22T07:45Z"
+modified: "2024-07-22T10:37Z"
+---
+
+*I couldn't get this to work:*
+
+*AutoFS* is a service that automatically mounts removable media and network shares.
+
+It's *configured* using `/etc/autofs/auto.master` (or `services.autofs.autoMaster` on NixOS):
+```text
+# mountpoint    device_type    --timeout=0 (to never unmount)
+/mnt/usb    /etc/autofs/auto.media        --timeout=0
+/mnt/nfs    /etc/autofs/auto.file_server  --timeout=60
+/mnt/smb    /etc/autofs/auto.<server>     --timeout 60 --browse
+```
+
+> [!caution]
+> This file must have an empty line at the end.
+
+Don't forget to launch `autofs.service`!

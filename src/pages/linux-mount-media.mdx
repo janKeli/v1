@@ -1,0 +1,17 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "linux-mount-media"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-07-22T10:37Z"
+modified: "2024-07-22T11:09Z"
+---
+
+You need to enable *services.udisks2* and then you can use these:
+```shell
+> udiskctl mount -b /dev/sda1
+> udiskctl unmount -b /dev/sda1
+```
+
+And then you can use something like `ldm` to auto-mount disks.

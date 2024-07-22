@@ -1,0 +1,52 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "nixos-custom-iso"
+source: "https://nixos.wiki/wiki/Creating_a_NixOS_live_CD"
+scope: "public"
+type: "main"
+created: "2024-07-22T06:56Z"
+modified: "2024-07-22T08:31Z"
+---
+
+You can *make* a custom NixOS-based *system* by creating a [nix-flake](/nix-flake) like this:
+```nix
+{
+  description = "Minimal Nixos Disk";
+  inputs.nixos.url = "nixpkgs/24.05";
+
+  outputs = { self, nixos }: {
+    nixosConfigurations.iso = nixos.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+        ./configuration.nix
+      ];
+    };
+  };
+}
+```
+```nix
+{ config, pkgs, lib, ... }:
+
+{
+    networking.useNetworkd = true; # auto-configure networks
+    networking.firewall.enable = false;
+    systemd.network.wait-online.enable = true;
+    networking.hostName = "mnd";
+
+    environment.systemPackages = with pkgs; [
+        vim
+        tmux
+        htop
+        strace
+    ];
+
+    system.stateVersion = "24.05";
+}
+```
+```shell
+> git init
+> git add flake.nix
+> nix build .#nixosConfigurations.iso.config.system.build.isoImage
+> ls result/iso
+```
