@@ -13,23 +13,26 @@ const meta = Astro.props
 
 const [createdDate, createdTime] = meta.created.split('T')
 const [modifiedDate, modifiedTime] = meta.modified.split('T')
+const noteType = meta.type === "main" ? "lipu" : "kulupu"
 ---
 
 <div class={meta.wrap ? "outer block wrap" : "outer block"}>
   <div>
-    {meta.type === "source" && <span title="source note" class="sitelen-pona">kulupu</span>}
-    <a class="name" href={'/' + meta.name}>{meta.name}</a>
+    <a href={'/' + meta.name}>
+      <span title={meta.type + " note"} class="sitelen-pona">{noteType}</span>
+      <span>[{meta.name}]</span>
+    </a>
   </div>
 
   <div class="block">
     <span title="created">
       <span class="sitelen-pona">sin</span>
-      {createdDate}
+      <span>{createdDate}</span>
     </span>
 
     <span title="last modified">
       <span class="sitelen-pona">ante</span>
-      {modifiedDate}
+      <span>{modifiedDate}</span>
     </span>
 
     {meta.source && 
@@ -59,9 +62,6 @@ const [modifiedDate, modifiedTime] = meta.modified.split('T')
   }
 
   .name {
-    border: 2px solid var(--color-link);
-    border-radius: 1ch;
-    padding: 0 0.5ch;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
