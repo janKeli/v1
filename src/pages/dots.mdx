@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-06-17T11:49Z"
-modified: "2024-07-22T13:37Z"
+modified: "2024-07-25T09:39Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -426,3 +426,54 @@ And for that I need to learn about [rsync](/rsync).
 <NoteMeta name="fixing-syncthing" source="" scope="public" type="main" created="2024-07-22T13:37Z" modified="2024-07-22T13:46Z" />
 
 Since I've moved the folder, syncthing is no longer working. Fixing that is trivial, syncthing's web gui is very nice. I wanted to sync the entire `/nix/persist`, but a few smaller directories will work better as *syncthing doesn't recommend syncing git repos*.
+
+---
+
+<NoteMeta name="discord-voice-and-firefox" source="" scope="public" type="main" created="2024-07-25T09:20Z" modified="2024-07-25T09:39Z" />
+
+- Discord likes there to be a physical (or virtual) microphone, it's not very comfortable with other applications feeding their audio into it
+- It works in firefox, but I've messed up something in my config
+- Also I wanted a clean firefox setup for a while,
+- *So I'm switching to librewolf*
+
+I've tried running discord in that, everything worked, then I exited the browser, re-launced it and was pleasantly surprised with my cookies being auto-deleted. I like this browser!
+
+---
+
+<NoteMeta name="pipewire-nix-virtual-devices" source="https://nixos.wiki/wiki/PipeWire#Advanced_Configuration" scope="public" type="main" created="2024-07-25T09:23Z" modified="2024-07-25T09:39Z" />
+
+I don't *really* know how this works, so check out the source, but here's the snippet I use for adding virtual audio devices:
+```nix
+services.pipewire.extraConfig.pipewire."91-null-sinks" = {
+  "context.objects" = [
+    {
+      factory = "spa-node-factory";
+      args = {
+        "factory.name"     = "support.node.driver";
+        "node.name"        = "Dummy-Driver";
+        "priority.driver"  = 8000;
+      };
+    }
+    {
+      factory = "adapter";
+      args = {
+        "factory.name"     = "support.null-audio-sink";
+        "node.name"        = "Microphone-Proxy";
+        "node.description" = "Microphone";
+        "media.class"      = "Audio/Source/Virtual";
+        "audio.position"   = "MONO";
+      };
+    }
+    {
+      factory = "adapter";
+      args = {
+        "factory.name"     = "support.null-audio-sink";
+        "node.name"        = "Main-Output-Proxy";
+        "node.description" = "Main Output";
+        "media.class"      = "Audio/Sink";
+        "audio.position"   = "FL,FR";
+      };
+    }
+  ];
+};
+```

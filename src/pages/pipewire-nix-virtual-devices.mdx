@@ -1,0 +1,45 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "pipewire-nix-virtual-devices"
+source: "https://nixos.wiki/wiki/PipeWire#Advanced_Configuration"
+scope: "public"
+type: "main"
+created: "2024-07-25T09:23Z"
+modified: "2024-07-25T09:39Z"
+---
+
+I don't *really* know how this works, so check out the source, but here's the snippet I use for adding virtual audio devices:
+```nix
+services.pipewire.extraConfig.pipewire."91-null-sinks" = {
+  "context.objects" = [
+    {
+      factory = "spa-node-factory";
+      args = {
+        "factory.name"     = "support.node.driver";
+        "node.name"        = "Dummy-Driver";
+        "priority.driver"  = 8000;
+      };
+    }
+    {
+      factory = "adapter";
+      args = {
+        "factory.name"     = "support.null-audio-sink";
+        "node.name"        = "Microphone-Proxy";
+        "node.description" = "Microphone";
+        "media.class"      = "Audio/Source/Virtual";
+        "audio.position"   = "MONO";
+      };
+    }
+    {
+      factory = "adapter";
+      args = {
+        "factory.name"     = "support.null-audio-sink";
+        "node.name"        = "Main-Output-Proxy";
+        "node.description" = "Main Output";
+        "media.class"      = "Audio/Sink";
+        "audio.position"   = "FL,FR";
+      };
+    }
+  ];
+};
+```
