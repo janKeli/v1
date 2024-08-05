@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-06-17T11:49Z"
-modified: "2024-07-25T09:39Z"
+modified: "2024-07-26T09:24Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -394,7 +394,7 @@ P.S. I didn't break my system.
 
 ---
 
-<NoteMeta name="first-backup-tarball" source="" scope="public" type="main" created="2024-07-20T17:11Z" modified="2024-07-20T17:17Z" />
+<NoteMeta name="first-backup-tarball" source="" scope="public" type="main" created="2024-07-20T17:11Z" modified="2024-08-05T08:41Z" />
 
 Again, *humanize*. This one is manual.
 
@@ -477,3 +477,23 @@ services.pipewire.extraConfig.pipewire."91-null-sinks" = {
   ];
 };
 ```
+
+---
+
+<NoteMeta name="discord-voice-and-librewolf" source="" scope="public" type="main" created="2024-07-25T15:31Z" modified="2024-07-25T15:33Z" />
+
+Turns out it works if you either
+1. use an extension that connects a pipewire node to webrtc, or
+2. enable `resistFingerprinting`, rendering Discord unable to select inputs and outputs on its own and break itself
+
+If you have any other ideas on how to do that, please tell me! Any ideas, hacks count!
+
+---
+
+<NoteMeta name="usability-of-android" source="" scope="public" type="main" created="2024-07-26T09:18Z" modified="2024-07-26T09:23Z" />
+
+1. it is very slow. Thanks to nix, I can work on any device, but this one is slow. Especially due to to proot.
+2. no services. That is expected, I can't have access to its init system.
+3. fs can be flaky. I tried `tar -xf` on a file and it failed with something like `No such file or directory`
+
+I'll probably try rooting the device later to see if that helps with anything. It would sure allow me to avoid proot!
