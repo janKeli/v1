@@ -1,0 +1,33 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "lipu"
+source: ""
+scope: "public"
+type: "source"
+created: "2024-08-05T15:22Z"
+modified: "2024-08-05T15:32Z"
+---
+
+import NoteMeta from "../components/NoteMeta.astro"
+
+<NoteMeta name="lipu-idea" source="" scope="public" type="main" created="2024-08-05T15:22Z" modified="2024-08-05T15:28Z" />
+
+I want a single app that would replace newpipe, antennapod and an rss reader. So basically an *RSS reader*/downloader plus *video/audio player*.
+
+Initially I wanted to build it for Android, but I also want it to work on my computer, so I'll use a cross-platform framework.
+
+It must be local-first, everything gets downloaded, everything works offline.
+
+---
+
+<NoteMeta name="lipu-motivation" source="" scope="public" type="main" created="2024-08-05T15:32Z" modified="2024-08-05T15:34Z" />
+
+I *wanted an RSS reader*, *miniflux* looks like a good option, but it's unnecesserally *complicated* for my use-case, it has a server and a client and I *don't want/need a server*. Plus it's *fun to build* things!
+
+---
+
+<NoteMeta name="lipu-lifecycle" source="" scope="public" type="main" created="2024-08-05T15:28Z" modified="2024-08-05T15:30Z" />
+
+The *first version* will be just a *CLI*, to test out the idea.
+
+Then it needs a *frontend*, I think [tauri](/tauri) looks good.
