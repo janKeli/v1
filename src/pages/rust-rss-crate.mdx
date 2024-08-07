@@ -1,0 +1,55 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "rust-rss-crate"
+source: "https://docs.rs/rss/latest/rss/"
+scope: "public"
+type: "main"
+created: "2024-08-05T16:03Z"
+modified: "2024-08-07T10:18Z"
+---
+
+```shell
+> cargo add rss
+```
+```rust
+use rss::Channel;
+use rss::ChannelBuilder;
+
+fn read() -> Channel {
+    let file = std::fs::File::open("feed.xml").unwrap();
+    let buffer = std::io::BufReader::new(file);
+    Channel::read_from(buffer).unwrap()
+}
+
+fn create() -> Channel {
+    ChannelBuilder::default()
+        .title("Example feed")
+        .link("http://example.com/feed")
+        .description("Test feed")
+        .build()
+}
+```
+
+Channel has its metadata and `items`:
+```rust
+struct Item {
+    title: Option<String>,
+    link: Option<String>,
+    description: Option<String>,
+    author: Option<String>,
+    categories: Vec<Category>,
+    comments: Option<String>,
+    /// The description of a media object that is attached to the item.
+    enclosure: Option<Enclosure>,
+    guid: Option<Guid>,
+    pub_date: Option<String>,
+    /// The RSS channel the item came from.
+    source: Option<Source>,
+    /// The HTML contents of the item.
+    content: Option<String>,
+    extensions: ExtensionMap,
+    atom_ext: Option<atom::AtomExtension>,
+    itunes_ext: Option<itunes::ITunesItemExtension>,
+    // some fields omitted
+}
+```

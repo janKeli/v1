@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-08-05T15:22Z"
-modified: "2024-08-05T15:32Z"
+modified: "2024-08-07T10:07Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -31,3 +31,89 @@ I *wanted an RSS reader*, *miniflux* looks like a good option, but it's unnecess
 The *first version* will be just a *CLI*, to test out the idea.
 
 Then it needs a *frontend*, I think [tauri](/tauri) looks good.
+
+---
+
+<NoteMeta name="rust-rss-crate" source="https://docs.rs/rss/latest/rss/" scope="public" type="main" created="2024-08-05T16:03Z" modified="2024-08-07T10:18Z" />
+
+```shell
+> cargo add rss
+```
+```rust
+use rss::Channel;
+use rss::ChannelBuilder;
+
+fn read() -> Channel {
+    let file = std::fs::File::open("feed.xml").unwrap();
+    let buffer = std::io::BufReader::new(file);
+    Channel::read_from(buffer).unwrap()
+}
+
+fn create() -> Channel {
+    ChannelBuilder::default()
+        .title("Example feed")
+        .link("http://example.com/feed")
+        .description("Test feed")
+        .build()
+}
+```
+
+Channel has its metadata and `items`:
+```rust
+struct Item {
+    title: Option<String>,
+    link: Option<String>,
+    description: Option<String>,
+    author: Option<String>,
+    categories: Vec<Category>,
+    comments: Option<String>,
+    /// The description of a media object that is attached to the item.
+    enclosure: Option<Enclosure>,
+    guid: Option<Guid>,
+    pub_date: Option<String>,
+    /// The RSS channel the item came from.
+    source: Option<Source>,
+    /// The HTML contents of the item.
+    content: Option<String>,
+    extensions: ExtensionMap,
+    atom_ext: Option<atom::AtomExtension>,
+    itunes_ext: Option<itunes::ITunesItemExtension>,
+    // some fields omitted
+}
+```
+
+---
+
+<NoteMeta name="goal-for-2024-08-07" source="" scope="public" type="main" created="2024-08-07T08:27Z" modified="2024-08-07T09:43Z" />
+
+Today I want to make a functioning prototype in the CLI.
+
+---
+
+<NoteMeta name="rust-reqwest-crate" source="https://docs.rs/reqwest/latest/reqwest/" scope="public" type="main" created="2024-08-07T10:06Z" modified="2024-08-07T10:13Z" />
+
+*reqwest* is the rust's most popular HTTP client:
+```toml
+# add to Cargo.toml
+reqwest = {
+    version = "0.12.5",
+    features = ["rustls-tls", "json"], # don't use OS's openssl
+    default-features = false,
+}
+```
+```rust
+let body = reqwest::get("https://example.com")
+    .await?
+    .text()
+    .await()?;
+
+let response = reqwest::Client::new()
+    .post("http://httpbin.org/post")
+    .json(&some_hashmap_here)
+    .send()
+    .await?;
+```
+
+---
+
+*not created yet*

@@ -1,0 +1,31 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "rust-reqwest-crate"
+source: "https://docs.rs/reqwest/latest/reqwest/"
+scope: "public"
+type: "main"
+created: "2024-08-07T10:06Z"
+modified: "2024-08-07T10:13Z"
+---
+
+*reqwest* is the rust's most popular HTTP client:
+```toml
+# add to Cargo.toml
+reqwest = {
+    version = "0.12.5",
+    features = ["rustls-tls", "json"], # don't use OS's openssl
+    default-features = false,
+}
+```
+```rust
+let body = reqwest::get("https://example.com")
+    .await?
+    .text()
+    .await()?;
+
+let response = reqwest::Client::new()
+    .post("http://httpbin.org/post")
+    .json(&some_hashmap_here)
+    .send()
+    .await?;
+```
