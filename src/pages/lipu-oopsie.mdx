@@ -1,0 +1,13 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "lipu-oopsie"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-08-07T13:49Z"
+modified: "2024-08-07T13:52Z"
+---
+
+I've tried to use the [rust-rss-crate](/rust-rss-crate) for the project because it's the only one I've heared of. Everything worked fine until I *tried adding more feeds*. I tested it with [fasterthanlime's feed](https://fasterthanli.me/index.xml) and [namtao's youtube feed](https://www.youtube.com/feeds/videos.xml?channel_id=UCMHZ1P2iYimObhtHKfPz7gw). The library complained that the feeds didn't have a correct rss version.
+
+So now I'm rewriting the entire thing (which is thankfully very small, so it's not a big deal) to use [feed-rs](/feed-rs).

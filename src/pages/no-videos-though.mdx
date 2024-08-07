@@ -1,0 +1,21 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "no-videos-though"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-08-07T14:13Z"
+modified: "2024-08-07T14:19Z"
+---
+
+I've fixed the previous error, added the No Boilerplate feed, ran the app. It errored out.
+
+Turns out it's not that simple to download things from youtube.
+
+Let's pray that [yt-dlp](/yt-dlp) is written in rust and has a library.
+
+\*checks\*
+
+\*dies\*
+
+And things like youtube-cli are wrappers on top of yt-dlp, so that doesn't help either. I don't want this project to have any system-level dependencies!

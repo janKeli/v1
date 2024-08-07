@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-08-05T15:22Z"
-modified: "2024-08-07T10:07Z"
+modified: "2024-08-07T14:23Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -34,8 +34,9 @@ Then it needs a *frontend*, I think [tauri](/tauri) looks good.
 
 ---
 
-<NoteMeta name="rust-rss-crate" source="https://docs.rs/rss/latest/rss/" scope="public" type="main" created="2024-08-05T16:03Z" modified="2024-08-07T10:18Z" />
+<NoteMeta name="rust-rss-crate" source="https://docs.rs/rss/latest/rss/" scope="public" type="main" created="2024-08-05T16:03Z" modified="2024-08-07T13:48Z" />
 
+A crate for reading/*creating* rss feeds. See [feed-rs](/feed-rs) as well.
 ```shell
 > cargo add rss
 ```
@@ -113,6 +114,56 @@ let response = reqwest::Client::new()
     .send()
     .await?;
 ```
+
+---
+
+*not created yet*
+
+---
+
+<NoteMeta name="lipu-oopsie" source="" scope="public" type="main" created="2024-08-07T13:49Z" modified="2024-08-07T13:52Z" />
+
+I've tried to use the [rust-rss-crate](/rust-rss-crate) for the project because it's the only one I've heared of. Everything worked fine until I *tried adding more feeds*. I tested it with [fasterthanlime's feed](https://fasterthanli.me/index.xml) and [namtao's youtube feed](https://www.youtube.com/feeds/videos.xml?channel_id=UCMHZ1P2iYimObhtHKfPz7gw). The library complained that the feeds didn't have a correct rss version.
+
+So now I'm rewriting the entire thing (which is thankfully very small, so it's not a big deal) to use [feed-rs](/feed-rs).
+
+---
+
+<NoteMeta name="feed-rs" source="https://docs.rs/feed-rs/2.1.0/feed_rs/index.html" scope="public" type="main" created="2024-08-07T12:50Z" modified="2024-08-07T13:49Z" />
+
+A crate for reading rss, atom, json feeds.
+
+It has much more *comprehensive types* and supports more formats than the [rust-rss-crate](/rust-rss-crate).
+
+```rust
+let feed = parser::parse(xml.as_bytes()).unwrap();
+```
+
+---
+
+*not created yet*
+
+---
+
+<NoteMeta name="no-videos-though" source="" scope="public" type="main" created="2024-08-07T14:13Z" modified="2024-08-07T14:19Z" />
+
+I've fixed the previous error, added the No Boilerplate feed, ran the app. It errored out.
+
+Turns out it's not that simple to download things from youtube.
+
+Let's pray that [yt-dlp](/yt-dlp) is written in rust and has a library.
+
+\*checks\*
+
+\*dies\*
+
+And things like youtube-cli are wrappers on top of yt-dlp, so that doesn't help either. I don't want this project to have any system-level dependencies!
+
+---
+
+<NoteMeta name="no-videos-solution-0" source="" scope="public" type="main" created="2024-08-07T14:18Z" modified="2024-08-07T14:21Z" />
+
+I've just realized that I can use iframes. So the simplest, *dumbest solution that will work* is to add an *ArticleBody::YouTube* enum variant, have it be a link and read it in the front-end.
 
 ---
 
