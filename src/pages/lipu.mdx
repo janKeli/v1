@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-08-05T15:22Z"
-modified: "2024-08-07T14:23Z"
+modified: "2024-08-08T07:55Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -26,11 +26,13 @@ I *wanted an RSS reader*, *miniflux* looks like a good option, but it's unnecess
 
 ---
 
-<NoteMeta name="lipu-lifecycle" source="" scope="public" type="main" created="2024-08-05T15:28Z" modified="2024-08-05T15:30Z" />
+<NoteMeta name="lipu-lifecycle" source="" scope="public" type="main" created="2024-08-05T15:28Z" modified="2024-08-08T05:47Z" />
 
 The *first version* will be just a *CLI*, to test out the idea.
 
 Then it needs a *frontend*, I think [tauri](/tauri) looks good.
+
+Then it needs ompl support and, as it turns out, youtube downloads.
 
 ---
 
@@ -167,4 +169,61 @@ I've just realized that I can use iframes. So the simplest, *dumbest solution th
 
 ---
 
-*not created yet*
+<NoteMeta name="no-videos-solution-1" source="" scope="public" type="main" created="2024-08-07T14:22Z" modified="2024-08-08T08:19Z" />
+
+After some more ~~googling~~ (duckduckgoing?) I have found the [rusty_ytdl](/rusty_ytdl) crate. I've not found it the first time because it's just a library, with no front-end ~~or apparently I'm just blind~~.
+
+Anyway, I think it's *worth implementing both* because youtube may break something on their end, rendering the [rusty_ytdl](/rusty_ytdl) useless.
+
+Though it makes sense to *start with the [option 0](/no-videos-solution-0)* because it's more lightweight.
+
+---
+
+<NoteMeta name="lipu-library" source="" scope="public" type="main" created="2024-08-08T07:55Z" modified="2024-08-08T08:03Z" />
+
+The logic part of [lipu](/lipu), rss reader back-end.
+
+Usage:
+```rust
+use lipu::App;
+
+// App is just a builder to get Vec<Article>
+let app: App = App::new().add_feed("https://fasterthanli.me/index.xml");
+let articles: Vec<Article> = app.fetch().await;
+```
+
+A [CLI app exmaple](https://github.com/janElikan/lipu/blob/main/src/main.rs).
+
+Types:
+```rust
+pub struct Article {
+    pub id: String,
+    pub name: String,
+    pub source: Option<String>,
+    pub description: Option<String>,
+    pub body: ArticleBody,
+    pub created: Option<DateTime<Utc>>,
+    pub updated: Option<DateTime<Utc>>,
+    pub viewed: Progress,
+}
+
+pub enum ArticleBody {
+    Text(String),
+    Video(MediaPayload),
+    Audio(MediaPayload),
+    YouTubeLink(String),
+}
+
+pub enum Progress {
+    None,
+    UntilLine(usize),
+    UntilSecond(usize),
+    Fully,
+}
+
+pub struct MediaPayload {
+    pub url: String,
+    pub mime_type: String,
+    pub downloaded: bool,
+}
+```
