@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-08-05T15:22Z"
-modified: "2024-08-08T07:55Z"
+modified: "2024-08-09T19:52Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -26,7 +26,7 @@ I *wanted an RSS reader*, *miniflux* looks like a good option, but it's unnecess
 
 ---
 
-<NoteMeta name="lipu-lifecycle" source="" scope="public" type="main" created="2024-08-05T15:28Z" modified="2024-08-08T05:47Z" />
+<NoteMeta name="lipu-lifecycle" source="" scope="public" type="main" created="2024-08-05T15:28Z" modified="2024-08-09T13:58Z" />
 
 The *first version* will be just a *CLI*, to test out the idea.
 
@@ -227,3 +227,74 @@ pub struct MediaPayload {
     pub downloaded: bool,
 }
 ```
+
+---
+
+<NoteMeta name="tauri-the-framework" source="https://v2.tauri.app/start/" scope="public" type="main" created="2024-08-09T13:49Z" modified="2024-08-09T15:23Z" />
+
+Tauri is a *cross-platform GUI* framework that uses [html](/html), [css](/css) and [javascript](/javascript) as a frontend and [rust](/rust) as a backend.
+
+What makes it *different* from something like [electron](/electron) is that it *uses system webview* instead of depending on chromium.
+
+As a result,
+- The apps are small
+- It *feels fast*
+
+---
+
+<NoteMeta name="tauri-getting-started" source="https://tauri.app/v1/guides/getting-started/prerequisites/#1-system-dependencies" scope="public" type="main" created="2024-08-09T13:57Z" modified="2024-08-09T19:50Z" />
+
+Install the [system deps](https://v2.tauri.app/start/prerequisites/#system-dependencies). If you're on [nixos](/nixos), they have [a flake example](https://tauri.app/v1/guides/getting-started/prerequisites/#1-system-dependencies), which I have tweaked and will post on 2024-08-10 as a github gist.
+
+```shell
+> npm create tauri-app@latest -- --rc
+> cd <name>
+> npm install
+> npm run tauri android init
+> npm run tauri dev
+# or npm run tauri android dev
+```
+
+---
+
+<NoteMeta name="sidenote-tauri-android" source="" scope="public" type="main" created="2024-08-09T17:28Z" modified="2024-08-09T19:56Z" />
+
+```
+[elikan@suli:/nix/persist/repos/tauri-playground/tauri-app]$ npm run tauri android init
+
+> tauri-app@0.0.0 tauri
+> tauri android init
+
+Generating Android Studio project...
+    Info "/nix/persist/repos/tauri-playground/tauri-app/src-tauri" relative to "/nix/persist/repos/tauri-playground/tauri-app/src-tauri/gen/android/tauri_app" is "../../../"
+victory: Project generated successfully!
+    Make cool apps! 🌻 🐕 🎉
+```
+
+Victory indeed, considering that I've spent the last 128 minutes trying to get it to work!
+
+oh wait, I forgot something:
+```
+Please set the JAVA_HOME variable in your environment to match the
+location of your Java installation.
+
+    Error Failed to assemble APK: command ["/nix/persist/repos/tauri-playground/tauri-app/src-tauri/gen/android/gradlew", "--project-dir", "/nix/persist/repos/tauri-playground/tauri-app/src-tauri/gen/android"] exited with code 1: command ["/nix/persist/repos/tauri-playground/tauri-app/src-tauri/gen/android/gradlew", "--project-dir", "/nix/persist/repos/tauri-playground/tauri-app/src-tauri/gen/android"] exited with code 1
+```
+
+Fixed that, ran it again and now it hang. I think it's okay, that's probably gradle being slow (?)
+
+I'm not very good with ~~plants~~ android and java tooling.
+
+```
+* What went wrong:
+Could not determine the dependencies of task ':app:compileArm64DebugJavaWithJavac'.
+> Failed to install the following SDK components:
+      platforms;android-34 Android SDK Platform 34
+  The SDK directory is not writable (/nix/store/ag3w2qik8hwb7wbf0bdxdwfjx3z0akd6-androidsdk/libexec/android-sdk)
+```
+
+(error about `aapt2` omitted)
+
+now I need [dynamic linking](https://github.com/0atman/noboilerplate/blob/main/scripts/38-nixos.md#ld-fix)... Oh, wait, [no I don't, it's just the dependencies](https://nixos.wiki/wiki/Android#gradlew)
+
+Finally! I'll publish the gist on 2024-08-10

@@ -1,0 +1,54 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "tauri"
+source: ""
+scope: "public"
+type: "source"
+created: "2024-08-09T13:57Z"
+modified: "2024-08-09T19:52Z"
+---
+
+import NoteMeta from "../components/NoteMeta.astro"
+
+<NoteMeta name="tauri-the-framework" source="https://v2.tauri.app/start/" scope="public" type="main" created="2024-08-09T13:49Z" modified="2024-08-09T15:23Z" />
+
+Tauri is a *cross-platform GUI* framework that uses [html](/html), [css](/css) and [javascript](/javascript) as a frontend and [rust](/rust) as a backend.
+
+What makes it *different* from something like [electron](/electron) is that it *uses system webview* instead of depending on chromium.
+
+As a result,
+- The apps are small
+- It *feels fast*
+
+---
+
+<NoteMeta name="tauri-architecture" source="https://v2.tauri.app/concept/" scope="public" type="main" created="2024-08-09T15:19Z" modified="2024-08-09T19:57Z" />
+
+Launching the application brings up the *core process*, it's the part you wrote in *rust* plus `tao` for creating windows and `wry` for talking to the webview.
+
+Each *webview is* a separate *process* on top of the core.
+
+The *core* process is the only one that has *access to the OS*.
+
+The *processes* have two ways of *communicating* with each other:
+- *events*, can be emitted by both the core and the webview
+- *commands*, called from the webview and work in much the same way as browser's `fetch`. The request is serialized into json, sent to the server, and then the server responds.
+
+---
+
+*not created yet*
+
+---
+
+<NoteMeta name="tauri-getting-started" source="https://tauri.app/v1/guides/getting-started/prerequisites/#1-system-dependencies" scope="public" type="main" created="2024-08-09T13:57Z" modified="2024-08-09T19:50Z" />
+
+Install the [system deps](https://v2.tauri.app/start/prerequisites/#system-dependencies). If you're on [nixos](/nixos), they have [a flake example](https://tauri.app/v1/guides/getting-started/prerequisites/#1-system-dependencies), which I have tweaked and will post on 2024-08-10 as a github gist.
+
+```shell
+> npm create tauri-app@latest -- --rc
+> cd <name>
+> npm install
+> npm run tauri android init
+> npm run tauri dev
+# or npm run tauri android dev
+```
