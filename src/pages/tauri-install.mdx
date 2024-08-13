@@ -1,11 +1,11 @@
 ---
 layout: ../layouts/MainLayout.astro
-title: "tauri-getting-started"
+title: "tauri-install"
 source: "https://tauri.app/v1/guides/getting-started/prerequisites/#1-system-dependencies"
 scope: "public"
 type: "main"
 created: "2024-08-09T13:57Z"
-modified: "2024-08-10T12:28Z"
+modified: "2024-08-10T13:08Z"
 ---
 
 Install the [system deps](https://v2.tauri.app/start/prerequisites/#system-dependencies). If you're on [nixos](/nixos), I have [made a flake](https://gist.github.com/janElikan/1a0d66b7f059387e44ba232b79af7450).
@@ -18,3 +18,5 @@ Install the [system deps](https://v2.tauri.app/start/prerequisites/#system-depen
 > npm run tauri dev
 # or npm run tauri android dev
 ```
+
+When using git, you *should commit* `Cargo.toml`, `Cargo.lock` and, if you are using, them `flake.nix` and `flake.lock`.

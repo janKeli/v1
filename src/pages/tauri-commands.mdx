@@ -1,0 +1,49 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "tauri-commands"
+source: "https://v2.tauri.app/develop/calling-rust/"
+scope: "public"
+type: "main"
+created: "2024-08-10T13:37Z"
+modified: "2024-08-10T13:59Z"
+---
+
+*Commands* are the back-end functions exposed to the webview, *like API endpoints*.
+
+```rust
+// file: lib.rs
+
+#[tauri:command]
+fn greet(name: String) -> String {
+  // The arguments can be of any `serde::Deserialize`able type.
+  // The return type must be `serde::Serialize`able
+  // and can be wrapped in a `Result`
+  // Commands can be `async`
+
+  return format!("Hello, {}!", name);
+}
+
+#[tauri:command]
+fn some_other_command() -> String {
+  "test".to_string()
+}
+
+#[cfg_attr(mobile, tauri::mobile_entry_point)]
+pub fn run() {
+  tauri::Builder::default()
+    .invoke_handler(tauri::generate_handler![greet, some_other_command])
+    .run(tauri::generate_context!())
+    .expect("error while running tauri application");
+}
+```
+```js
+// When using the Tauri API npm package:
+import { invoke } from '@tauri-apps/api/core';
+
+// When using the Tauri global script (if not using the npm package)
+const invoke = window.__TAURI__.invoke;
+
+// Invoke the command
+invoke('greet', { name: 'world' }).then(console.log);
+// you can .catch() to process a `Result:Err`
+```

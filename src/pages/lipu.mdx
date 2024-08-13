@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-08-05T15:22Z"
-modified: "2024-08-09T19:52Z"
+modified: "2024-08-13T09:54Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -242,7 +242,7 @@ As a result,
 
 ---
 
-<NoteMeta name="tauri-getting-started" source="https://tauri.app/v1/guides/getting-started/prerequisites/#1-system-dependencies" scope="public" type="main" created="2024-08-09T13:57Z" modified="2024-08-10T12:28Z" />
+<NoteMeta name="tauri-install" source="https://tauri.app/v1/guides/getting-started/prerequisites/#1-system-dependencies" scope="public" type="main" created="2024-08-09T13:57Z" modified="2024-08-10T13:08Z" />
 
 Install the [system deps](https://v2.tauri.app/start/prerequisites/#system-dependencies). If you're on [nixos](/nixos), I have [made a flake](https://gist.github.com/janElikan/1a0d66b7f059387e44ba232b79af7450).
 
@@ -254,6 +254,8 @@ Install the [system deps](https://v2.tauri.app/start/prerequisites/#system-depen
 > npm run tauri dev
 # or npm run tauri android dev
 ```
+
+When using git, you *should commit* `Cargo.toml`, `Cargo.lock` and, if you are using, them `flake.nix` and `flake.lock`.
 
 ---
 
@@ -298,3 +300,10 @@ Could not determine the dependencies of task ':app:compileArm64DebugJavaWithJava
 now I need [dynamic linking](https://github.com/0atman/noboilerplate/blob/main/scripts/38-nixos.md#ld-fix)... Oh, wait, [no I don't, it's just the dependencies](https://nixos.wiki/wiki/Android#gradlew)
 
 Finally! I'll publish the gist on 2024-08-10
+
+---
+
+<NoteMeta name="lipu-todos" source="" scope="public" type="main" created="2024-08-13T09:54Z" modified="2024-08-13T09:54Z" />
+
+- back end: add link tag support (see 0atman's feed)
+- frontend: add full screen video view

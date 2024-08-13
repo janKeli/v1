@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-08-09T13:57Z"
-modified: "2024-08-09T19:52Z"
+modified: "2024-08-10T14:19Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -40,7 +40,7 @@ The *processes* have two ways of *communicating* with each other:
 
 ---
 
-<NoteMeta name="tauri-getting-started" source="https://tauri.app/v1/guides/getting-started/prerequisites/#1-system-dependencies" scope="public" type="main" created="2024-08-09T13:57Z" modified="2024-08-10T12:28Z" />
+<NoteMeta name="tauri-install" source="https://tauri.app/v1/guides/getting-started/prerequisites/#1-system-dependencies" scope="public" type="main" created="2024-08-09T13:57Z" modified="2024-08-10T13:08Z" />
 
 Install the [system deps](https://v2.tauri.app/start/prerequisites/#system-dependencies). If you're on [nixos](/nixos), I have [made a flake](https://gist.github.com/janElikan/1a0d66b7f059387e44ba232b79af7450).
 
@@ -51,4 +51,249 @@ Install the [system deps](https://v2.tauri.app/start/prerequisites/#system-depen
 > npm run tauri android init
 > npm run tauri dev
 # or npm run tauri android dev
+```
+
+When using git, you *should commit* `Cargo.toml`, `Cargo.lock` and, if you are using, them `flake.nix` and `flake.lock`.
+
+---
+
+<NoteMeta name="tauri-commands" source="https://v2.tauri.app/develop/calling-rust/" scope="public" type="main" created="2024-08-10T13:37Z" modified="2024-08-10T13:59Z" />
+
+*Commands* are the back-end functions exposed to the webview, *like API endpoints*.
+
+```rust
+// file: lib.rs
+
+#[tauri:command]
+fn greet(name: String) -> String {
+  // The arguments can be of any `serde::Deserialize`able type.
+  // The return type must be `serde::Serialize`able
+  // and can be wrapped in a `Result`
+  // Commands can be `async`
+
+  return format!("Hello, {}!", name);
+}
+
+#[tauri:command]
+fn some_other_command() -> String {
+  "test".to_string()
+}
+
+#[cfg_attr(mobile, tauri::mobile_entry_point)]
+pub fn run() {
+  tauri::Builder::default()
+    .invoke_handler(tauri::generate_handler![greet, some_other_command])
+    .run(tauri::generate_context!())
+    .expect("error while running tauri application");
+}
+```
+```js
+// When using the Tauri API npm package:
+import { invoke } from '@tauri-apps/api/core';
+
+// When using the Tauri global script (if not using the npm package)
+const invoke = window.__TAURI__.invoke;
+
+// Invoke the command
+invoke('greet', { name: 'world' }).then(console.log);
+// you can .catch() to process a `Result:Err`
+```
+
+---
+
+<NoteMeta name="tauri-commands-state" source="https://v2.tauri.app/develop/calling-rust/#accessing-managed-state" scope="public" type="main" created="2024-08-10T13:54Z" modified="2024-08-10T13:58Z" />
+
+Since rust is functional and can't really have global state, you need to pass state as an argument:
+```rust
+struct MyState(String);
+
+#[tauri::command]
+fn example_command(state: tauri::State<MyState>) {
+  assert_eq!(state.0 == "some state value", true);
+}
+
+#[cfg_attr(mobile, tauri::mobile_entry_point)]
+pub fn run() {
+  tauri::Builder::default()
+    .manage(MyState("some state value".to_string()))
+    .invoke_handler(tauri::generate_handler![example_command])
+    .run(tauri::generate_context!())
+    .expect("error while running tauri application");
+}
+```
+
+---
+
+<NoteMeta name="tauri-mutable-state" source="https://v2.tauri.app/develop/state-management/#mutability" scope="public" type="main" created="2024-08-10T14:17Z" modified="2024-08-10T14:18Z" />
+
+If there are multiple commands that are going to mutate state, you can use `Mutex`:
+```rust
+use std::sync::Mutex;
+
+use tauri::{Builder, Manager};
+
+#[derive(Default)]
+struct AppState {
+  counter: u32,
+}
+
+#[tauri::command]
+fn increase_counter(state: State<'_, Mutex<AppState>>) -> u32 {
+  let mut state = state.lock().unwrap();
+  state.counter += 1;
+  state.counter
+}
+
+fn main() {
+  Builder::default()
+    .setup(|app| {
+      app.manage(Mutex::new(AppState::default()));
+      Ok(())
+    })
+    .run(tauri::generate_context!())
+    .unwrap();
+}
+```
+
+---
+
+<NoteMeta name="tauri-events" source="https://v2.tauri.app/develop/calling-frontend/" scope="public" type="main" created="2024-08-10T13:09Z" modified="2024-08-10T13:37Z" />
+
+*Events* are designed for exchanging *small data* packets quickly. Their bodies are *json strings*.
+
+Events can be *global* (use `emit`) or webview-specific (read the source of this note).
+
+```rust
+use tauri::{AppHandle, Emitter};
+use serde::Serialize;
+
+#[derive(Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+struct Download<'a> {
+  url: &'a str,
+}
+
+#[tauri::command]
+fn download(app: AppHandle, url: String) {
+  // actual download logic
+
+  app.emit("download-finished", Download { url: &url }).unwrap();
+}
+```
+```typescript
+import { listen } from '@tauri-apps/api/event';
+
+type Download = {
+  url: string;
+};
+
+const stop_listening = listen<Download>('download-finished', (event) => {
+  console.log(`download from ${event.payload.url} finished`);
+});
+```
+
+You can also listen to events in rust, check out the source for that.
+
+---
+
+<NoteMeta name="tauri-channels" source="https://v2.tauri.app/develop/calling-frontend/#channels" scope="public" type="main" created="2024-08-10T13:24Z" modified="2024-08-10T13:37Z" />
+
+*Channels* are used for streaming data. They are *suitable for large data transfers*.
+
+```rust
+use tauri::{AppHandle, Channel};
+use serde::Serialize;
+
+#[derive(Clone, Serialize)]
+#[serde(rename_all = "camelCase", tag = "event", content = "data")]
+enum DownloadEvent<'a> {
+  #[serde(rename_all = "camelCase")]
+  Started {
+    download_id: usize,
+    content_length: usize,
+  },
+  #[serde(rename_all = "camelCase")]
+  Progress {
+    download_id: usize,
+    chunk_length: usize,
+  },
+  #[serde(rename_all = "camelCase")]
+  Finished {
+    download_id: usize,
+  },
+}
+
+#[tauri::command]
+fn download(app: AppHandle, url: String, on_event: Channel<DownloadEvent>) {
+  let content_length = 1000;
+  let download_id = 1;
+
+  on_event.send(DownloadEvent::Started {
+    download_id,
+    content_length,
+  }).unwrap();
+
+  for chunk_length in [15, 150, 35, 500, 300] {
+    on_event.send(DownloadEvent::Progress {
+      download_id,
+      chunk_length,
+    }).unwrap();
+  }
+
+  on_event.send(DownloadEvent::Finished { download_id }).unwrap();
+}
+```
+```typescript
+import { invoke, Channel } from '@tauri-apps/api/core';
+
+type DownloadEvent =
+  | {
+      event: 'started';
+      data: {
+        url: string;
+        downloadId: number;
+        contentLength: number;
+      };
+    }
+  | {
+      event: 'progress';
+      data: {
+        downloadId: number;
+        chunkLength: number;
+      };
+    }
+  | {
+      event: 'finished';
+      data: {
+        downloadId: number;
+      };
+    };
+
+const onEvent = new Channel<DownloadEvent>();
+onEvent.onmessage = (message) => {
+  console.log(`got download event ${message.event}`);
+};
+
+await invoke('download', {
+  url: 'https://example.com',
+  onEvent,
+});
+```
+
+---
+
+<NoteMeta name="tauri-config" source="https://v2.tauri.app/develop/configuration-files/" scope="public" type="main" created="2024-08-10T14:04Z" modified="2024-08-10T14:14Z" />
+
+- `Cargo.toml` for the rust back-end
+- `package.json` for the front-end
+- `tauri.conf.json` for the runner/bundler
+
+---
+
+<NoteMeta name="tauri-updates" source="" scope="public" type="main" created="2024-08-10T14:19Z" modified="2024-08-10T14:20Z" />
+
+```shell
+> npm install @tauri-apps/cli@latest @tauri-apps/api@latest
+> cd src-tauri
+> cargo update
 ```

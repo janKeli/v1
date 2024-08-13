@@ -1,0 +1,38 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "tauri-mutable-state"
+source: "https://v2.tauri.app/develop/state-management/#mutability"
+scope: "public"
+type: "main"
+created: "2024-08-10T14:17Z"
+modified: "2024-08-10T14:18Z"
+---
+
+If there are multiple commands that are going to mutate state, you can use `Mutex`:
+```rust
+use std::sync::Mutex;
+
+use tauri::{Builder, Manager};
+
+#[derive(Default)]
+struct AppState {
+  counter: u32,
+}
+
+#[tauri::command]
+fn increase_counter(state: State<'_, Mutex<AppState>>) -> u32 {
+  let mut state = state.lock().unwrap();
+  state.counter += 1;
+  state.counter
+}
+
+fn main() {
+  Builder::default()
+    .setup(|app| {
+      app.manage(Mutex::new(AppState::default()));
+      Ok(())
+    })
+    .run(tauri::generate_context!())
+    .unwrap();
+}
+```

@@ -1,0 +1,28 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "tauri-commands-state"
+source: "https://v2.tauri.app/develop/calling-rust/#accessing-managed-state"
+scope: "public"
+type: "main"
+created: "2024-08-10T13:54Z"
+modified: "2024-08-10T13:58Z"
+---
+
+Since rust is functional and can't really have global state, you need to pass state as an argument:
+```rust
+struct MyState(String);
+
+#[tauri::command]
+fn example_command(state: tauri::State<MyState>) {
+  assert_eq!(state.0 == "some state value", true);
+}
+
+#[cfg_attr(mobile, tauri::mobile_entry_point)]
+pub fn run() {
+  tauri::Builder::default()
+    .manage(MyState("some state value".to_string()))
+    .invoke_handler(tauri::generate_handler![example_command])
+    .run(tauri::generate_context!())
+    .expect("error while running tauri application");
+}
+```

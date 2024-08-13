@@ -1,0 +1,44 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "tauri-events"
+source: "https://v2.tauri.app/develop/calling-frontend/"
+scope: "public"
+type: "main"
+created: "2024-08-10T13:09Z"
+modified: "2024-08-10T13:37Z"
+---
+
+*Events* are designed for exchanging *small data* packets quickly. Their bodies are *json strings*.
+
+Events can be *global* (use `emit`) or webview-specific (read the source of this note).
+
+```rust
+use tauri::{AppHandle, Emitter};
+use serde::Serialize;
+
+#[derive(Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+struct Download<'a> {
+  url: &'a str,
+}
+
+#[tauri::command]
+fn download(app: AppHandle, url: String) {
+  // actual download logic
+
+  app.emit("download-finished", Download { url: &url }).unwrap();
+}
+```
+```typescript
+import { listen } from '@tauri-apps/api/event';
+
+type Download = {
+  url: string;
+};
+
+const stop_listening = listen<Download>('download-finished', (event) => {
+  console.log(`download from ${event.payload.url} finished`);
+});
+```
+
+You can also listen to events in rust, check out the source for that.
