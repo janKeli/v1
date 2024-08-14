@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-08-05T15:22Z"
-modified: "2024-08-13T09:54Z"
+modified: "2024-08-14T15:06Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -303,7 +303,53 @@ Finally! I'll publish the gist on 2024-08-10
 
 ---
 
-<NoteMeta name="lipu-todos" source="" scope="public" type="main" created="2024-08-13T09:54Z" modified="2024-08-13T09:54Z" />
+<NoteMeta name="lipu-todos" source="" scope="public" type="main" created="2024-08-13T09:54Z" modified="2024-08-14T13:45Z" />
 
 - back end: add link tag support (see 0atman's feed)
 - frontend: add full screen video view
+- both: add better support for dialogs (like the ones [fasterthanlime](https://fasterthanli.me) and [Xe Iaso](https://xeiaso.net) use)
+
+---
+
+<NoteMeta name="lipu-status-day-6" source="" scope="public" type="main" created="2024-08-13T10:57Z" modified="2024-08-13T11:03Z" />
+
+- [x] tauri setup
+- [x] list download
+- [x] list view
+- [x] light mode
+- [x] app controls (except the buttons shift sometimes)
+- [ ] app control logic
+- [ ] article view
+- [ ] audio view
+- [ ] media download
+- [ ] youtube view
+- [ ] video view
+- [ ] progress saving
+- [ ] settings & feeds
+- [ ] desktop shortcuts
+
+---
+
+<NoteMeta name="note-on-languages" source="" scope="public" type="main" created="2024-08-14T13:59Z" modified="2024-08-14T14:01Z" />
+
+I've noticed a drastic difference between writing the back-end and the front-end for [lipu](/lipu).
+
+The front-end currently uses [react](/react), I run the app continuously and click around to make sure nothing breaks (it does).
+
+The back-end was written in [rust](/rust), I ran it like twice to make sure the thing does everything I want it to. The rest of the time I just had [cargo-clippy](/cargo-clippy) on the right half of the screen and "talked" to it.
+
+*The rust experience really is nicer.*
+
+---
+
+<NoteMeta name="note-on-lipu-day-7" source="" scope="public" type="main" created="2024-08-14T15:03Z" modified="2024-08-14T15:23Z" />
+
+I *don't love how cards look*, probably gonna get rid of them in a few days.
+
+Also, while I remember, the plan is to eventually *scrape* the website that an article is coming from *if it's allowed* by its `robots.txt`.
+
+I should *tweak the backend* so that if an *item disappears* from the feed (Xe's feed is just the last 10 articles, for example), it should be *kept on the device*.
+
+And the back button doesn't work on mobile because it's a single-page app and I don't catch that event.
+
+And add the zoom for images.
