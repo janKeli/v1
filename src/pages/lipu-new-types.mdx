@@ -1,0 +1,74 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "lipu-new-types"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-08-17T18:09Z"
+modified: "2024-08-17T18:14Z"
+---
+
+```rust
+pub struct Lipu {
+    feeds: Vec<String>,
+    items: Vec<Item>,
+}
+
+trait LipuInterface {
+    fn add_feed(&mut self, url: String);
+    fn add_mastodon_feed(&mut self, instance: String, user: String);
+    async fn add_youtube_channel(&mut self, name: String);
+    async fn refresh(&mut self) -> Result<(), ()>;
+    fn remove_feed(&mut self, url: &str) -> Result<(), ()>;
+
+    fn list(&self) -> &[Metadata];
+    fn search(&self, query: &str) -> &[Metadata];
+    fn with_tag(&self) -> &[Metadata];
+
+    fn add_tag(&mut self, item_id: &str, tag: &str) -> Result<(), ()>;
+    fn remove_tag(&mut self, item_id: &str, tag: &str) -> Result<(), ()>;
+    fn drop_tag(&mut self, tag: &str) -> Result<(), ()>;
+
+    fn load(&self, item_id: &str) -> &Item;
+    fn set_viewing_progress(&mut self, item_id: &str, progress: ViewingProgress) -> Result<(), ()>;
+    async fn download_item(&mut self, item_id: &str) -> Result<(), ()>;
+}
+```
+This interface does everything that I have outlined [above](/rethinking-lipu), I think. The frontend's job from here is to handle the playback and rendering.
+
+```rust
+pub struct Item {
+    pub metadata: Metadata,
+    pub body: Body,
+}
+
+pub struct Metadata {
+    pub id: String,
+
+    pub name: String,
+    pub tags: Vec<String>,
+
+    pub feed_url: String,
+    pub link: Option<String>,
+    pub author: Option<String>,
+    pub description: Option<String>,
+
+    pub created: Option<DateTime<Utc>>,
+    pub updated: Option<DateTime<Utc>>,
+
+    pub viewed: ViewingProgress,
+}
+
+pub enum ViewingProgress {
+    Zero,
+    UntilParagraph(usize),
+    UntilSecond(usize),
+    Fully,
+}
+
+pub enum Body {
+    DownloadLink { mime_type: String, url: String },
+    File { mime_type: String, path: PathBuf },
+}
+```
+This new `Body` will contain *text as files* as well, because some feeds don't give you a *full article*, so it *will have to be downloaded* from the website. *Lipu is a reader, not just a list of links.*

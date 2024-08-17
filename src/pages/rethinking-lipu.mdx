@@ -1,0 +1,30 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "rethinking-lipu"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-08-17T16:16Z"
+modified: "2024-08-17T18:16Z"
+---
+
+Back-end:
+
+| task                             | component                  |
+| -------------------------------- | -------------------------- |
+| managing feeds                   | lib                        |
+| fetching updates                 | lib                        |
+| managing groups                  | lib                        |
+| downloading media                | lib, path provided by main |
+| keeping track of user's progress | lib                        |
+| managing what's playing now      | main                       |
+
+Front-end:
+
+| task                                                 | component      |
+| ---------------------------------------------------- | -------------- |
+| rendering the list of feed items                     | List           |
+| rendering the list of groups                         | Groups         |
+| rendering a feed item's description or text body     | Item           |
+| playing media in the foreground and background       | Player         |
+| controlling media, sending its state to the back-end | PlayerControls |

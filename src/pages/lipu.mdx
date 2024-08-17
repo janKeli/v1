@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-08-05T15:22Z"
-modified: "2024-08-14T15:06Z"
+modified: "2024-08-17T18:15Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -20,9 +20,9 @@ It must be local-first, everything gets downloaded, everything works offline.
 
 ---
 
-<NoteMeta name="lipu-motivation" source="" scope="public" type="main" created="2024-08-05T15:32Z" modified="2024-08-05T15:34Z" />
+<NoteMeta name="lipu-motivation" source="" scope="public" type="main" created="2024-08-05T15:32Z" modified="2024-08-15T14:51Z" />
 
-I *wanted an RSS reader*, *miniflux* looks like a good option, but it's unnecesserally *complicated* for my use-case, it has a server and a client and I *don't want/need a server*. Plus it's *fun to build* things!
+I [wanted an RSS reader](/read-important-things-deeply), *miniflux* looks like a good option, but it's unnecesserally *complicated* for my use-case, it has a server and a client and I *don't want/need a server*. Plus it's *fun to build* things!
 
 ---
 
@@ -353,3 +353,111 @@ I should *tweak the backend* so that if an *item disappears* from the feed (Xe's
 And the back button doesn't work on mobile because it's a single-page app and I don't catch that event.
 
 And add the zoom for images.
+
+---
+
+<NoteMeta name="lipu-groups" source="" scope="public" type="main" created="2024-08-15T14:41Z" modified="2024-08-15T14:47Z" />
+
+I need to *remember to add folders/groups*.
+
+Context: I have discovered that a service we use at *work has an RSS feed*. I don't want to mix the blogs I'm reading with work, so this. Also iirc *mastodon gives you feeds*, it'd be useful for that as well.
+
+---
+
+<NoteMeta name="lipu-cookies" source="" scope="public" type="main" created="2024-08-15T14:47Z" modified="2024-08-15T14:48Z" />
+
+Some RSS feeds require you to log in, so the app needs an interface to do that. Should be relatively simple considering the front-end is a webapp and I can just add an iframe with the login form, then pull the cookies to the back-end.
+
+---
+
+<NoteMeta name="rethinking-lipu" source="" scope="public" type="main" created="2024-08-17T16:16Z" modified="2024-08-17T18:16Z" />
+
+Back-end:
+
+| task                             | component                  |
+| -------------------------------- | -------------------------- |
+| managing feeds                   | lib                        |
+| fetching updates                 | lib                        |
+| managing groups                  | lib                        |
+| downloading media                | lib, path provided by main |
+| keeping track of user's progress | lib                        |
+| managing what's playing now      | main                       |
+
+Front-end:
+
+| task                                                 | component      |
+| ---------------------------------------------------- | -------------- |
+| rendering the list of feed items                     | List           |
+| rendering the list of groups                         | Groups         |
+| rendering a feed item's description or text body     | Item           |
+| playing media in the foreground and background       | Player         |
+| controlling media, sending its state to the back-end | PlayerControls |
+
+---
+
+<NoteMeta name="lipu-new-types" source="" scope="public" type="main" created="2024-08-17T18:09Z" modified="2024-08-17T18:14Z" />
+
+```rust
+pub struct Lipu {
+    feeds: Vec<String>,
+    items: Vec<Item>,
+}
+
+trait LipuInterface {
+    fn add_feed(&mut self, url: String);
+    fn add_mastodon_feed(&mut self, instance: String, user: String);
+    async fn add_youtube_channel(&mut self, name: String);
+    async fn refresh(&mut self) -> Result<(), ()>;
+    fn remove_feed(&mut self, url: &str) -> Result<(), ()>;
+
+    fn list(&self) -> &[Metadata];
+    fn search(&self, query: &str) -> &[Metadata];
+    fn with_tag(&self) -> &[Metadata];
+
+    fn add_tag(&mut self, item_id: &str, tag: &str) -> Result<(), ()>;
+    fn remove_tag(&mut self, item_id: &str, tag: &str) -> Result<(), ()>;
+    fn drop_tag(&mut self, tag: &str) -> Result<(), ()>;
+
+    fn load(&self, item_id: &str) -> &Item;
+    fn set_viewing_progress(&mut self, item_id: &str, progress: ViewingProgress) -> Result<(), ()>;
+    async fn download_item(&mut self, item_id: &str) -> Result<(), ()>;
+}
+```
+This interface does everything that I have outlined [above](/rethinking-lipu), I think. The frontend's job from here is to handle the playback and rendering.
+
+```rust
+pub struct Item {
+    pub metadata: Metadata,
+    pub body: Body,
+}
+
+pub struct Metadata {
+    pub id: String,
+
+    pub name: String,
+    pub tags: Vec<String>,
+
+    pub feed_url: String,
+    pub link: Option<String>,
+    pub author: Option<String>,
+    pub description: Option<String>,
+
+    pub created: Option<DateTime<Utc>>,
+    pub updated: Option<DateTime<Utc>>,
+
+    pub viewed: ViewingProgress,
+}
+
+pub enum ViewingProgress {
+    Zero,
+    UntilParagraph(usize),
+    UntilSecond(usize),
+    Fully,
+}
+
+pub enum Body {
+    DownloadLink { mime_type: String, url: String },
+    File { mime_type: String, path: PathBuf },
+}
+```
+This new `Body` will contain *text as files* as well, because some feeds don't give you a *full article*, so it *will have to be downloaded* from the website. *Lipu is a reader, not just a list of links.*
