@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-08-05T15:22Z"
-modified: "2024-08-17T18:15Z"
+modified: "2024-08-18T11:34Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -461,3 +461,9 @@ pub enum Body {
 }
 ```
 This new `Body` will contain *text as files* as well, because some feeds don't give you a *full article*, so it *will have to be downloaded* from the website. *Lipu is a reader, not just a list of links.*
+
+---
+
+<NoteMeta name="lipu-new-types-implemented" source="" scope="public" type="main" created="2024-08-18T11:34Z" modified="2024-08-18T11:36Z" />
+
+I believe [it is implemented now](https://github.com/janElikan/lipu/tree/c2f4e6a2a1b093fa2bc474c92a4399f0d673a27e), or at least a minimal version of it. Clippy is not happy, but what I want right now is a *working prototype*, which I can refactor later. So I'm switching over to the front-end side of things.
