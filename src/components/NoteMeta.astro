@@ -16,7 +16,7 @@ const [modifiedDate, modifiedTime] = meta.modified.split('T')
 const noteType = meta.type === "main" ? "lipu" : "kulupu"
 ---
 
-<div class={meta.wrap ? "outer block wrap" : "outer block"}>
+<div class={meta.wrap ? "outer block wrap" : "outer block"} id={meta.name}>
   <div>
     <a href={'/' + meta.name}>
       <span title={meta.type + " note"} class="sitelen-pona">{noteType}</span>
