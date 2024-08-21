@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-08-05T15:22Z"
-modified: "2024-08-18T11:34Z"
+modified: "2024-08-21T16:37Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -467,3 +467,49 @@ This new `Body` will contain *text as files* as well, because some feeds don't g
 <NoteMeta name="lipu-new-types-implemented" source="" scope="public" type="main" created="2024-08-18T11:34Z" modified="2024-08-18T11:36Z" />
 
 I believe [it is implemented now](https://github.com/janElikan/lipu/tree/c2f4e6a2a1b093fa2bc474c92a4399f0d673a27e), or at least a minimal version of it. Clippy is not happy, but what I want right now is a *working prototype*, which I can refactor later. So I'm switching over to the front-end side of things.
+
+---
+
+<NoteMeta name="lipu-no-more-react" source="" scope="public" type="main" created="2024-08-19T16:49Z" modified="2024-08-19T16:50Z" />
+
+I have moved the search logic to the back-end, thinking that react was slow. Now it is still just as slow. I'll try switching to vanilla to see if that fixes anything.
+
+---
+
+<NoteMeta name="lipu-startup-as-conversation" source="" scope="public" type="main" created="2024-08-20T21:27Z" modified="2024-08-21T16:36Z" />
+
+main.ts: await Dom load
+window: done
+main: init feeds
+main: init items
+main: init reader
+main: init player
+feeds: window find element feeds
+items: window find element items
+player: window init
+reader: window init
+player: done
+reader: done
+window: div#feeds
+window: div#items
+feeds: backend fetch feeds
+items: backend refresh
+items: window draw refreshing animation
+backend: *feed list*
+feeds: window render this
+feeds: done
+backend: *OK*
+items: backend list
+backend: *metadata*
+items: window render this
+items: done
+
+window: button clicked *ID*
+list: main what is this *ID*
+main: backend load *ID*
+backend: *body*
+main: looks like a podcast
+main: player, *body*
+main: reader, *metadata*
+player: window, update
+reader: window, rerender
