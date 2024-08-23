@@ -1,0 +1,21 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "2024-08-23-filenames"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-08-23T11:53Z"
+modified: "2024-08-23T18:08Z"
+---
+
+I do really love rust a lot. Especially in contrast to typescript. The *compiler is so much more helpful!* And the standard library's function names make so much sense!
+
+For instance, I realized that I tried to use the raw ID of each resource, which can contain a full url with all the slashes and whatnot, as a filename and the system couldn't create anything because of that. Here's what the solution ended up being:
+```rust
+let filename: String = item.metadata.id
+  .chars()
+  .filter(|char| char.is_ascii_alphanumeric())
+  .collect();
+```
+
+Tauri is funny though: I have ran the app, told it to download something and it restarted. Turns out writing anything into `./` means writing into `src-tauri/` and writing into `src-tauri/` triggers a reload.

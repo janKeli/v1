@@ -1,0 +1,13 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "2024-08-23-cant-resolve-file"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-08-23T13:09Z"
+modified: "2024-08-23T13:15Z"
+---
+
+So I told the backend to download files into `/tmp/downloads` and it does. The problem is that [tauri](/tauri) does not give the frontend implicit filesystem access or network access, which honestly makes a lot of sense.
+
+Anyway, this prompts me to work on storage and now I'll start making it remember the feeds. Since everything is SERDE anyway, that should be easy!
