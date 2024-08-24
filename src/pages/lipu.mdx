@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-08-05T15:22Z"
-modified: "2024-08-23T18:04Z"
+modified: "2024-08-24T17:59Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -535,3 +535,27 @@ Tauri is funny though: I have ran the app, told it to download something and it 
 <NoteMeta name="2024-08-23-end-of-day" source="" scope="public" type="main" created="2024-08-23T18:03Z" modified="2024-08-23T18:06Z" />
 
 I got lipu's *backend to work* how I need it and implemented persistent state, but I *can't figure out* how to *load files* from the *frontend* in [tauri](/tauri). I'll post an update once I work it out. Best case that will be 2024-08-24.
+
+---
+
+<NoteMeta name="2024-08-24-end-of-day" source="" scope="public" type="main" created="2024-08-24T17:58Z" modified="2024-08-24T18:55Z" />
+
+I've narrowed down the problem. I've changed the permissions and the files are now accessible, tested that on `feeds.json`. *I can read them from javascript, but not use them in html, as assets.* I suspect this is because the asset path is wrong, I'll try reading the source of the function that reads a file from backend to understand how to fetch it manually.
+
+Cool, it doesn't, it `invoke`s the backend! And the backend just streams the file :/
+
+Okay, I'll try to make it work tomorrow by making a backend function which I can fetch to get a response as an image. Except wait, can I fetch?
+
+Or [just embedding the image as raw data into html](https://stackoverflow.com/questions/20756042/how-to-display-an-image-stored-as-byte-array-in-html-javascript) probably works. At least as a short-term solution. I'll try that now.
+
+No, wait, the permissions are malformed when I'm using the path api. That's a problem for a future me though.
+
+What the heck, it's not the full file? It's only the first 309 lines?
+
+[oh, yeah, right, I forgot about this...](/tauri-channels) Yeah \*sigh\*
+
+Oh, good, no, the permissions are not malformed on the path, I just converted the path to something viewable in html.
+
+Now I've requested it as I did before and took a look at the network tab. Don't know why I didn't do that earlier. *Anyway, I get* `The resource was requested insecurely.`, which is better than no error.
+
+*I'm stuck on this error now*
