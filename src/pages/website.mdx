@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-06-30T15:55Z"
-modified: "2024-08-15T14:39Z"
+modified: "2024-08-25T17:27Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -290,3 +290,33 @@ Here's what I want to add:
 - *github gist integration*, so if a note's source is set as a github gist, it syncs with it
 - an *rss* feed
 - external links being a different color
+
+---
+
+<NoteMeta name="website-image-pipeline" source="" scope="public" type="main" created="2024-08-25T16:16Z" modified="2024-08-25T16:42Z" />
+
+The idea is that I draw whaever in excalidraw, it exports an SVG, the site-builder cleans it, makes it use the css variables and embeds it.
+
+Here's a demo of how this should work:
+![excalidraw-test.excalidraw](/excalidraw-test.excalidraw)
+
+---
+
+<NoteMeta name="mdx-says-nope-to-images" source="" scope="public" type="main" created="2024-08-25T17:26Z" modified="2024-08-25T19:24Z" />
+
+Or, this is how it *would work*, but nope, what I get is:
+```text
+Expected the closing tag `</text>` either after the end of `paragraph` (130:16) or another opening tag after the start of `paragraph` (130:2)
+```
+
+That's because it's formatted like this though:
+```xml
+	<text x="58.59375" y="19.3125" font-family=
+	"Cascadia, Segoe UI Emoji" font-size="20px" fill="#6741d9"
+	text-anchor="middle" style="white-space: pre;" direction="ltr"
+	dominant-baseline="alphabetic">references</text>
+```
+
+So I can probably fix it by parsing the entire thing \*sigh\*
+
+Fine, *I'll do it tomorrow™*!

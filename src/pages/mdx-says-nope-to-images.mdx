@@ -1,0 +1,26 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "mdx-says-nope-to-images"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-08-25T17:26Z"
+modified: "2024-08-25T19:24Z"
+---
+
+Or, this is how it *would work*, but nope, what I get is:
+```text
+Expected the closing tag `</text>` either after the end of `paragraph` (130:16) or another opening tag after the start of `paragraph` (130:2)
+```
+
+That's because it's formatted like this though:
+```xml
+	<text x="58.59375" y="19.3125" font-family=
+	"Cascadia, Segoe UI Emoji" font-size="20px" fill="#6741d9"
+	text-anchor="middle" style="white-space: pre;" direction="ltr"
+	dominant-baseline="alphabetic">references</text>
+```
+
+So I can probably fix it by parsing the entire thing \*sigh\*
+
+Fine, *I'll do it tomorrow™*!
