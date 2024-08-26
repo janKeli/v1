@@ -32,14 +32,26 @@ const title = frontmatter.title === 'index' ? 'jan Elikan' : frontmatter.title;
 		--color-base: #1e1e2e;
 		--color-text: #cdd6f4;
 		--color-subtext: #a6adc8;
-		--color-link: #b4befe;
-		--color-emphasis: #a6e3a1;
-		--color-deleted: #f38ba8;
+		--color-maroon: #eba0ac;
+		--color-sapphire: #74c7ec;
+		--color-blue: #89b4fa;
+		--color-lavander: #b4befe;
+		--color-mavue: #cba6f7;
+		--color-pink: #f5c2e7;
+		--color-green: #a6e3a1;
+		--color-teal: #94e2d5;
+		--color-yellow: #f9e2af;
+		--color-peach: #fab387;
+		--color-red: #f38ba8;
+
+		--color-link: var(--color-lavander);
+		--color-emphasis: var(--color-green);
+		--color-deleted: var(--color-red);
 		--color-border: #313244;
 		--color-code-base: #181825;
 		--color-code-text: #cdd6f4;
 		--color-header-base: #181825;
-		--color-select: #b4befe;
+		--color-select: var(--color-lavander);
 	}
 
 	@media (prefers-color-scheme: light) {
@@ -47,14 +59,26 @@ const title = frontmatter.title === 'index' ? 'jan Elikan' : frontmatter.title;
 			--color-base: #eff1f5;
 			--color-text: #4c4f69;
 			--color-subtext: #6c6f85;
-			--color-link: #7287fd;
-			--color-emphasis: #1e66f5;
-			--color-deleted: #d20f39;
+			--color-maroon: #dc8a78; /* this is rosewater, actually */
+			--color-sapphire: #209fb5;
+			--color-blue: #1e66f5;
+			--color-lavander: #7287fd;
+			--color-mavue: #8839ef;
+			--color-pink: #ea76cb;
+			--color-green: #40a02b;
+			--color-teal: #179299;
+			--color-yellow: #df8e1d;
+			--color-peach: #fe640b;
+			--color-red: #d20f39;
+
+			--color-link: var(--color-lavander);
+			--color-emphasis: var(--color-peach);
+			--color-deleted: var(--color-red);
 			--color-border: #ccd0da;
 			--color-code-base: #181825;
 			--color-code-text: #cdd6f4;
 			--color-header-base: #181825;
-			--color-select: #7287fd;
+			--color-select: var(--color-lavander);
 		}
 	}
 
