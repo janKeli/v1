@@ -5,41 +5,74 @@ source: ""
 scope: "public"
 type: "main"
 created: "2024-08-20T21:27Z"
-modified: "2024-08-23T11:56Z"
+modified: "2024-08-26T13:11Z"
 ---
 
 main.ts: await Dom load
+
 window: done
+
 main: init feeds
+
 main: init items
+
 main: init reader
+
 main: init player
+
 feeds: window find element feeds
+
 items: window find element items
+
 player: window init
+
 reader: window init
+
 player: done
+
 reader: done
+
 window: div#feeds
+
 window: div#items
+
 feeds: backend fetch feeds
+
 items: backend refresh
+
 items: window draw refreshing animation
+
 backend: *feed list*
+
 feeds: window render this
+
 feeds: done
+
 backend: *OK*
+
 items: backend list
+
 backend: *metadata*
+
 items: window render this
+
 items: done
 
+
 window: button clicked *ID*
+
 list: main what is this *ID*
+
 main: backend load *ID*
+
 backend: *body*
+
 main: looks like a podcast
+
 main: player, *body*
+
 main: reader, *metadata*
+
 player: window, update
+
 reader: window, rerender
