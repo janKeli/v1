@@ -1,0 +1,13 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "i-dont-understand-tauri-ipc"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-08-28T15:23Z"
+modified: "2024-08-28T15:29Z"
+---
+
+Making a custom stream function doesn't solve anything beacuse I need to fetch data from html and not js anyway.
+
+I've read [a github discussion about this](https://github.com/tauri-apps/tauri/discussions/7145) again, I've *overlooked the asset protocol*. [The docs](https://v2.tauri.app/reference/javascript/api/namespacecore/#convertfilesrc) say that I need to patch csp.

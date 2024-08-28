@@ -1,0 +1,26 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "how-to-use-assets-in-tauri-v2"
+source: "https://v2.tauri.app/reference/config/#app"
+scope: "public"
+type: "main"
+created: "2024-08-28T15:50Z"
+modified: "2024-08-28T15:58Z"
+---
+
+Yay, I have finally figured it out [.ui](https://en.wikibooks.org/wiki/Lojban/Attitudinals#Simple_pure_emotions:)
+
+They didn't document this properly, [leaving links](https://v2.tauri.app/reference/javascript/api/namespacecore/#convertfilesrc) to [v1](https://tauri.app/v1/api/config/#allowlistconfig.protocol), which is half outdated, but here's the *patch* for `tauri.conf.json` that is needed *to make assets from appdata work*:
+```json
+{
+  "app": {
+      "security": {
+          "csp": "default-src 'self' ipc: http://ipc.localhost; img-src 'self' asset: http://asset.localhost",
+          "assetProtocol": {
+              "enable": true,
+              "scope": ["$APPDATA/**"]
+          }
+      }
+  }
+}
+```

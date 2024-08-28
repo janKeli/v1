@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-08-05T15:22Z"
-modified: "2024-08-24T17:59Z"
+modified: "2024-08-28T18:03Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -596,3 +596,38 @@ Oh, good, no, the permissions are not malformed on the path, I just converted th
 Now I've requested it as I did before and took a look at the network tab. Don't know why I didn't do that earlier. *Anyway, I get* `The resource was requested insecurely.`, which is better than no error.
 
 *I'm stuck on this error now*
+
+---
+
+<NoteMeta name="i-dont-understand-tauri-ipc" source="" scope="public" type="main" created="2024-08-28T15:23Z" modified="2024-08-28T15:29Z" />
+
+Making a custom stream function doesn't solve anything beacuse I need to fetch data from html and not js anyway.
+
+I've read [a github discussion about this](https://github.com/tauri-apps/tauri/discussions/7145) again, I've *overlooked the asset protocol*. [The docs](https://v2.tauri.app/reference/javascript/api/namespacecore/#convertfilesrc) say that I need to patch csp.
+
+---
+
+<NoteMeta name="how-to-use-assets-in-tauri-v2" source="https://v2.tauri.app/reference/config/#app" scope="public" type="main" created="2024-08-28T15:50Z" modified="2024-08-28T15:58Z" />
+
+Yay, I have finally figured it out [.ui](https://en.wikibooks.org/wiki/Lojban/Attitudinals#Simple_pure_emotions:)
+
+They didn't document this properly, [leaving links](https://v2.tauri.app/reference/javascript/api/namespacecore/#convertfilesrc) to [v1](https://tauri.app/v1/api/config/#allowlistconfig.protocol), which is half outdated, but here's the *patch* for `tauri.conf.json` that is needed *to make assets from appdata work*:
+```json
+{
+  "app": {
+      "security": {
+          "csp": "default-src 'self' ipc: http://ipc.localhost; img-src 'self' asset: http://asset.localhost",
+          "assetProtocol": {
+              "enable": true,
+              "scope": ["$APPDATA/**"]
+          }
+      }
+  }
+}
+```
+
+---
+
+<NoteMeta name="2024-08-28-ugh" source="" scope="public" type="main" created="2024-08-28T18:03Z" modified="2024-08-28T18:03Z" />
+
+Now I have some problems with loading audio assets. Gonna think about that tomorrow.
