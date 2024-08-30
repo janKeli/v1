@@ -1,0 +1,103 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "2024-08-30-debugging-lipu"
+source: ""
+scope: "public"
+type: "main"
+created: "2024-08-30T13:51Z"
+modified: "2024-08-30T18:05Z"
+---
+
+> Failed to load resource: the server responded with a status of 500
+
+So? What am I supposed to do with that? The server didn't log anything?
+
+Here's the fetch call:
+```text
+fetch("asset://localhost/%2Fhome%2Felikan%2F.local%2Fshare%2Fapp.janelikan.lipu%2Flipu%2Fhttpsapispreakercomdownloadepisode39524531mastermp3.mp3", {
+    "cache": "default",
+    "credentials": "omit",
+    "headers": {
+        "Accept": "image/webp,image/avif,image/jxl,video/*;q=0.8,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15"
+    },
+    "method": "GET",
+    "mode": "cors",
+    "redirect": "follow",
+    "referrerPolicy": "strict-origin-when-cross-origin"
+})
+```
+
+(thinking)
+
+Could it be that the invoke function attaches an accept header that rejects any audio and that's why it doesn't work? Let me try raw fetch:
+```js
+> await fetch("asset://localhost/%2Fhome%2Felikan%2F.local%2Fshare%2Fapp.janelikan.lipu%2Flipu%2Fhttpsapispreakercomdownloadepisode39524531mastermp3.mp3")
+
+[Info] Response
+
+body: ReadableStream {locked: false, cancel: function, getReader: function, pipeTo: function, pipeThrough: function, …}
+
+bodyUsed: false
+
+headers: Headers {append: function, delete: function, get: function, getSetCookie: function, has: function, …}
+
+ok: false
+
+redirected: false
+
+status: 500
+
+statusText: "Internal Server Error"
+
+type: "cors"
+
+url: "asset://localhost/%2Fhome%2Felikan%2F.local%2Fshare%2Fapp.janelikan.lipu%2Flipu%2Fhttpsapispreakercomdownloadepisode39524531mastermp3.mp3"
+
+Response Prototype
+```
+
+That didn't work, okay, what else can I try?
+
+Wait, does a fetch request work on an image?
+```js
+> await fetch("asset://localhost/%2Fhome%2Felikan%2F.local%2Fshare%2Fapp.janelikan.lipu%2Flipu%2Fhttpsd3wo5wojvuv7lcloudfrontnettrssitunessquare1400imagesspreakercomoriginala54ebc29615c1ac79160293cb07e80d1jpg")
+
+[Info] Response
+
+body: ReadableStream {locked: false, cancel: function, getReader: function, pipeTo: function, pipeThrough: function, …}
+
+bodyUsed: false
+
+headers: Headers {append: function, delete: function, get: function, getSetCookie: function, has: function, …}
+
+ok: true
+
+redirected: false
+
+status: 200
+
+statusText: "OK"
+
+type: "cors"
+
+url: "asset://localhost/%2Fhome%2Felikan%2F.local%2Fshare%2Fapp.janelikan.lipu%2Flipu%2Fhttpsd3wo5wojvuv7lcloudfrontnettrssitunessquare1400imagess…"
+
+Response Prototype
+```
+
+it does, so that isn't the problem.
+
+Oh, I can do `npm run tauri -- dev --verbose`.
+
+That didn't give me any additional logs.
+
+I'll try `cargo-tauri` to see if it's any different.
+
+(walks away, it's 14:16)
+
+(15:20) I'm back with good/bad news. *It works on windows.* [this issue](https://github.com/tauri-apps/tauri/issues/7355) mentioned that it COULD work on windows, I decided to check it in my [vm-lab](/vm-lab). Well, it did start right up.
+
+Okay, there's still hope. The FS plugin gave me an array of 5446843 numbers, and the file is 5.2MiB, so it did give me the full file. Now just gotta display it somehow.
+
+(to be continued)
