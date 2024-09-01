@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-08-05T15:22Z"
-modified: "2024-08-30T13:51Z"
+modified: "2024-09-01T16:20Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -733,5 +733,15 @@ I'll try `cargo-tauri` to see if it's any different.
 (15:20) I'm back with good/bad news. *It works on windows.* [this issue](https://github.com/tauri-apps/tauri/issues/7355) mentioned that it COULD work on windows, I decided to check it in my [vm-lab](/vm-lab). Well, it did start right up.
 
 Okay, there's still hope. The FS plugin gave me an array of 5446843 numbers, and the file is 5.2MiB, so it did give me the full file. Now just gotta display it somehow.
+
+(to be continued)
+
+---
+
+<NoteMeta name="2024-09-01" source="" scope="public" type="main" created="2024-09-01T16:20Z" modified="2024-09-01T16:49Z" />
+
+I got it working by creating an objecturl, just like someone suggested under that issue. So happy it's working now!
+
+Not that happy anymore, it's not working on mobile... Gonna deal with that later.
 
 (to be continued)
