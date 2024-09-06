@@ -1,0 +1,15 @@
+---
+layout: ../layouts/MainLayout.astro
+title: "leptos-frontend-only-init"
+source: "https://book.leptos.dev/getting_started/index.html"
+scope: "public"
+type: "main"
+created: "2024-09-06T14:02Z"
+modified: "2024-09-06T14:05Z"
+---
+
+You'll need `trunk`, it's in nixpkgs and on crates.io, that's the build thingy, and a nightly rust toolchain, which I installed with [fenix](/fenix).
+
+Then you `cargo add leptos --features=csr,nightly` and create an `index.html` in the root of your project (not `src/`, the root!) with an empty head & body.
+
+Use `trunk server --open` to run.

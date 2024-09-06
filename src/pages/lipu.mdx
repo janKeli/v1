@@ -5,7 +5,7 @@ source: ""
 scope: "public"
 type: "source"
 created: "2024-08-05T15:22Z"
-modified: "2024-09-01T16:20Z"
+modified: "2024-09-06T12:07Z"
 ---
 
 import NoteMeta from "../components/NoteMeta.astro"
@@ -745,3 +745,13 @@ I got it working by creating an objecturl, just like someone suggested under tha
 Not that happy anymore, it's not working on mobile... Gonna deal with that later.
 
 (to be continued)
+
+---
+
+<NoteMeta name="lipu-so-ive-been-thinking" source="" scope="public" type="main" created="2024-09-06T12:07Z" modified="2024-09-06T12:10Z" />
+
+I just want a working version and that's going extremely slow now. To make an app, I have to figure out tauri.
+
+*But.*
+
+But. If I drop the requirement of offline media for now, I could wrap the lipu-library in a wasm library and make a web version and then put it on this website. That'd be faster, I'm way more familiar with those things. That would break the contract, so it'd be a v1.0. Then I could write a new wrapper for, say, android, to bring back the offline thing.
