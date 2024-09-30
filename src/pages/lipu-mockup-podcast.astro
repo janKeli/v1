@@ -1,0 +1,289 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    >
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css"
+    >
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content="lipu the rss reader's UI mockup" />
+		<title>lipu</title>
+	</head>
+	<body>
+    <div class="container-fluid">
+      <nav>
+        <ul>
+          <!-- icons from heroicons -->
+          <li>
+            <a href="/">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="/lipu">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="/lipu-mockup" class="current-page">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-2.25-1.313M21 7.5v2.25m0-2.25-2.25 1.313M3 7.5l2.25-1.313M3 7.5l2.25 1.313M3 7.5v2.25m9 3 2.25-1.313M12 12.75l-2.25-1.313M12 12.75V15m0 6.75 2.25-1.313M12 21.75V19.5m0 2.25-2.25-1.313m0-16.875L12 2.25l2.25 1.313M21 14.25v2.25l-2.25 1.313m-13.5 0L3 16.5v-2.25" />
+              </svg>
+            </a>
+          </li>
+        </ul>
+        <ul>
+          <li title="unfold sidebar">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 16.811c0 .864-.933 1.406-1.683.977l-7.108-4.061a1.125 1.125 0 0 1 0-1.954l7.108-4.061A1.125 1.125 0 0 1 21 8.689v8.122ZM11.25 16.811c0 .864-.933 1.406-1.683.977l-7.108-4.061a1.125 1.125 0 0 1 0-1.954l7.108-4.061a1.125 1.125 0 0 1 1.683.977v8.122Z" />
+            </svg>
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+            </svg>
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811V8.69ZM12.75 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061a1.125 1.125 0 0 1-1.683-.977V8.69Z" />
+            </svg>
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+            </svg>
+          </li>
+      </nav>
+
+  		<main>
+        <ul class="entries">
+          <li>
+            <h2>
+              <a href="/lipu-mockup-article" class="text-article">
+                Entry Title (article)
+              </a>
+            </h2>
+            <p>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+              <span>yyyy-mm-dd</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+              <span>author</span>
+            </p>
+            <p>
+              entry description which will usually
+              take up about 2 or 3 lines
+            </p>
+          </li>
+          <li>
+            <h2>
+              <a href="/lipu-mockup-podcast" class="text-podcast underlined">
+                Entry Title (podcast)
+              </a>
+            </h2>
+            <p>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+              <span>yyyy-mm-dd</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+              <span>author</span>
+            </p>
+            <p>
+              entry description which will usually
+              take up about 2 or 3 lines
+            </p>
+          </li>
+          <li>
+            <h2>
+              <!-- videos will just link to youtube -->
+              <!-- that is unless I figure out how to save things locally -->
+              <!-- then it would make sense to add a video player -->
+              <a href="#" class="text-video">
+                Entry Title (video)
+              </a>
+            </h2>
+            <p>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+              <span>yyyy-mm-dd</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+              <span>author</span>
+            </p>
+            <p>
+              entry description which will usually
+              take up about 2 or 3 lines
+            </p>
+          </li>
+        </ul>
+
+         <div class="content-wrapper">
+          <div class="content">
+            <div class="description">
+              <div class="metadata">
+                <h1>Episode title</h1>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget feugiat ante, quis maximus massa. Maecenas porta ipsum non leo ullamcorper feugiat. Proin luctus lectus in sem interdum, non pulvinar nunc varius. Morbi volutpat dolor enim, eget gravida tellus sodales id. Curabitur egestas feugiat enim, eget interdum tellus euismod ut. Nam in sem eu massa bibendum tempor. In finibus quam quis enim accumsan auctor.
+                </p>
+              </div>
+              <div>
+                <img alt="pod artwork" class="pod-art" />
+                <div class="player">
+                </div>
+              </div>
+            </div>
+
+            <h2>Transcript</h2>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget feugiat ante, quis maximus massa. Maecenas porta ipsum non leo ullamcorper feugiat. Proin luctus lectus in sem interdum, non pulvinar nunc varius. Morbi volutpat dolor enim, eget gravida tellus sodales id. Curabitur egestas feugiat enim, eget interdum tellus euismod ut. Nam in sem eu massa bibendum tempor. In finibus quam quis enim accumsan auctor.
+            </p>
+            <p> Ut aliquet hendrerit nisl, sed fringilla ante hendrerit eu. Nulla scelerisque libero maximus, ullamcorper felis nec, luctus lorem. Praesent sem erat, ullamcorper vel ornare sed, facilisis vitae sem. Etiam sodales arcu id lectus porta, et convallis odio laoreet. Fusce in diam neque. Vestibulum rutrum commodo efficitur. Ut sed tincidunt quam. Mauris condimentum vitae tellus a cursus. Fusce sollicitudin, diam sit amet molestie feugiat, ipsum mauris tempor libero, ac egestas libero massa eget tortor. </p>
+            <p> Mauris accumsan, metus iaculis aliquam accumsan, massa arcu elementum ex, a fermentum velit elit nec libero. Integer maximus justo a neque convallis sollicitudin a nec nibh. Morbi volutpat enim massa, ac finibus nisl eleifend ut. Cras rutrum at quam quis feugiat. Nulla massa mauris, scelerisque sit amet nibh a, ornare feugiat neque. Maecenas diam magna, fermentum id cursus varius, consequat vitae ex. Mauris luctus a ipsum in fermentum. Fusce volutpat interdum fermentum. Quisque non tortor in lorem vestibulum rutrum. </p>
+            <p> Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec pharetra nunc vel est accumsan ultrices. Suspendisse auctor tortor augue, et faucibus massa pretium quis. Ut porta pellentesque feugiat. Sed scelerisque lacinia nibh interdum ullamcorper. Proin porta tellus in venenatis laoreet. Nam efficitur lectus nec vulputate imperdiet. Pellentesque posuere dapibus euismod. Aenean ut diam egestas, maximus urna ac, vulputate ex. Donec massa orci, dignissim at purus sed, commodo consequat dolor. Pellentesque et laoreet ante, at convallis est. Nam luctus, libero ac scelerisque pellentesque, dolor neque aliquam purus, sed laoreet leo nibh a risus. Aenean semper ante at enim placerat dignissim. Vestibulum dapibus, ligula et porttitor consectetur, mauris sem tempus lacus, posuere porta ex tortor eget justo. Integer mattis, ante vitae semper interdum, nisl tellus eleifend nulla, quis consectetur libero odio sed sapien. </p>
+            <p> Morbi ultricies sollicitudin ligula laoreet lacinia. Pellentesque porttitor quis sem ac aliquam. Donec dui tortor, vulputate suscipit purus quis, efficitur tristique turpis. Fusce vehicula lorem id tincidunt varius. Maecenas sollicitudin neque nec odio venenatis, at sodales est tristique. Donec sit amet diam at velit porta consequat in quis nulla. Suspendisse id mauris quis ex suscipit placerat. Nulla volutpat quis felis ut maximus. Pellentesque malesuada dignissim augue. Aliquam tristique nec diam non pretium. Nunc fringilla accumsan orci, vel aliquet elit pulvinar eget. Donec porttitor dolor eu dapibus imperdiet. Maecenas quis mauris ut lectus convallis posuere. </p>
+            <p> Integer volutpat sodales nulla. Integer eget quam id augue aliquet venenatis nec quis tellus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam lacus risus, blandit sed nisl a, viverra elementum arcu. Nunc pulvinar sit amet ante quis luctus. Phasellus pellentesque diam non augue molestie tincidunt non eget justo. Donec a ante eget tortor vehicula imperdiet. Nullam scelerisque dignissim malesuada. Suspendisse sed dapibus dolor. Fusce vulputate ante risus, vel laoreet erat suscipit quis. Phasellus sit amet venenatis erat. Duis egestas quis tellus ac dapibus. Vestibulum in ex cursus, scelerisque massa id, elementum augue. Duis aliquet ut eros a gravida. In blandit purus ut est malesuada ullamcorper. </p>
+            <p> Sed eu vulputate mi. Phasellus rhoncus ipsum et lacus aliquam, sed bibendum felis scelerisque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Phasellus lacinia ipsum in feugiat fermentum. Morbi nec sollicitudin est. Duis vulputate elit metus, sit amet varius dolor fringilla a. Maecenas non lacus rutrum, porta orci eu, lacinia dolor. Nulla fringilla tincidunt lacus vitae dignissim. Maecenas finibus, enim vehicula venenatis pretium, metus massa dapibus lorem, non tincidunt risus ligula pulvinar erat. Ut sed varius justo. Cras ac erat sed ipsum hendrerit porttitor. In lacinia massa sit amet elit egestas, id gravida ante consectetur. Integer dignissim est vitae turpis fringilla, ac finibus velit facilisis. Curabitur ante eros, luctus sed tincidunt in, tincidunt nec justo. Morbi hendrerit, nulla eu dapibus suscipit, sapien arcu ornare erat, eget aliquet velit eros sit amet purus. </p>
+            <p> Vestibulum varius et diam sit amet iaculis. Nunc tincidunt pretium hendrerit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Morbi ullamcorper felis ac urna sagittis, eu pretium ligula auctor. Maecenas a volutpat tellus. Maecenas efficitur libero tortor, vitae laoreet tortor iaculis ut. Proin vel magna nibh. Nulla nunc sapien, mollis eu ex sed, ullamcorper pellentesque orci. Donec ipsum diam, tempus eget condimentum ut, tincidunt id lacus. Sed est ipsum, tincidunt vitae diam eu, faucibus maximus lorem. Mauris porttitor, nisi nec ultrices tempor, dui metus tristique nibh, sit amet tincidunt diam enim sed felis. In hac habitasse platea dictumst. Maecenas at magna consequat, vulputate leo in, maximus velit. Pellentesque laoreet malesuada orci, blandit mattis odio malesuada at. </p>
+            <p> Etiam nec dui vulputate, finibus lectus vitae, bibendum mi. Maecenas volutpat congue dolor, ut ultricies massa mattis ac. Suspendisse vitae blandit metus, nec luctus elit. Proin mattis consequat vehicula. Nunc dolor mi, finibus non leo at, vestibulum fringilla metus. Morbi porttitor enim quis magna ultrices, sed luctus felis molestie. Fusce erat lorem, fermentum ut dui eu, rhoncus finibus lacus. Vivamus in facilisis dui, ut mattis sapien. Nam lobortis tortor dui, viverra convallis ipsum aliquam vitae. Nulla condimentum, elit et posuere ornare, ante lacus ornare est, ut faucibus turpis nisi eget nisl. Integer tortor ex, auctor eget velit ut, semper tempor tortor. Proin ut eros orci. Ut fermentum mattis nulla, sit amet bibendum velit. Phasellus nec eleifend justo, quis sodales dolor. Nulla turpis dui, scelerisque nec placerat at, mattis quis mi. </p>
+          </div>
+        </div>
+  		</main>
+    </div>
+	</body>
+</html>
+
+<style is:global>
+  .container-fluid {
+    display: flex;
+    height: 100dvh;
+    padding: 0;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.5em;
+    background: var(--pico-code-background-color);
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+      padding: 0;
+      margin: 0 !important;
+
+      li {
+        width: 2.5em;
+        height: 2.5em;
+        border-radius: 2.5em;
+        background: var(--pico-background-color);
+        margin: 0;
+        padding: 0.5em;
+
+        a {
+          color: var(--pico-secondary);
+          display: grid;
+          place-items: center;
+        }
+      }
+    }
+  }
+
+  main {
+    padding: 1em;
+    width: 100%;
+    display: flex;
+    gap: 2em;
+
+    .entries {
+      padding: 0;
+      margin: 0;
+      overflow-y: auto;
+
+      li {
+        list-style: none;
+        margin-bottom: 2em;
+
+        span {
+          margin-right: 1em;
+        }
+      }
+    }
+
+    .content-wrapper {
+      width: 100%;
+      overflow-y: auto;
+
+      .content {
+        max-width: 80ch;
+        margin: 0 auto;
+      }
+
+      .description {
+        display: flex;
+
+        div {
+          width: 50%;
+        }
+        
+        .pod-art {
+          display: block;
+          background: var(--pico-code-background-color);
+          aspect-ratio: 1 / 1;
+        }
+      }
+    }
+
+    svg {
+      height: 1em;
+    }
+  }
+
+  .current-page {
+    color: var(--pico-primary);
+  }
+
+  .text-article {
+    color: var(--pico-color-cyan-300);
+    text-decoration: none;
+  }
+
+  .text-podcast {
+    color: var(--pico-color-jade-300);
+    text-decoration: none;
+  }
+  .text-video {
+    color: var(--pico-color-lime-300);
+    text-decoration: none;
+  }
+
+  .underlined {
+    text-decoration: underline;
+  }
+</style>
