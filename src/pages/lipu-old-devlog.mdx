@@ -192,7 +192,7 @@ let app: App = App::new().add_feed("https://fasterthanli.me/index.xml");
 let articles: Vec<Article> = app.fetch().await;
 ```
 
-A [CLI app exmaple](https://github.com/janElikan/lipu/blob/main/src/main.rs).
+A [CLI app exmaple](https://github.com/janKeli/lipu/blob/main/src/main.rs).
 
 Types:
 ```rust
@@ -244,7 +244,7 @@ As a result,
 
 <NoteMeta name="tauri-install" source="https://tauri.app/v1/guides/getting-started/prerequisites/#1-system-dependencies" scope="public" type="main" created="2024-08-09T13:57Z" modified="2024-08-10T13:08Z" />
 
-Install the [system deps](https://v2.tauri.app/start/prerequisites/#system-dependencies). If you're on [nixos](/nixos), I have [made a flake](https://gist.github.com/janElikan/1a0d66b7f059387e44ba232b79af7450).
+Install the [system deps](https://v2.tauri.app/start/prerequisites/#system-dependencies). If you're on [nixos](/nixos), I have [made a flake](https://gist.github.com/janKeli/1a0d66b7f059387e44ba232b79af7450).
 
 ```shell
 > npm create tauri-app@latest -- --rc
@@ -262,7 +262,7 @@ When using git, you *should commit* `Cargo.toml`, `Cargo.lock` and, if you are u
 <NoteMeta name="sidenote-tauri-android" source="" scope="public" type="main" created="2024-08-09T17:28Z" modified="2024-08-09T19:56Z" />
 
 ```
-[elikan@suli:/nix/persist/repos/tauri-playground/tauri-app]$ npm run tauri android init
+[keli@suli:/nix/persist/repos/tauri-playground/tauri-app]$ npm run tauri android init
 
 > tauri-app@0.0.0 tauri
 > tauri android init
@@ -468,7 +468,7 @@ This new `Body` will contain *text as files* as well, because some feeds don't g
 
 <NoteMeta name="lipu-new-types-implemented" source="" scope="public" type="main" created="2024-08-18T11:34Z" modified="2024-08-18T11:36Z" />
 
-I believe [it is implemented now](https://github.com/janElikan/lipu/tree/c2f4e6a2a1b093fa2bc474c92a4399f0d673a27e), or at least a minimal version of it. Clippy is not happy, but what I want right now is a *working prototype*, which I can refactor later. So I'm switching over to the front-end side of things.
+I believe [it is implemented now](https://github.com/janKeli/lipu/tree/c2f4e6a2a1b093fa2bc474c92a4399f0d673a27e), or at least a minimal version of it. Clippy is not happy, but what I want right now is a *working prototype*, which I can refactor later. So I'm switching over to the front-end side of things.
 
 ---
 
@@ -648,7 +648,7 @@ So? What am I supposed to do with that? The server didn't log anything?
 
 Here's the fetch call:
 ```text
-fetch("asset://localhost/%2Fhome%2Felikan%2F.local%2Fshare%2Fapp.janelikan.lipu%2Flipu%2Fhttpsapispreakercomdownloadepisode39524531mastermp3.mp3", {
+fetch("asset://localhost/%2Fhome%2Fkeli%2F.local%2Fshare%2Fapp.jankeli.lipu%2Flipu%2Fhttpsapispreakercomdownloadepisode39524531mastermp3.mp3", {
     "cache": "default",
     "credentials": "omit",
     "headers": {
@@ -666,7 +666,7 @@ fetch("asset://localhost/%2Fhome%2Felikan%2F.local%2Fshare%2Fapp.janelikan.lipu%
 
 Could it be that the invoke function attaches an accept header that rejects any audio and that's why it doesn't work? Let me try raw fetch:
 ```js
-> await fetch("asset://localhost/%2Fhome%2Felikan%2F.local%2Fshare%2Fapp.janelikan.lipu%2Flipu%2Fhttpsapispreakercomdownloadepisode39524531mastermp3.mp3")
+> await fetch("asset://localhost/%2Fhome%2Fkeli%2F.local%2Fshare%2Fapp.jankeli.lipu%2Flipu%2Fhttpsapispreakercomdownloadepisode39524531mastermp3.mp3")
 
 [Info] Response
 
@@ -686,7 +686,7 @@ statusText: "Internal Server Error"
 
 type: "cors"
 
-url: "asset://localhost/%2Fhome%2Felikan%2F.local%2Fshare%2Fapp.janelikan.lipu%2Flipu%2Fhttpsapispreakercomdownloadepisode39524531mastermp3.mp3"
+url: "asset://localhost/%2Fhome%2Fkeli%2F.local%2Fshare%2Fapp.jankeli.lipu%2Flipu%2Fhttpsapispreakercomdownloadepisode39524531mastermp3.mp3"
 
 Response Prototype
 ```
@@ -695,7 +695,7 @@ That didn't work, okay, what else can I try?
 
 Wait, does a fetch request work on an image?
 ```js
-> await fetch("asset://localhost/%2Fhome%2Felikan%2F.local%2Fshare%2Fapp.janelikan.lipu%2Flipu%2Fhttpsd3wo5wojvuv7lcloudfrontnettrssitunessquare1400imagesspreakercomoriginala54ebc29615c1ac79160293cb07e80d1jpg")
+> await fetch("asset://localhost/%2Fhome%2Fkeli%2F.local%2Fshare%2Fapp.jankeli.lipu%2Flipu%2Fhttpsd3wo5wojvuv7lcloudfrontnettrssitunessquare1400imagesspreakercomoriginala54ebc29615c1ac79160293cb07e80d1jpg")
 
 [Info] Response
 
@@ -715,7 +715,7 @@ statusText: "OK"
 
 type: "cors"
 
-url: "asset://localhost/%2Fhome%2Felikan%2F.local%2Fshare%2Fapp.janelikan.lipu%2Flipu%2Fhttpsd3wo5wojvuv7lcloudfrontnettrssitunessquare1400imagess…"
+url: "asset://localhost/%2Fhome%2Fkeli%2F.local%2Fshare%2Fapp.jankeli.lipu%2Flipu%2Fhttpsd3wo5wojvuv7lcloudfrontnettrssitunessquare1400imagess…"
 
 Response Prototype
 ```

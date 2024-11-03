@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://janelikan.github.io/sitemap-index.xml
+Sitemap: https://jankeli.github.io/sitemap-index.xml

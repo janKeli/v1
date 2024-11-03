@@ -40,7 +40,7 @@ I've set up a flake in it and installed [home-manager](/home-manager). That work
 
 <NoteMeta name="2024-06-24-hardware-dots" source="" scope="public" type="main" created="2024-06-24T15:20Z" modified="2024-06-24T15:23Z" />
 
-I now use [dots](/dots) on my primary machine! You can check out the repo [on GitHub](https://github.com/janElikan/dots). If you have any input, please create an issue there!
+I now use [dots](/dots) on my primary machine! You can check out the repo [on GitHub](https://github.com/janKeli/dots). If you have any input, please create an issue there!
 
 ---
 
@@ -63,7 +63,7 @@ Requirements for each machine:
 - *no remote access* except for the server
 - *no closed-source services* that have *full access to hardware* (e.g. google assistant)
   - exception: phone vendor's kernel
-- all devices can be *set up* either fully or semi-*automatically* using the [dots repo](https://github.com/janElikan/dots) (i.e. no snowflakes)
+- all devices can be *set up* either fully or semi-*automatically* using the [dots repo](https://github.com/janKeli/dots) (i.e. no snowflakes)
 - the *OS* has to be able to *heal itself* to a point, no system reinstalls
 
 Data:
@@ -310,7 +310,7 @@ Of these, I wanna back up:
 
 ```shell
 > sudo tar -caf backup.tar.gz active-externalism secure identity
-[sudo] password for elikan:
+[sudo] password for keli:
 
 > ls | where name == backup.tar.gz
 ╭───┬───────────────┬──────┬─────────┬──────────────╮
@@ -399,8 +399,8 @@ P.S. I didn't break my system.
 Again, *humanize*. This one is manual.
 
 ```shell
-> tar -caf backup.tar.gz active-externalism impermanence/home/elikan/.password-store impermanence/home/elikan/.2fa-codes
-> gpg --output backup.gpg --encrypt --recipient janelikan ./backup.tar.gz
+> tar -caf backup.tar.gz active-externalism impermanence/home/keli/.password-store impermanence/home/keli/.2fa-codes
+> gpg --output backup.gpg --encrypt --recipient jankeli ./backup.tar.gz
 > rm backup.tar.gz
 > ls
 ╭───┬────────────────────┬──────┬──────────┬────────────────╮

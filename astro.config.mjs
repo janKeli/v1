@@ -5,7 +5,7 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://janElikan.github.io',
+  site: 'https://jankeli.github.io',
   markdown: {
     shikiConfig: {
       theme: 'catppuccin-mocha'
