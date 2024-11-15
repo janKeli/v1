@@ -4,8 +4,6 @@ import Header from "../components/Header.astro";
 import NoteMeta from "../components/NoteMeta.astro";
 
 const { frontmatter } = Astro.props;
-
-const title = frontmatter.title === 'index' ? 'jan Keli' : frontmatter.title;
 ---
 
 <html lang="en">
@@ -16,12 +14,12 @@ const title = frontmatter.title === 'index' ? 'jan Keli' : frontmatter.title;
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content="jan Elikan's notes" />
-		<title>{title}</title>
+		<title>{frontmatter.title}</title>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<NoteMeta name={title} {...frontmatter} />
+			<NoteMeta name={frontmatter.title} {...frontmatter} />
 	    <slot />
 		</main>
 	</body>
@@ -52,34 +50,6 @@ const title = frontmatter.title === 'index' ? 'jan Keli' : frontmatter.title;
 		--color-code-text: #cdd6f4;
 		--color-header-base: #181825;
 		--color-select: var(--color-lavander);
-	}
-
-	@media (prefers-color-scheme: light) {
-		:root {
-			--color-base: #eff1f5;
-			--color-text: #4c4f69;
-			--color-subtext: #6c6f85;
-			--color-maroon: #dc8a78; /* this is rosewater, actually */
-			--color-sapphire: #209fb5;
-			--color-blue: #1e66f5;
-			--color-lavander: #7287fd;
-			--color-mavue: #8839ef;
-			--color-pink: #ea76cb;
-			--color-green: #40a02b;
-			--color-teal: #179299;
-			--color-yellow: #df8e1d;
-			--color-peach: #fe640b;
-			--color-red: #d20f39;
-
-			--color-link: var(--color-lavander);
-			--color-emphasis: var(--color-peach);
-			--color-deleted: var(--color-red);
-			--color-border: #ccd0da;
-			--color-code-base: #181825;
-			--color-code-text: #cdd6f4;
-			--color-header-base: #181825;
-			--color-select: var(--color-lavander);
-		}
 	}
 
 	* {
@@ -135,8 +105,12 @@ const title = frontmatter.title === 'index' ? 'jan Keli' : frontmatter.title;
 		margin: 0.25em 0;
 	}
 
-	ul, ol {
+	ul {
 		padding: 0 0 1em 20px;
+	}
+
+	ol {
+		padding: 0 0 1em 30px;
 	}
 
 	table {
